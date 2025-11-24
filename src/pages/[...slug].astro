@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 const { slug } = Astro.params;
 const currentSlug = slug || "home"; // Default to home if root
 
-const response = await fetch(`http://localhost:3001/api/pages/${slug}`);
+const response = await fetch(`http://localhost:4321/api/pages/${slug}`);
 
 const pageData = await response.json();
 
