@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import VehicleDetails from "../../components/VehicleDetails.astro";
+import vehiclesData from "../../data/vehicles.json";
+import homeData from "../../data/home.json";
+
+const { id } = Astro.params;
+const vehicle = vehiclesData.find((v) => v.id === id);
+
+if (!vehicle) {
+    return Astro.redirect("/404");
+}
+---
+
+<Layout
+    title={`${vehicle.year} ${vehicle.make} ${vehicle.model} | Passport Mazda`}
+>
+    <Header {...homeData.header} />
+
+    <main class="bg-gray-50 min-h-screen pb-12">
+        <div class="bg-white border-b border-gray-200 mb-8">
+            <div class="container mx-auto px-4 py-4">
+                <a
+                    href="/searchnew"
+                    class="text-blue-600 hover:underline flex items-center gap-1"
+                >
+                    ← Back to Inventory
+                </a>
+            </div>
+        </div>
+
+        <VehicleDetails vehicle={vehicle} />
+    </main>
+
+    <Footer {...homeData.footer} />
+</Layout>

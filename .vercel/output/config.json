@@ -1,0 +1,67 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/components/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/pages/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/pages/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/render/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/searchnew/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/searchused/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/skeleton-test/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/test-dynamic/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/vehicle/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^(?:/(.*?))?/?$",
+			"dest": "_render"
+		}
+	]
+}

@@ -1,0 +1,95 @@
+{
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home Page",
+      "blocks": [
+        {
+          "type": "HeroSection",
+          "data": {
+            "title": "Welcome to Astro Builder",
+            "subtitle": "Build pages dynamically with JSON"
+          },
+          "serverIsland": true
+        },
+        {
+          "type": "FeaturesGrid",
+          "data": {
+            "items": [
+              "Fast12",
+              "Dynamic",
+              "Easy",
+              "sadddd"
+            ]
+          }
+        },
+        {
+          "type": "NewsletterSignup",
+          "data": {
+            "ctaText": "Subscribe"
+          }
+        },
+        {
+          "type": "Hero",
+          "data": {
+            "title": "Find Your Next Mazda",
+            "image": "https://www.passportmazda.com/static/bam-mazda/CTA_Sub_Hero_Desktop-1422x400.jpg?width=1920",
+            "search": {
+              "placeholder": "Search by Model, Year, or Keyword"
+            }
+          }
+        },
+        {
+          "type": "Footer",
+          "data": {
+            "address": "5050 Auth Way, Suitland, MD 20746",
+            "phone": "240-695-5601",
+            "hours": [
+              {
+                "department": "Sales",
+                "time": "Mon-Fri 9am-8pm"
+              },
+              {
+                "department": "Service",
+                "time": "Mon-Fri 7am-6pm"
+              }
+            ]
+          }
+        },
+        {
+          "type": "VehicleGrid",
+          "data": {
+            "title": "Incredible New Mazda Vehicles",
+            "description": "Check out our latest inventory.",
+            "vehicles": [
+              {
+                "model": "Mazda CX-30",
+                "available": 31,
+                "image": "https://pictures.dealer.com/p/passportmazda/0894/089489610a0e0a170155656565656565.jpg"
+              },
+              {
+                "model": "Mazda CX-5",
+                "available": 71,
+                "image": "https://pictures.dealer.com/p/passportmazda/1234/1234567890abcdef1234567890abcdef.jpg"
+              }
+            ]
+          }
+        },
+        {
+          "type": "DynamicRenderer",
+          "data": {
+            "html": "<h2>Hello World 111</h2>",
+            "css": "h2 { color: blue; }",
+            "js": "console.log(\"Hello from Dynamic Renderer\");"
+          }
+        },
+        {
+          "type": "NewsletterSignup",
+          "data": {
+            "ctaText": "Subscribe"
+          }
+        }
+      ]
+    }
+  ]
+}
