@@ -1,0 +1,189 @@
+---
+import "./SearchFilter.css";
+import type { FilterParams, FilterCount } from "../utils/filterUtils";
+import { isFilterActive } from "../utils/filterUtils";
+
+interface Props {
+    currentFilters: FilterParams;
+    filterCounts: {
+        models: FilterCount[];
+        years: FilterCount[];
+        statuses: FilterCount[];
+        priceRanges: FilterCount[];
+    };
+}
+
+const { currentFilters, filterCounts } = Astro.props;
+
+// Define filter categories with their display names
+const filterCategories = [
+    {
+        title: "Status",
+        type: "status" as const,
+        options:
+            filterCounts.statuses.length > 0
+                ? filterCounts.statuses
+                : [
+                      { label: "New", count: 0 },
+                      { label: "In Transit", count: 0 },
+                      { label: "In Stock", count: 0 },
+                  ],
+    },
+    {
+        title: "Year",
+        type: "year" as const,
+        options:
+            filterCounts.years.length > 0
+                ? filterCounts.years.sort((a, b) =>
+                      b.label.localeCompare(a.label),
+                  )
+                : [
+                      { label: "2025", count: 0 },
+                      { label: "2024", count: 0 },
+                  ],
+    },
+    {
+        title: "Model",
+        type: "model" as const,
+        options:
+            filterCounts.models.length > 0
+                ? filterCounts.models.sort((a, b) =>
+                      a.label.localeCompare(b.label),
+                  )
+                : [
+                      { label: "CX-5", count: 0 },
+                      { label: "CX-30", count: 0 },
+                      { label: "CX-50", count: 0 },
+                      { label: "CX-90", count: 0 },
+                      { label: "Mazda3 Sedan", count: 0 },
+                  ],
+    },
+    {
+        title: "Price",
+        type: "price" as const,
+        options: filterCounts.priceRanges,
+    },
+];
+
+// Check if any filters are active
+const hasActiveFilters =
+    currentFilters.models.length > 0 ||
+    currentFilters.years.length > 0 ||
+    currentFilters.statuses.length > 0 ||
+    currentFilters.priceRanges.length > 0;
+
+// Get current page path for Clear All link
+const currentPath = Astro.url.pathname;
+---
+
+<aside class="search-filter">
+    <div class="filter-header">
+        <h3 class="text-lg font-bold">Filters</h3>
+        {
+            hasActiveFilters && (
+                <a href={currentPath} class="clear-filters">
+                    Clear All
+                </a>
+            )
+        }
+    </div>
+
+    <div class="search-input-wrapper">
+        <input
+            type="text"
+            placeholder="Search by Make, Model, or Keyword"
+            class="search-input"
+        />
+    </div>
+
+    {
+        filterCategories.map((category) => (
+            <div class="filter-section">
+                <div class="filter-title">
+                    {category.title}
+                    <span>−</span>
+                </div>
+                <div class="filter-options">
+                    {category.options.map((option) => {
+                        const isChecked = isFilterActive(
+                            currentFilters,
+                            category.type,
+                            option.label,
+                        );
+                        return (
+                            <label class="filter-option">
+                                <input
+                                    type="checkbox"
+                                    class="filter-checkbox"
+                                    data-filter-type={category.type}
+                                    data-filter-value={option.label}
+                                    checked={isChecked}
+                                />
+                                <span>{option.label}</span>
+                                <span class="filter-count">
+                                    ({option.count})
+                                </span>
+                            </label>
+                        );
+                    })}
+                </div>
+            </div>
+        ))
+    }
+</aside>
+
+<script>
+    // Handle filter checkbox changes
+    function handleFilterChange(event: Event) {
+        const checkbox = event.target as HTMLInputElement;
+        const filterType = checkbox.dataset.filterType as
+            | "model"
+            | "year"
+            | "status"
+            | "price";
+        const filterValue = checkbox.dataset.filterValue!;
+        const isChecked = checkbox.checked;
+
+        // Build new URL with updated filters
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        // Get current values for this filter type
+        const currentValues =
+            params.get(filterType)?.split(",").filter(Boolean) || [];
+
+        // Add or remove the value
+        let newValues: string[];
+        if (isChecked) {
+            newValues = [...currentValues, filterValue];
+        } else {
+            newValues = currentValues.filter((v) => v !== filterValue);
+        }
+
+        // Update URL params
+        if (newValues.length > 0) {
+            params.set(filterType, newValues.join(","));
+        } else {
+            params.delete(filterType);
+        }
+
+        url.search = params.toString();
+
+        // Navigate to new URL (View Transitions will handle smooth transition)
+        window.location.href = url.toString();
+    }
+
+    // Attach event listeners to all checkboxes
+    function initializeFilters() {
+        const checkboxes = document.querySelectorAll(".filter-checkbox");
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", handleFilterChange);
+        });
+    }
+
+    // Initialize on page load
+    initializeFilters();
+
+    // Re-initialize after view transitions
+    document.addEventListener("astro:page-load", initializeFilters);
+</script>

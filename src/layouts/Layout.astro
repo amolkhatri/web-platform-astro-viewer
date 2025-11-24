@@ -1,0 +1,49 @@
+---
+import { ClientRouter } from "astro:transitions";
+import DeviceBanner from "../components/DeviceBanner.astro";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Basics</title>
+		<ClientRouter />
+	</head>
+	<body>
+		<!-- <DeviceBanner /> -->
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	:root {
+		/* Component Theme Variables (Light Mode Default) */
+		--hero-bg: #f0f0f0;
+		--card-bg: white;
+		--text-color: #333;
+		--heading-color: #111;
+		--text-muted: #666;
+		--border-color: #ddd;
+		--newsletter-bg: #333;
+		--newsletter-text: white;
+		--primary-color: #007bff;
+	}
+
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		font-family: system-ui, sans-serif;
+	}
+</style>

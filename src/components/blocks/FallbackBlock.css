@@ -1,0 +1,6 @@
+.fallback {
+    padding: 1rem;
+    border: 1px dashed red;
+    color: red;
+    text-align: center;
+}

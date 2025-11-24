@@ -1,0 +1,17 @@
+---
+const { items = [] } = Astro.props;
+---
+
+<section class="features">
+  {
+    items.map((item) => (
+      <div class="feature-card">
+        <h3>{item}</h3>
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  @import "./FeaturesGrid.css";
+</style>

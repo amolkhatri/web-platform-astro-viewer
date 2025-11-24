@@ -1,0 +1,11 @@
+---
+const { type } = Astro.props;
+---
+
+<div class="fallback">
+  <p>Unknown block type: <strong>{type}</strong></p>
+</div>
+
+<style>
+  @import "./FallbackBlock.css";
+</style>

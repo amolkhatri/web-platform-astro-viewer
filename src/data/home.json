@@ -1,0 +1,102 @@
+{
+    "header": {
+        "logo": {
+            "src": "https://www.passportmazda.com/assets/logos/passport-mazda-logo.png",
+            "alt": "Passport Mazda"
+        },
+        "nav": [
+            {
+                "label": "New",
+                "href": "/searchnew"
+            },
+            {
+                "label": "Pre-Owned",
+                "href": "/searchused"
+            },
+            {
+                "label": "Specials",
+                "href": "/specials"
+            },
+            {
+                "label": "Service & Parts",
+                "href": "/service"
+            },
+            {
+                "label": "Financing",
+                "href": "/financing"
+            },
+            {
+                "label": "About Us",
+                "href": "/about"
+            }
+        ],
+        "phone": "301-423-2200"
+    },
+    "hero": {
+        "title": "Find Your Next Mazda in Suitland, MD",
+        "image": "https://di-uploads-pod5.dealerinspire.com/passportmazda/uploads/2023/08/24-Mazda-CX-90-PHEV-Hero-Banner-Desktop.jpg",
+        "search": {
+            "placeholder": "Search by Model, Year, or Keyword"
+        }
+    },
+    "vehicleGrid": {
+        "title": "Incredible New Mazda Vehicles for Sale",
+        "description": "Are you someone who loves options? Then, you’ll love all the shiny new Mazda vehicles in our showroom.",
+        "vehicles": [
+            {
+                "model": "Mazda CX-30",
+                "available": 31,
+                "image": "https://pictures.dealer.com/p/passportmazda/0894/089489610a0e0a170155656565656565.jpg"
+            },
+            {
+                "model": "Mazda CX-5",
+                "available": 71,
+                "image": "https://pictures.dealer.com/p/passportmazda/1234/1234567890abcdef1234567890abcdef.jpg"
+            },
+            {
+                "model": "Mazda CX-50",
+                "available": 55,
+                "image": "https://pictures.dealer.com/p/passportmazda/5678/567890abcdef1234567890abcdef1234.jpg"
+            },
+            {
+                "model": "Mazda CX-90",
+                "available": 22,
+                "image": "https://pictures.dealer.com/p/passportmazda/90ab/90abcdef1234567890abcdef12345678.jpg"
+            }
+        ]
+    },
+    "contentSections": [
+        {
+            "title": "Mazda Certified Pre-Owned",
+            "content": "Only the best-maintained late-model vehicles make the Mazda Certified Pre-Owned (CPO) vehicle cut. To be eligible, they must pass a rigorous 160-point inspection.",
+            "link": {
+                "label": "Search Certified",
+                "href": "/certified"
+            },
+            "image": "https://di-uploads-pod5.dealerinspire.com/passportmazda/uploads/2023/08/Mazda-CPO-Banner.jpg"
+        },
+        {
+            "title": "Maintaining Your Mazda",
+            "content": "The service team at Passport Mazda has been factory-trained to provide you with exceptional service and ensure your vehicle is performing at its best.",
+            "link": {
+                "label": "Schedule Service",
+                "href": "/service"
+            },
+            "image": "https://di-uploads-pod5.dealerinspire.com/passportmazda/uploads/2023/08/Mazda-Service-Banner.jpg"
+        }
+    ],
+    "footer": {
+        "address": "5050 Auth Way, Suitland, MD 20746",
+        "phone": "240-695-5601",
+        "hours": [
+            {
+                "department": "Sales",
+                "time": "Mon-Fri 9am-8pm, Sat 9am-7pm, Sun 12pm-5pm"
+            },
+            {
+                "department": "Service",
+                "time": "Mon-Fri 7am-6pm, Sat 8am-4pm, Sun Closed"
+            }
+        ]
+    }
+}

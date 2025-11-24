@@ -1,0 +1,14 @@
+---
+import "./VehicleListSkeleton.css";
+import VehicleCardSkeleton from "./VehicleCardSkeleton.astro";
+
+interface Props {
+    count?: number;
+}
+
+const { count = 6 } = Astro.props;
+---
+
+<div class="vehicle-list-skeleton">
+    {Array.from({ length: count }).map(() => <VehicleCardSkeleton />)}
+</div>

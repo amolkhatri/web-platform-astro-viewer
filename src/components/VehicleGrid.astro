@@ -1,0 +1,55 @@
+---
+interface Vehicle {
+  model: string;
+  available: number;
+  image: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  vehicles: Vehicle[];
+}
+
+const { title, description, vehicles } = Astro.props;
+---
+
+<section class="vehicle-grid-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{title}</h2>
+      <p class="section-description">{description}</p>
+    </div>
+
+    <div class="grid-container">
+      {vehicles.map((vehicle) => (
+        <div class="vehicle-card group">
+          <div class="card-image-wrapper">
+            <!-- Placeholder image logic if real image fails or is placeholder -->
+            <div class="placeholder-image">
+               <span class="placeholder-icon">🚗</span>
+            </div>
+             <!-- <img src={vehicle.image} alt={vehicle.model} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" /> -->
+             <div class="stock-badge">
+                In Stock
+             </div>
+          </div>
+          <div class="card-content">
+            <h3 class="vehicle-title">{vehicle.model}</h3>
+            <p class="vehicle-availability">
+                <span class="availability-dot"></span>
+                {vehicle.available} Available
+            </p>
+            <a href="#" class="view-inventory-btn">
+              View Inventory
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+    @import "./VehicleGrid.css";
+</style>

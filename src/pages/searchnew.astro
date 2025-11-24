@@ -1,0 +1,98 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SearchFilter from "../components/SearchFilter.astro";
+import SortBar from "../components/SortBar.astro";
+import VehicleList from "../components/VehicleList.astro";
+import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
+import vehiclesData from "../data/vehicles.json";
+import { isBot } from "../utils/isBot";
+import {
+    parseFilters,
+    filterVehicles,
+    calculateFilterCounts,
+    type Vehicle,
+} from "../utils/filterUtils";
+
+import homeData from "../data/home.json";
+
+const allVehicles = vehiclesData as Vehicle[];
+
+// Parse filters from URL query parameters
+const currentFilters = parseFilters(Astro.url.searchParams);
+
+// Filter vehicles based on current filters
+const filteredVehicles = filterVehicles(allVehicles, currentFilters);
+
+// Calculate dynamic filter counts
+const filterCounts = calculateFilterCounts(allVehicles, currentFilters);
+
+// Detect if the request is from a bot
+const userAgent = Astro.request.headers.get("user-agent") || "";
+const isBotRequest = isBot(userAgent);
+console.log("is bot request" + isBotRequest);
+---
+
+<Layout title="Search New Inventory | Passport Mazda">
+    <Header {...homeData.header} />
+
+    <main class="search-page-main">
+        <div class="container mx-auto px-4 py-8">
+            <div class="page-header mb-6">
+                <h1 class="text-3xl font-bold text-gray-900">
+                    New Mazda Inventory
+                </h1>
+            </div>
+
+            <div class="search-layout">
+                <!-- Sidebar -->
+                <div class="search-sidebar">
+                    <SearchFilter
+                        currentFilters={currentFilters}
+                        filterCounts={filterCounts}
+                    />
+                </div>
+
+                <!-- Content -->
+                <div class="search-content">
+                    <SortBar count={filteredVehicles.length} />
+
+                    {
+                        isBotRequest ? (
+                            <VehicleList vehicles={filteredVehicles} />
+                        ) : (
+                            <VehicleList
+                                server:defer
+                                vehicles={filteredVehicles}
+                            >
+                                <VehicleListSkeleton slot="fallback" />
+                            </VehicleList>
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer {...homeData.footer} />
+</Layout>
+
+<style>
+    .search-page-main {
+        background-color: #f9fafb;
+        min-height: 100vh;
+    }
+
+    .search-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+        .search-layout {
+            grid-template-columns: 280px 1fr;
+        }
+    }
+</style>

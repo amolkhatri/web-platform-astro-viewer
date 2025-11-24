@@ -1,0 +1,32 @@
+---
+const userAgent = Astro.request.headers.get("user-agent") || "";
+const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        userAgent,
+    );
+const deviceType = isMobile ? "Mobile Device" : "Desktop Device";
+---
+
+<div class="device-banner">
+    <p>You are browsing on a <strong>{deviceType}</strong></p>
+</div>
+
+<style>
+    .device-banner {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        font-family: system-ui, sans-serif;
+    }
+
+    /* Push content down so banner doesn't overlap */
+    :global(body) {
+        margin-top: 40px;
+    }
+</style>

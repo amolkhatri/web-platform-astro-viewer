@@ -1,0 +1,13 @@
+---
+interface Props {
+    html: string;
+    css?: string;
+    js?: string;
+}
+
+const { html, css = "", js = "" } = Astro.props;
+---
+
+<style set:html={css}></style>
+<div set:html={html} />
+<script set:html={js} />

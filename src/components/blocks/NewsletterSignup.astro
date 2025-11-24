@@ -1,0 +1,15 @@
+---
+const { ctaText = "Subscribe" } = Astro.props;
+---
+
+<section class="newsletter">
+  <h2>Stay Updated</h2>
+  <form onsubmit="event.preventDefault(); alert('Subscribed!');">
+    <input type="email" placeholder="Enter your email" required />
+    <button type="submit">{ctaText}</button>
+  </form>
+</section>
+
+<style>
+  @import "./NewsletterSignup.css";
+</style>

@@ -1,0 +1,127 @@
+---
+import "./VehicleCard.css";
+
+import { Image } from "astro:assets";
+
+interface Props {
+    vehicle: {
+        id: string;
+        year: number;
+        make: string;
+        model: string;
+        trim: string;
+        vin: string;
+        stock: string;
+        status: string;
+        price: number;
+        msrp: number;
+        image: string;
+        exteriorColor: string;
+        interiorColor: string;
+        engine: string;
+        transmission: string;
+        drivetrain: string;
+        mpg: string;
+    };
+}
+
+const { vehicle } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "../assets/*.{jpeg,jpg,png,gif,webp}",
+);
+const imagePath = `../assets/${vehicle.image}`;
+if (!images[imagePath])
+    throw new Error(
+        `"${vehicle.image}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,webp}"`,
+    );
+
+const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+    }).format(price);
+};
+---
+
+<div class="vehicle-card-detailed">
+    <div class="card-image-container">
+        <div class="card-badges">
+            <span class="badge new">New</span>
+            <span class="badge stock">{vehicle.status}</span>
+        </div>
+        <a href={`/vehicle/${vehicle.id}`} class="block h-full">
+            <Image
+                src={images[imagePath]()}
+                alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+                class="card-image"
+                loading="lazy"
+            />
+        </a>
+    </div>
+
+    <div class="card-details">
+        <div class="vehicle-header">
+            <div class="vehicle-year-make">{vehicle.year} {vehicle.make}</div>
+            <a
+                href={`/vehicle/${vehicle.id}`}
+                class="hover:underline text-inherit"
+            >
+                <h3 class="vehicle-model-trim">
+                    {vehicle.model}
+                    {vehicle.trim}
+                </h3>
+            </a>
+        </div>
+
+        <div class="specs-grid">
+            <div class="spec-item" title="Engine">
+                <span>⚙️</span>
+                {vehicle.engine}
+            </div>
+            <div class="spec-item" title="Transmission">
+                <span>🕹️</span>
+                {vehicle.transmission}
+            </div>
+            <div class="spec-item" title="Drivetrain">
+                <span>🚙</span>
+                {vehicle.drivetrain}
+            </div>
+            <div class="spec-item" title="MPG">
+                <span>⛽</span>
+                {vehicle.mpg}
+            </div>
+            <div class="spec-item" title="Exterior Color">
+                <span>🎨</span>
+                {vehicle.exteriorColor}
+            </div>
+            <div class="spec-item" title="Stock Number">
+                <span>#️⃣</span>
+                {vehicle.stock}
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <div class="price-row">
+                <span class="price-label">MSRP</span>
+                <span class="price-value msrp">{formatPrice(vehicle.msrp)}</span
+                >
+            </div>
+            <div class="price-row">
+                <span class="price-label">Passport Price</span>
+                <span class="price-value final"
+                    >{formatPrice(vehicle.price)}</span
+                >
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <a
+                href={`/vehicle/${vehicle.id}`}
+                class="btn btn-outline text-center no-underline">View Details</a
+            >
+            <button class="btn btn-primary">Get E-Price</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+---
+interface Props {
+    address: string;
+    phone: string;
+    hours: {
+        department: string;
+        time: string;
+    }[];
+}
+
+const { address, phone, hours } = Astro.props;
+---
+
+<a
+    href="#"
+    class="hover:text-white hover:translate-x-1 transition-all inline-block"
+    >Service Center</a
+>
+
+<li>
+    <a
+        href="#"
+        class="hover:text-white hover:translate-x-1 transition-all inline-block"
+        >Financing</a
+    >
+</li>
+<li>
+    <a
+        href="#"
+        class="hover:text-white hover:translate-x-1 transition-all inline-block"
+        >Contact Us</a
+    >
+</li>
+
+<div
+    class="border-t border-gray-800 mt-16 pt-8 text-center text-gray-500 text-sm"
+>
+    <p>
+        &copy; {new Date().getFullYear()} Passport Mazda. All rights reserved.
+    </p>
+</div>

@@ -1,0 +1,61 @@
+---
+import PageBuilder from "../components/PageBuilder.astro";
+import Layout from "../layouts/Layout.astro";
+
+const { slug } = Astro.params;
+const currentSlug = slug || "home"; // Default to home if root
+
+const response = await fetch(`http://localhost:3001/api/pages/${slug}`);
+
+const pageData = await response.json();
+
+// Using dummy data for now
+// const pageData = {
+//   title: "Welcome to Our Platform",
+//   blocks: [
+//     {
+//       type: "HeroSection",
+//       data: {
+//         title: "Build Amazing Websites",
+//         subtitle: "Create dynamic pages with our powerful page builder",
+//       },
+//     },
+//     {
+//       type: "FeaturesGrid",
+//       data: {
+//         items: [
+//           "Drag & Drop Editor",
+//           "Real-time Preview",
+//           "Custom Components",
+//           "Responsive Design",
+//           "SEO Optimized",
+//           "Fast Performance",
+//         ],
+//       },
+//     },
+//     {
+//       type: "NewsletterSignup",
+//       data: {
+//         ctaText: "Join Waitlist",
+//       },
+//     },
+//   ],
+// };
+
+const error = null;
+---
+
+<Layout title={pageData ? pageData.title : "Page Not Found"}>
+  <main>
+    {
+      error ? (
+        <div style="text-align: center; padding: 2rem;">
+          <h1>404</h1>
+          <p>{error}</p>
+        </div>
+      ) : (
+        <PageBuilder blocks={pageData.blocks} />
+      )
+    }
+  </main>
+</Layout>

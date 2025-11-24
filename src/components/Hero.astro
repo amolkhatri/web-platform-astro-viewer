@@ -1,0 +1,55 @@
+---
+interface Props {
+    title: string;
+    image: string;
+    search: {
+        placeholder: string;
+    };
+}
+
+const { title, image, search } = Astro.props;
+---
+
+<section class="hero-section">
+    <div class="hero-bg">
+        <img
+            src={image}
+            alt="Hero Background"
+            class="hero-image"
+            loading="eager"
+        />
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+        <h1 class="hero-title">
+            {title}
+        </h1>
+
+        <div class="search-widget">
+            <div class="search-form">
+                <input
+                    type="text"
+                    placeholder={search.placeholder}
+                    class="search-input"
+                />
+                <button class="search-button"> Search </button>
+            </div>
+            <div class="search-links">
+                <a href="#" class="search-link">
+                    <span class="search-link-dot"></span> Search New
+                </a>
+                <a href="#" class="search-link">
+                    <span class="search-link-dot"></span> Search Used
+                </a>
+                <a href="#" class="search-link">
+                    <span class="search-link-dot"></span> Certified Pre-Owned
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @import "./Hero.css";
+</style>

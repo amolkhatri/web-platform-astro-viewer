@@ -1,0 +1,16 @@
+---
+import "./VehicleList.css";
+import VehicleCard from "./VehicleCard.astro";
+
+await (async () => new Promise((resolve) => setTimeout(resolve, 3000)))();
+
+interface Props {
+    vehicles: any[];
+}
+
+const { vehicles } = Astro.props;
+---
+
+<div class="vehicle-list">
+    {vehicles.map((vehicle) => <VehicleCard vehicle={vehicle} />)}
+</div>
