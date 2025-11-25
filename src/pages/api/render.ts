@@ -51,6 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
         console.log('CSS file found:', cssPathComponents);
         css = fs.readFileSync(cssPathComponents, 'utf-8');
       } else {
+        css = "no css found";
         console.warn(`CSS file not found: ${cssPathComponents}`);
       }
     } catch (cssError) {
