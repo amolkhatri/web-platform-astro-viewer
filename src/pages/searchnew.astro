@@ -5,7 +5,8 @@ import Footer from "../components/Footer.astro";
 import SearchFilter from "../components/SearchFilter.astro";
 import SortBar from "../components/SortBar.astro";
 import VehicleList from "../components/VehicleList.astro";
-import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import "../components/VehicleList.css";
 import vehiclesData from "../data/vehicles.json";
 import { isBot } from "../utils/isBot";
 import {
@@ -32,6 +33,20 @@ const filterCounts = calculateFilterCounts(allVehicles, currentFilters);
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const isBotRequest = isBot(userAgent);
 console.log("is bot request" + isBotRequest);
+
+const PAGE_SIZE = 12;
+const initialVehicles = filteredVehicles.slice(0, PAGE_SIZE);
+const initialOffset = initialVehicles.length;
+const hasMoreVehicles = filteredVehicles.length > initialOffset;
+
+const buildLoadMoreQuery = (offset: number) => {
+    const params = new URLSearchParams(Astro.url.searchParams);
+    params.set("offset", offset.toString());
+    params.set("limit", PAGE_SIZE.toString());
+    return params.toString();
+};
+
+const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}`;
 ---
 
 <Layout title="Search New Inventory | Passport Mazda">
@@ -62,12 +77,34 @@ console.log("is bot request" + isBotRequest);
                         isBotRequest ? (
                             <VehicleList vehicles={filteredVehicles} />
                         ) : (
-                            <VehicleList
-                                server:defer
-                                vehicles={filteredVehicles}
-                            >
-                                <VehicleListSkeleton slot="fallback" />
-                            </VehicleList>
+                            <>
+                                <div id="vehicle-grid" class="vehicle-list">
+                                    {initialVehicles.map((vehicle) => (
+                                        <VehicleCard vehicle={vehicle} />
+                                    ))}
+
+                                    {
+                                        hasMoreVehicles && (
+                                            <button
+                                                class="vehicle-load-trigger"
+                                                type="button"
+                                                hx-get={initialLoadMoreUrl}
+                                                hx-trigger="revealed, click"
+                                                hx-swap="outerHTML"
+                                                aria-label="Load more vehicles"
+                                            >
+                                                <span class="load-more-label">
+                                                    Load more vehicles
+                                                </span>
+                                                <span
+                                                    class="loading-indicator"
+                                                    aria-hidden="true"
+                                                />
+                                            </button>
+                                        )
+                                    }
+                                </div>
+                            </>
                         )
                     }
                 </div>
@@ -76,9 +113,19 @@ console.log("is bot request" + isBotRequest);
     </main>
 
     <Footer {...homeData.footer} />
+
+    {
+        !isBotRequest && (
+            <script
+                src="https://unpkg.com/htmx.org@1.9.12"
+                crossorigin="anonymous"
+                defer
+            />
+        )
+    }
 </Layout>
 
-<style>
+<style is:global>
     .search-page-main {
         background: var(--surface-bg);
         min-height: 100vh;
@@ -98,5 +145,63 @@ console.log("is bot request" + isBotRequest);
         .search-layout {
             grid-template-columns: 280px 1fr;
         }
+    }
+
+    .vehicle-load-trigger {
+        grid-column: 1 / -1;
+        margin: 2rem auto 0;
+        padding: 0.85rem 1.75rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        background: var(--surface-bg);
+        color: var(--text-color);
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        transition: border-color 150ms ease, color 150ms ease;
+    }
+
+    .vehicle-load-trigger:hover,
+    .vehicle-load-trigger:focus-visible {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        outline: none;
+    }
+
+    .vehicle-load-trigger .loading-indicator {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 999px;
+        border: 2px solid color-mix(in srgb, var(--text-color) 40%, transparent);
+        border-top-color: var(--primary-color);
+        animation: vehicle-load-spin 0.85s linear infinite;
+        opacity: 0;
+    }
+
+    .vehicle-load-trigger.htmx-request .loading-indicator {
+        opacity: 1;
+    }
+
+    .vehicle-load-trigger.htmx-request .load-more-label {
+        opacity: 0.7;
+    }
+
+    @keyframes vehicle-load-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .vehicle-load-complete {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin: 2rem 0 1rem;
+        color: var(--text-subtle);
+        font-size: 0.9rem;
     }
 </style>

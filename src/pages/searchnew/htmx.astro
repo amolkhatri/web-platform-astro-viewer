@@ -1,0 +1,72 @@
+---
+import VehicleCard from "../../components/VehicleCard.astro";
+import "../../components/VehicleList.css";
+import vehiclesData from "../../data/vehicles.json";
+import {
+    parseFilters,
+    filterVehicles,
+    type Vehicle,
+} from "../../utils/filterUtils";
+
+const DEFAULT_PAGE_SIZE = 12;
+const allVehicles = vehiclesData as Vehicle[];
+const url = new URL(Astro.request.url);
+const searchParams = url.searchParams;
+const currentFilters = parseFilters(searchParams);
+const filteredVehicles = filterVehicles(allVehicles, currentFilters);
+
+const offsetParam = Number(searchParams.get("offset") || "0");
+const offset = Number.isFinite(offsetParam) && offsetParam > 0 ? offsetParam : 0;
+
+const limitParam = Number(searchParams.get("limit") || DEFAULT_PAGE_SIZE);
+const limit =
+    Number.isFinite(limitParam) && limitParam > 0 ? limitParam : DEFAULT_PAGE_SIZE;
+
+const sliceEnd = offset + limit;
+const vehiclesChunk = filteredVehicles.slice(offset, sliceEnd);
+const nextOffset = offset + vehiclesChunk.length;
+const hasMore = nextOffset < filteredVehicles.length;
+
+const buildNextUrl = () => {
+    if (!hasMore) return "";
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set("offset", nextOffset.toString());
+    nextParams.set("limit", limit.toString());
+    return `/searchnew/htmx?${nextParams.toString()}`;
+};
+---
+
+{vehiclesChunk.length === 0 ? (
+    <div class="vehicle-load-complete">
+        No additional vehicles match your filters.
+    </div>
+) : (
+    <>
+        {vehiclesChunk.map((vehicle) => (
+            <VehicleCard vehicle={vehicle} />
+        ))}
+
+        {
+            hasMore ? (
+                <button
+                    class="vehicle-load-trigger"
+                    type="button"
+                    hx-get={buildNextUrl()}
+                    hx-trigger="revealed, click"
+                    hx-swap="outerHTML"
+                    aria-label="Load more vehicles"
+                >
+                    <span class="load-more-label">
+                        Load more vehicles
+                    </span>
+                    <span class="loading-indicator" aria-hidden="true" />
+                </button>
+            ) : (
+                <div class="vehicle-load-complete">
+                    You’ve reached the end of the results.
+                </div>
+            )
+        }
+    </>
+)}
+

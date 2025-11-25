@@ -1,4 +1,7 @@
 ---
+import MazdaLogo from "../assets/Mazda.webp";
+import { Image } from "astro:assets";
+
 interface Props {
     address: string;
     phone: string;
@@ -9,33 +12,67 @@ interface Props {
 }
 
 const { address, phone, hours } = Astro.props;
+
+const quickLinks = [
+    { label: "New Inventory", href: "/searchnew" },
+    { label: "Pre-Owned Inventory", href: "/searchused" },
+    { label: "Finance Center", href: "/financing" },
+    { label: "Service & Parts", href: "/service" },
+    { label: "Schedule Service", href: "/service/schedule" },
+    { label: "Contact Us", href: "/contact" }
+];
 ---
 
-<a
-    href="#"
-    class="hover:text-white hover:translate-x-1 transition-all inline-block"
-    >Service Center</a
->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="footer-logo-link">
+                    <Image src={MazdaLogo} alt="Passport Mazda" width={160} height={40} loading="lazy" decoding="async" class="footer-logo" />
+                </a>
+                <p class="footer-address">{address}</p>
+                <a href={`tel:${phone}`} class="footer-phone">{phone}</a>
+            </div>
 
-<li>
-    <a
-        href="#"
-        class="hover:text-white hover:translate-x-1 transition-all inline-block"
-        >Financing</a
-    >
-</li>
-<li>
-    <a
-        href="#"
-        class="hover:text-white hover:translate-x-1 transition-all inline-block"
-        >Contact Us</a
-    >
-</li>
+            <div>
+                <h3 class="column-title">Quick Links</h3>
+                <ul class="links-list">
+                    {
+                        quickLinks.map((link) => (
+                            <li>
+                                <a class="footer-link" href={link.href}>
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
 
-<div
-    class="border-t border-gray-800 mt-16 pt-8 text-center text-gray-500 text-sm"
->
-    <p>
-        &copy; {new Date().getFullYear()} Passport Mazda. All rights reserved.
-    </p>
-</div>
+            <div>
+                <h3 class="column-title">Store Hours</h3>
+                <div class="hours-list">
+                    {
+                        hours.map((item) => (
+                            <div class="hours-item">
+                                <span class="department-name">
+                                    {item.department}
+                                </span>
+                                <span class="department-time">{item.time}</span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; {new Date().getFullYear()} Passport Mazda. All rights
+            reserved.
+        </div>
+    </div>
+</footer>
+
+<style>
+    @import "./Footer.css";
+</style>
