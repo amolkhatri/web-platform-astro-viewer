@@ -16,13 +16,7 @@ const shouldLoadHtmx = !isBot(userAgent);
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 		<ClientRouter />
-		{shouldLoadHtmx && (
-			<script
-				src="https://unpkg.com/htmx.org@1.9.12"
-				crossorigin="anonymous"
-				is:inline
-			></script>
-		)}
+		{shouldLoadHtmx && <script is:inline src="/htmx.min.js" />}
 	</head>
 	<body>
 		<!-- <DeviceBanner /> -->
