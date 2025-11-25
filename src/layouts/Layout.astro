@@ -16,70 +16,133 @@ const shouldLoadHtmx = !isBot(userAgent);
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 		<ClientRouter />
+		{shouldLoadHtmx && (
+			<script
+				src="https://unpkg.com/htmx.org@1.9.12"
+				crossorigin="anonymous"
+				is:inline
+			></script>
+		)}
 	</head>
 	<body>
 		<!-- <DeviceBanner /> -->
 		<slot />
 		<div id="eprice-overlay-root" aria-live="polite" aria-busy="false"></div>
-		{shouldLoadHtmx && (
-			<>
-				<script
-					src="https://unpkg.com/htmx.org@1.9.12"
-					crossorigin="anonymous"
-					defer
-				/>
-				<script is:inline>
-					(function () {
-						const rootId = "eprice-overlay-root";
+		<script is:inline data-astro-rerun>
+			(function () {
+				const rootId = "eprice-overlay-root";
 
-						function closeOverlay() {
-							const root = document.getElementById(rootId);
-							if (root) {
-								root.innerHTML = "";
-								root.removeAttribute("data-overlay-open");
-							}
+				function closeOverlay() {
+					const root = document.getElementById(rootId);
+					if (root) {
+						root.innerHTML = "";
+						root.removeAttribute("data-overlay-open");
+					}
+				}
+
+				// Set up overlay close handlers (only once per document lifecycle)
+				if (!window.__overlayHandlersInitialized) {
+					window.__overlayHandlersInitialized = true;
+
+					document.addEventListener("click", (event) => {
+						const target = event.target;
+						if (!(target instanceof HTMLElement)) {
+							return;
 						}
 
-						document.addEventListener("click", (event) => {
-							const target = event.target;
-							if (!(target instanceof HTMLElement)) {
-								return;
-							}
+						const dismissTrigger = target.closest(
+							"[data-overlay-dismiss='eprice']",
+						);
+						if (dismissTrigger) {
+							event.preventDefault();
+							closeOverlay();
+						}
+					});
 
-							const dismissTrigger = target.closest(
-								"[data-overlay-dismiss='eprice']",
+					document.addEventListener("keydown", (event) => {
+						if (event.key === "Escape") {
+							closeOverlay();
+						}
+					});
+
+					// HTMX event handlers (set once)
+					document.addEventListener("htmx:afterSwap", (event) => {
+						const target = event.target;
+						
+						// Handle overlay content being swapped into the overlay root
+						if (
+							target instanceof HTMLElement &&
+							target.id === rootId
+						) {
+							const focusTarget = target.querySelector(
+								"[data-overlay-panel]",
 							);
-							if (dismissTrigger) {
-								event.preventDefault();
-								closeOverlay();
+							if (focusTarget instanceof HTMLElement) {
+								requestAnimationFrame(() => focusTarget.focus());
 							}
-						});
+							target.setAttribute("data-overlay-open", "true");
+						}
+						
+						// Process all new content that was swapped in
+						if (target instanceof HTMLElement && window.htmx) {
+							setTimeout(() => {
+								window.htmx.process(target);
+							}, 0);
+						}
+					});
+				}
 
-						document.addEventListener("keydown", (event) => {
-							if (event.key === "Escape") {
-								closeOverlay();
+				// This runs on every page load (including soft navigations due to data-astro-rerun)
+				function processHtmxElements() {
+					if (window.htmx) {
+						// Process entire document body to activate hx- attributes
+						window.htmx.process(document.body);
+					} else {
+						// HTMX not loaded yet, wait and retry
+						let attempts = 0;
+						const checkInterval = setInterval(() => {
+							attempts++;
+							if (window.htmx) {
+								clearInterval(checkInterval);
+								window.htmx.process(document.body);
+							} else if (attempts >= 50) {
+								clearInterval(checkInterval);
+								console.warn("HTMX not loaded");
 							}
-						});
+						}, 100);
+					}
+				}
 
-						document.addEventListener("htmx:afterSwap", (event) => {
-							const target = event.target;
-							if (
-								target instanceof HTMLElement &&
-								target.id === rootId
-							) {
-								const focusTarget = target.querySelector(
-									"[data-overlay-panel]",
-								);
-								if (focusTarget instanceof HTMLElement) {
-									requestAnimationFrame(() => focusTarget.focus());
+				// Process HTMX elements now
+				processHtmxElements();
+
+				// Also set up a MutationObserver for server:defer content
+				if (!window.__htmxObserverInitialized && window.htmx) {
+					window.__htmxObserverInitialized = true;
+					const observer = new MutationObserver((mutations) => {
+						mutations.forEach((mutation) => {
+							mutation.addedNodes.forEach((node) => {
+								if (node instanceof HTMLElement) {
+									const hasHtmxAttrs = node.hasAttribute('hx-get') ||
+										node.hasAttribute('hx-post') ||
+										node.querySelector('[hx-get], [hx-post]');
+									
+									if (hasHtmxAttrs && window.htmx) {
+										setTimeout(() => {
+											window.htmx.process(node);
+										}, 0);
+									}
 								}
-								target.setAttribute("data-overlay-open", "true");
-							}
+							});
 						});
-					})();
-				</script>
-			</>
-		)}
+					});
+					observer.observe(document.body, {
+						childList: true,
+						subtree: true
+					});
+				}
+			})();
+		</script>
 	</body>
 </html>
 

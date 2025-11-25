@@ -167,6 +167,9 @@ const currentPath = Astro.url.pathname;
             params.delete(filterType);
         }
 
+        // Reset to page 1 when filters change
+        params.delete("page");
+
         url.search = params.toString();
 
         // Navigate to new URL (View Transitions will handle smooth transition)

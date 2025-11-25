@@ -6,6 +6,7 @@ import SearchFilter from "../components/SearchFilter.astro";
 import SortBar from "../components/SortBar.astro";
 import VehicleList from "../components/VehicleList.astro";
 import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
+import Pagination from "../components/Pagination.astro";
 import vehiclesData from "../data/vehicles.json";
 import { isBot } from "../utils/isBot";
 import {
@@ -27,6 +28,15 @@ const filteredVehicles = filterVehicles(allVehicles, currentFilters);
 
 // Calculate dynamic filter counts
 const filterCounts = calculateFilterCounts(allVehicles, currentFilters);
+
+// Pagination Logic
+const ITEMS_PER_PAGE = 12;
+const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
+const totalPages = Math.ceil(filteredVehicles.length / ITEMS_PER_PAGE);
+const paginatedVehicles = filteredVehicles.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+);
 
 // Detect if the request is from a bot
 const userAgent = Astro.request.headers.get("user-agent") || "";
@@ -59,16 +69,21 @@ const isBotRequest = isBot(userAgent);
 
                     {
                         isBotRequest ? (
-                            <VehicleList vehicles={filteredVehicles} />
+                            <VehicleList vehicles={paginatedVehicles} />
                         ) : (
                             <VehicleList
                                 server:defer
-                                vehicles={filteredVehicles}
+                                vehicles={paginatedVehicles}
                             >
                                 <VehicleListSkeleton slot="fallback" />
                             </VehicleList>
                         )
                     }
+
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                    />
                 </div>
             </div>
         </div>
