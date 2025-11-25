@@ -13,7 +13,12 @@ import DynamicRenderer from '../../components/DynamicRenderer.astro';
 import VehicleList from '../../components/VehicleList.astro';
 import VehicleListSkeleton from '../../components/VehicleListSkeleton.astro';
 import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+
+// Define __dirname at module scope for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -28,8 +33,6 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const container = await AstroContainer.create();
-    const fs = await import('node:fs');
-    const path = await import('node:path');
 
     const result = await renderComponent(container, type, data);
     const { html } = result;
@@ -38,40 +41,41 @@ export const POST: APIRoute = async ({ request }) => {
     let css = '';
     try {
       const cssFileName = `${type}.css`;
-      
+
       // Try multiple path resolution strategies for compatibility with both local dev and Vercel
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = dirname(__filename);
-      
-      // Strategy 1: Relative to current file (works in dev and most deployments)
-      const cssPathRelative = path.resolve(__dirname, '../../components', cssFileName);
-      
-      // Strategy 2: Relative to process.cwd() (works in Vercel serverless)
-      const cssPathCwd = path.resolve(process.cwd(), 'src/components', cssFileName);
-      
-      // Strategy 3: Relative to dist/.vercel/output (Vercel build output)
-      const cssPathDist = path.resolve(process.cwd(), 'dist', 'src/components', cssFileName);
-      
-      // Try each path in order
-      const possiblePaths = [cssPathRelative, cssPathCwd, cssPathDist];
-      let cssPath = null;
-      
+      const possiblePaths = [
+        // Strategy 1: Relative to current file (works in dev)
+        resolve(__dirname, '../../components', cssFileName),
+        // Strategy 2: Relative to process.cwd() (works in some serverless environments)
+        resolve(process.cwd(), 'src/components', cssFileName),
+        // Strategy 3: In .vercel/output directory structure
+        resolve(process.cwd(), '.vercel/output/functions/render.func/src/components', cssFileName),
+        // Strategy 4: In dist directory
+        resolve(process.cwd(), 'dist/src/components', cssFileName),
+        // Strategy 5: Directly in components (if copied to build output)
+        resolve(process.cwd(), 'components', cssFileName),
+      ];
+
+      let cssPath: string | null = null;
+      let testedPaths: string[] = [];
+
       for (const testPath of possiblePaths) {
-        if (fs.existsSync(testPath)) {
+        testedPaths.push(testPath);
+        if (existsSync(testPath)) {
           cssPath = testPath;
           break;
         }
       }
-      
+
       if (cssPath) {
-        css = fs.readFileSync(cssPath, 'utf-8');
+        css = readFileSync(cssPath, 'utf-8');
       } else {
-        // CSS not found - this is okay, continue without it
-        // The component's styles might be inlined or handled differently
+        // Log the paths we tried for debugging
+        console.warn(`CSS file not found for ${type}. Tried paths:`, testedPaths);
       }
     } catch (cssError) {
-      // Silently continue without CSS - not critical for functionality
-      // CSS might be bundled or inlined in the HTML already
+      console.error('Error reading CSS file:', cssError);
+      // Continue without CSS - not critical for functionality
     }
 
     return new Response(
