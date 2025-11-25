@@ -32,15 +32,29 @@ export const GET: APIRoute = async ({ params }) => {
     return new Response(JSON.stringify(page), {
       status: 200,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       }
     });
   } else {
     return new Response(JSON.stringify({ error: 'Page not found' }), {
       status: 404,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       }
     });
   }
 }
+
+// Handle CORS preflight
+export const OPTIONS: APIRoute = async () => {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+};

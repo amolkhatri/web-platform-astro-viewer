@@ -33,7 +33,8 @@ export const GET: APIRoute = async () => {
   return new Response(JSON.stringify(db.pages), {
     status: 200,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     }
   });
 }
@@ -46,7 +47,8 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ error: 'Slug and blocks are required' }), {
       status: 400,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       }
     });
   }
@@ -67,7 +69,20 @@ export const POST: APIRoute = async ({ request }) => {
   return new Response(JSON.stringify(newPage), {
     status: 200,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     }
   });
 }
+
+// Handle CORS preflight
+export const OPTIONS: APIRoute = async () => {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+};
