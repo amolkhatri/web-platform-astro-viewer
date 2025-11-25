@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import HeroSection from '../../components/blocks/HeroSection.astro';
-import FeaturesGrid from '../../components/blocks/FeaturesGrid.astro';
-import NewsletterSignup from '../../components/blocks/NewsletterSignup.astro';
-import FallbackBlock from '../../components/blocks/FallbackBlock.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import FeaturesGrid from '../../components/FeaturesGrid.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import FallbackBlock from '../../components/FallbackBlock.astro';
 import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
 import VehicleGrid from '../../components/VehicleGrid.astro';
@@ -28,52 +28,49 @@ export const POST: APIRoute = async ({ request }) => {
     const container = await AstroContainer.create();
     const fs = await import('node:fs');
     const path = await import('node:path');
-    
+
     const result = await renderComponent(container, type, data);
     const { html } = result;
-    
+
     // Read the CSS file for the component
     let css = '';
     try {
       // Construct path to the CSS file relative to the project root or current file
-      // Since we are in src/pages/api/render.ts, and components are in src/components/blocks/
+      // Since we are in src/pages/api/render.ts, and components are in src/components/
       // We need to resolve the correct path. 
       // In a real deployment, this might need adjustment depending on how assets are bundled.
       // For this dev environment, we'll try to resolve relative to the current file.
-      
+
       const cssFileName = `${type}.css`;
       // Assuming the process runs from the project root or we can find the file relative to this source file
       // We will try to find the file in the known location
-      const cssPathBlocks = path.resolve(process.cwd(), 'src/components/blocks', cssFileName);
       const cssPathComponents = path.resolve(process.cwd(), 'src/components', cssFileName);
-      
-      if (fs.existsSync(cssPathBlocks)) {
-        css = fs.readFileSync(cssPathBlocks, 'utf-8');
-      } else if (fs.existsSync(cssPathComponents)) {
+
+      if (fs.existsSync(cssPathComponents)) {
         css = fs.readFileSync(cssPathComponents, 'utf-8');
       } else {
-        // console.warn(`CSS file not found: ${cssPath}`);
+        // console.warn(`CSS file not found: ${cssPathComponents}`);
       }
     } catch (cssError) {
       console.error('Error reading CSS file:', cssError);
       // Continue without CSS if it fails
     }
-    
+
     return new Response(
-      JSON.stringify({ html, css }), 
-      { 
-        status: 200, 
-        headers: { 
+      JSON.stringify({ html, css }),
+      {
+        status: 200,
+        headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
-        } 
+        }
       }
     );
   } catch (error) {
     console.error('Render error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: 'Failed to render component', 
+      JSON.stringify({
+        error: 'Failed to render component',
         details: error instanceof Error ? error.message : 'Unknown error'
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
