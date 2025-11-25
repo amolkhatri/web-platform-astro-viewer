@@ -1,46 +1,35 @@
-# Astro Starter Kit: Basics
+# Web Platform Astro Viewer
 
-```sh
-npm create astro@latest -- --template basics
-```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+This package hosts the Astro-based viewer for the DealerOn platform. Pages are primarily served out of Redis, while `db.json` in the project root acts as a local development data source and seed file.
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+Run all commands from the project root:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command                         | Action                                                     |
+| :------------------------------ | :--------------------------------------------------------- |
+| `npm install`                   | Installs dependencies                                      |
+| `npm run dev`                   | Starts the dev server at `http://localhost:4321`           |
+| `npm run build`                 | Builds the site into `./dist/`                             |
+| `npm run preview`               | Previews the production build                              |
+| `npm run astro ...`             | For direct Astro CLI commands                              |
+| `npm run seed:redis [--force]`  | Seeds Redis from `db.json` (details below)                 |
 
-## 👀 Want to learn more?
+## Redis Seeding Script
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Use the standalone script to migrate `db.json` content into Redis whenever you bootstrap an environment or need to restore missing page data.
+
+```sh
+# Provide the Redis connection string via env var…
+REDIS_URL=redis://localhost:6379 npm run seed:redis
+
+# …or pass it explicitly as a CLI flag.
+npm run seed:redis -- --redis-url=redis://localhost:6379
+```
+
+### Options
+
+- `--force` clears existing `pages:*` keys plus the `pages:all` set before reseeding.
+- `--redis-url=` overrides the `REDIS_URL` environment variable if you prefer a CLI flag.
+
+If Redis already stores page data and `--force` is omitted, the script exits early and leaves existing state untouched. Ensure `db.json` exists before running the migration. When the script finishes, it logs how many pages were written or why it skipped seeding.
