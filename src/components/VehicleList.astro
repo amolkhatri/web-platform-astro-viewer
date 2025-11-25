@@ -6,11 +6,24 @@ await (async () => new Promise((resolve) => setTimeout(resolve, 3000)))();
 
 interface Props {
     vehicles: any[];
+    wrapper?: boolean;
 }
 
-const { vehicles } = Astro.props;
+const { vehicles, wrapper = true } = Astro.props;
 ---
 
-<div class="vehicle-list">
-    {vehicles.map((vehicle) => <VehicleCard vehicle={vehicle} />)}
-</div>
+{
+    wrapper ? (
+        <div class="vehicle-list">
+            {vehicles.map((vehicle) => (
+                <VehicleCard vehicle={vehicle} />
+            ))}
+        </div>
+    ) : (
+        <>
+            {vehicles.map((vehicle) => (
+                <VehicleCard vehicle={vehicle} />
+            ))}
+        </>
+    )
+}

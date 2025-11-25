@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import SearchFilter from "../components/SearchFilter.astro";
 import SortBar from "../components/SortBar.astro";
 import VehicleList from "../components/VehicleList.astro";
+import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
 import VehicleCard from "../components/VehicleCard.astro";
 import "../components/VehicleList.css";
 import vehiclesData from "../data/vehicles.json";
@@ -79,30 +80,36 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
                         ) : (
                             <>
                                 <div id="vehicle-grid" class="vehicle-list">
-                                    {initialVehicles.map((vehicle) => (
-                                        <VehicleCard vehicle={vehicle} />
-                                    ))}
+                                    <VehicleList
+                                        server:defer
+                                        vehicles={initialVehicles}
+                                        wrapper={false}
+                                    >
+                                        <VehicleListSkeleton
+                                            slot="fallback"
+                                            count={PAGE_SIZE}
+                                            wrapper={false}
+                                        />
+                                    </VehicleList>
 
-                                    {
-                                        hasMoreVehicles && (
-                                            <button
-                                                class="vehicle-load-trigger"
-                                                type="button"
-                                                hx-get={initialLoadMoreUrl}
-                                                hx-trigger="revealed, click"
-                                                hx-swap="outerHTML"
-                                                aria-label="Load more vehicles"
-                                            >
-                                                <span class="load-more-label">
-                                                    Load more vehicles
-                                                </span>
-                                                <span
-                                                    class="loading-indicator"
-                                                    aria-hidden="true"
-                                                />
-                                            </button>
-                                        )
-                                    }
+                                    {hasMoreVehicles && (
+                                        <button
+                                            class="vehicle-load-trigger"
+                                            type="button"
+                                            hx-get={initialLoadMoreUrl}
+                                            hx-trigger="revealed, click"
+                                            hx-swap="outerHTML"
+                                            aria-label="Load more vehicles"
+                                        >
+                                            <span class="load-more-label">
+                                                Load more vehicles
+                                            </span>
+                                            <span
+                                                class="loading-indicator"
+                                                aria-hidden="true"
+                                            />
+                                        </button>
+                                    )}
                                 </div>
                             </>
                         )
@@ -113,7 +120,6 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
     </main>
 
     <Footer {...homeData.footer} />
-
 </Layout>
 
 <style is:global>
@@ -151,7 +157,9 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
         display: inline-flex;
         align-items: center;
         gap: 0.65rem;
-        transition: border-color 150ms ease, color 150ms ease;
+        transition:
+            border-color 150ms ease,
+            color 150ms ease;
     }
 
     .vehicle-load-trigger:hover,

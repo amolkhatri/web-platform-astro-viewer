@@ -4,11 +4,24 @@ import VehicleCardSkeleton from "./VehicleCardSkeleton.astro";
 
 interface Props {
     count?: number;
+    wrapper?: boolean;
 }
 
-const { count = 6 } = Astro.props;
+const { count = 6, wrapper = true } = Astro.props;
 ---
 
-<div class="vehicle-list-skeleton">
-    {Array.from({ length: count }).map(() => <VehicleCardSkeleton />)}
-</div>
+{
+    wrapper ? (
+        <div class="vehicle-list-skeleton">
+            {Array.from({ length: count }).map(() => (
+                <VehicleCardSkeleton />
+            ))}
+        </div>
+    ) : (
+        <>
+            {Array.from({ length: count }).map(() => (
+                <VehicleCardSkeleton />
+            ))}
+        </>
+    )
+}
