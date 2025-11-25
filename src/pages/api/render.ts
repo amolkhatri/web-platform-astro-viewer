@@ -44,9 +44,10 @@ export const POST: APIRoute = async ({ request }) => {
       const cssFileName = `${type}.css`;
       // Assuming the process runs from the project root or we can find the file relative to this source file
       // We will try to find the file in the known location
-      const cssPathComponents = path.resolve(process.cwd(), 'src/components', cssFileName);
+      const cssPathComponents = path.resolve(process.cwd(), 'src/components', cssFileName)  ;
 
       if (fs.existsSync(cssPathComponents)) {
+        console.log('CSS file found:', cssPathComponents);
         css = fs.readFileSync(cssPathComponents, 'utf-8');
       } else {
         // console.warn(`CSS file not found: ${cssPathComponents}`);
