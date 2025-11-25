@@ -121,7 +121,16 @@ const formatPrice = (price: number) => {
                 href={`/vehicle/${vehicle.id}`}
                 class="btn btn-outline text-center no-underline">View Details</a
             >
-            <button class="btn btn-primary">Get E-Price</button>
+            <button
+                class="btn btn-primary"
+                type="button"
+                hx-get={`/api/eprice/${vehicle.id}`}
+                hx-target="#eprice-overlay-root"
+                hx-swap="innerHTML"
+                aria-controls="eprice-overlay-root"
+            >
+                Get E-Price
+            </button>
         </div>
     </div>
 </div>

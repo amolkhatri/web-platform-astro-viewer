@@ -114,15 +114,6 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
 
     <Footer {...homeData.footer} />
 
-    {
-        !isBotRequest && (
-            <script
-                src="https://unpkg.com/htmx.org@1.9.12"
-                crossorigin="anonymous"
-                defer
-            />
-        )
-    }
 </Layout>
 
 <style is:global>
