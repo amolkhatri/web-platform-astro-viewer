@@ -1,15 +1,12 @@
 ---
 import PageBuilder from "../components/PageBuilder.astro";
 import Layout from "../layouts/Layout.astro";
-import { readDb, type Page } from "../utils/db";
+import { getPage, type Page } from "../lib/db";
 
 const { slug } = Astro.params;
 const currentSlug = slug || "home"; // Default to home if root
 
-//read db.json
-
-const db = readDb();
-const pageData = db.pages.find((p: Page) => p.slug === currentSlug);
+const pageData: Page | null = await getPage(currentSlug);
 
 // Using dummy data for now
 // const pageData = {

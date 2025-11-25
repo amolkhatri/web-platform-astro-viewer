@@ -27,16 +27,103 @@ import DeviceBanner from "../components/DeviceBanner.astro";
 	}
 
 	:root {
-		/* Component Theme Variables (Light Mode Default) */
-		--hero-bg: #f0f0f0;
-		--card-bg: white;
-		--text-color: #333;
-		--heading-color: #111;
-		--text-muted: #666;
-		--border-color: #ddd;
-		--newsletter-bg: #333;
-		--newsletter-text: white;
-		--primary-color: #007bff;
+		/* Material 3 reference palette (dark) */
+		--md-ref-palette-primary40: #94b2ff;
+		--md-ref-palette-primary80: #d6e2ff;
+		--md-ref-palette-secondary40: #b9c6da;
+		--md-ref-palette-secondary80: #dde2f3;
+		--md-ref-palette-tertiary40: #f3b2d8;
+		--md-ref-palette-tertiary80: #ffd7f0;
+		--md-ref-palette-neutral10: #121212;
+		--md-ref-palette-neutral20: #1c1c1c;
+		--md-ref-palette-neutral30: #262626;
+		--md-ref-palette-neutral90: #e2e2e2;
+		--md-ref-palette-neutral-variant30: #3c3f47;
+		--md-ref-palette-neutral-variant60: #6b6f78;
+		--md-ref-palette-error40: #f2b8b5;
+		--md-ref-palette-error80: #f9dedc;
+
+		/* Material system colors */
+		--md-sys-color-background: var(--md-ref-palette-neutral10);
+		--md-sys-color-on-background: var(--md-ref-palette-neutral90);
+		--md-sys-color-surface: #121212;
+		--md-sys-color-surface-dim: #0d0d0d;
+		--md-sys-color-surface-bright: #2b2b2b;
+		--md-sys-color-surface-container-lowest: #0a0a0a;
+		--md-sys-color-surface-container-low: #171717;
+		--md-sys-color-surface-container: #1c1c1c;
+		--md-sys-color-surface-container-high: #222222;
+		--md-sys-color-surface-container-highest: #2f2f2f;
+		--md-sys-color-on-surface: var(--md-ref-palette-neutral90);
+		--md-sys-color-on-surface-variant: #c5c6cf;
+		--md-sys-color-outline: rgba(255, 255, 255, 0.12);
+		--md-sys-color-outline-variant: rgba(255, 255, 255, 0.2);
+		--md-sys-color-primary: var(--md-ref-palette-primary40);
+		--md-sys-color-on-primary: #0a2d61;
+		--md-sys-color-primary-container: #1d3456;
+		--md-sys-color-on-primary-container: var(--md-ref-palette-primary80);
+		--md-sys-color-secondary: #adc0d8;
+		--md-sys-color-on-secondary: #18222f;
+		--md-sys-color-secondary-container: #253041;
+		--md-sys-color-on-secondary-container: #e0e6f4;
+		--md-sys-color-tertiary: #f3b2d8;
+		--md-sys-color-on-tertiary: #3d0e2b;
+		--md-sys-color-tertiary-container: #4e1f3d;
+		--md-sys-color-on-tertiary-container: #ffd9ec;
+		--md-sys-color-error: #f2b8b5;
+		--md-sys-color-on-error: #601410;
+		--md-sys-color-error-container: #8c1d18;
+		--md-sys-color-on-error-container: #f9dedc;
+
+		/* Elevation and radii */
+		--md-elevation-1: 0px 1px 3px rgba(0, 0, 0, 0.35),
+			0px 1px 2px rgba(0, 0, 0, 0.24);
+		--md-elevation-2: 0px 4px 8px rgba(0, 0, 0, 0.45),
+			0px 2px 3px rgba(0, 0, 0, 0.35);
+		--md-elevation-3: 0px 8px 16px rgba(0, 0, 0, 0.55),
+			0px 6px 8px rgba(0, 0, 0, 0.45);
+		--md-radius-sm: 8px;
+		--md-radius-md: 16px;
+		--md-radius-lg: 24px;
+
+		/* Legacy aliases for existing components */
+		--page-bg: var(--md-sys-color-background);
+		--surface-bg: var(--md-sys-color-surface);
+		--surface-elevated: var(--md-sys-color-surface-container-high);
+		--card-bg: var(--md-sys-color-surface-container);
+		--card-bg-muted: var(--md-sys-color-surface-container-low);
+		--card-bg-contrast: var(--md-sys-color-surface-container-highest);
+		--border-color: var(--md-sys-color-outline);
+		--border-color-strong: var(--md-sys-color-outline-variant);
+		--divider-color: var(--md-sys-color-outline);
+		--text-color: var(--md-sys-color-on-surface);
+		--heading-color: var(--md-sys-color-on-surface);
+		--text-muted: color-mix(in srgb, var(--md-sys-color-on-surface) 65%, transparent);
+		--text-subtle: color-mix(in srgb, var(--md-sys-color-on-surface) 45%, transparent);
+		--newsletter-bg: var(--md-sys-color-surface-container-high);
+		--newsletter-text: var(--md-sys-color-on-surface);
+		--primary-color: var(--md-sys-color-primary);
+		--primary-color-strong: var(--md-sys-color-primary-container);
+		--primary-color-soft: color-mix(
+			in srgb,
+			var(--md-sys-color-primary) 15%,
+			transparent
+		);
+		--accent-color: var(--md-sys-color-tertiary);
+		--accent-color-soft: color-mix(
+			in srgb,
+			var(--md-sys-color-tertiary) 15%,
+			transparent
+		);
+		--danger-color: var(--md-sys-color-error);
+		--danger-color-dark: var(--md-sys-color-error-container);
+		--warning-color: #f7c76b;
+		--success-color: #6dd58c;
+		--hero-gradient: radial-gradient(circle at top, #1e2e54, #0e111a);
+		--shadow-soft: var(--md-elevation-2);
+		--radius-sm: var(--md-radius-sm);
+		--radius-md: var(--md-radius-md);
+		--radius-lg: var(--md-radius-lg);
 	}
 
 	html,
@@ -44,6 +131,28 @@ import DeviceBanner from "../components/DeviceBanner.astro";
 		margin: 0;
 		width: 100%;
 		height: 100%;
-		font-family: system-ui, sans-serif;
+		font-family: "Inter", "Roboto", system-ui, sans-serif;
+		background: var(--md-sys-color-background);
+		color: var(--md-sys-color-on-background);
+	}
+	body {
+		min-height: 100vh;
+	}
+	main {
+		background: var(--surface-bg);
+		min-height: 100vh;
+		color: var(--md-sys-color-on-surface);
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: var(--heading-color);
+	}
+	p {
+		color: var(--text-color);
 	}
 </style>

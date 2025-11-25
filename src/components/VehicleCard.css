@@ -1,21 +1,22 @@
 .vehicle-card-detailed {
-    background-color: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md, 12px);
     overflow: hidden;
     transition: box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    box-shadow: var(--shadow-soft, 0 10px 30px rgba(2, 6, 23, 0.35));
 }
 
 .vehicle-card-detailed:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.65);
 }
 
 .card-image-container {
     position: relative;
     aspect-ratio: 16/9;
-    background-color: #f3f4f6;
+    background-color: var(--card-bg-muted);
     overflow: hidden;
 }
 
@@ -38,15 +39,15 @@
     border-radius: 0.25rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: white;
+    color: var(--heading-color);
 }
 
 .badge.new {
-    background-color: #2563eb;
+    background-color: var(--primary-color-strong);
 }
 
 .badge.stock {
-    background-color: #059669;
+    background-color: var(--success-color);
 }
 
 .card-details {
@@ -62,7 +63,7 @@
 
 .vehicle-year-make {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -70,7 +71,7 @@
 .vehicle-model-trim {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--heading-color);
     line-height: 1.4;
 }
 
@@ -80,7 +81,7 @@
     gap: 0.5rem;
     margin-bottom: 1rem;
     font-size: 0.875rem;
-    color: #4b5563;
+    color: var(--text-color);
 }
 
 .spec-item {
@@ -91,7 +92,7 @@
 
 .pricing-section {
     margin-top: auto;
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid var(--border-color);
     padding-top: 1rem;
 }
 
@@ -104,22 +105,22 @@
 
 .price-label {
     font-size: 0.875rem;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .price-value {
     font-weight: 600;
-    color: #111827;
+    color: var(--heading-color);
 }
 
 .price-value.msrp {
     text-decoration: line-through;
-    color: #9ca3af;
+    color: var(--text-muted);
 }
 
 .price-value.final {
     font-size: 1.25rem;
-    color: #dc2626;
+    color: var(--danger-color);
 }
 
 .card-actions {
@@ -140,22 +141,22 @@
 }
 
 .btn-primary {
-    background-color: #dc2626;
-    color: white;
-    border: 1px solid #dc2626;
+    background-color: var(--danger-color);
+    color: var(--heading-color);
+    border: 1px solid var(--danger-color);
 }
 
 .btn-primary:hover {
-    background-color: #b91c1c;
+    background-color: var(--danger-color-dark);
 }
 
 .btn-outline {
-    background-color: white;
-    color: #111827;
-    border: 1px solid #d1d5db;
+    background-color: transparent;
+    color: var(--heading-color);
+    border: 1px solid var(--border-color);
 }
 
 .btn-outline:hover {
-    background-color: #f3f4f6;
-    border-color: #9ca3af;
+    background-color: rgba(148, 163, 184, 0.08);
+    border-color: var(--border-color-strong);
 }

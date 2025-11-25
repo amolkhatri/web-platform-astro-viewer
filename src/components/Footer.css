@@ -1,8 +1,8 @@
 .footer {
-    background-color: #111827;
-    color: white;
+    background-color: var(--surface-elevated);
+    color: var(--text-color);
     padding-top: 4rem;
-    border-top: 4px solid #2563eb;
+    border-top: 4px solid var(--primary-color-strong);
 }
 
 .container {
@@ -47,12 +47,12 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: white;
+    color: var(--heading-color);
     letter-spacing: -0.025em;
 }
 
 .footer-address {
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-bottom: 1rem;
     line-height: 1.625;
 }
@@ -60,7 +60,7 @@
 .footer-phone {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #60a5fa;
+    color: var(--primary-color);
     text-decoration: none;
     display: block;
     margin-bottom: 1.5rem;
@@ -68,7 +68,7 @@
 }
 
 .footer-phone:hover {
-    color: #93c5fd;
+    color: var(--accent-color);
 }
 
 .social-icons {
@@ -79,7 +79,7 @@
 .social-icon {
     width: 2.5rem;
     height: 2.5rem;
-    background-color: #1f2937;
+    background-color: var(--card-bg);
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -89,15 +89,15 @@
 }
 
 .social-icon:hover {
-    background-color: #2563eb;
+    background-color: var(--primary-color-strong);
 }
 
 .social-icon.twitter:hover {
-    background-color: #60a5fa;
+    background-color: var(--primary-color);
 }
 
 .social-icon.instagram:hover {
-    background-color: #db2777;
+    background-color: var(--accent-color);
 }
 
 .social-text {
@@ -108,8 +108,8 @@
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: white;
-    border-bottom: 1px solid #1f2937;
+    color: var(--heading-color);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
     display: inline-block;
 }
@@ -124,7 +124,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #1f2937;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
 }
 
@@ -133,12 +133,12 @@
 }
 
 .department-name {
-    color: #d1d5db;
+    color: var(--text-color);
     font-weight: 500;
 }
 
 .department-time {
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.875rem;
     font-family: monospace;
 }
@@ -147,7 +147,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    color: #9ca3af;
+    color: var(--text-muted);
     list-style: none;
     padding: 0;
 }
@@ -160,15 +160,15 @@
 }
 
 .footer-link:hover {
-    color: white;
+    color: var(--heading-color);
     transform: translateX(0.25rem);
 }
 
 .copyright {
-    border-top: 1px solid #1f2937;
+    border-top: 1px solid var(--border-color);
     margin-top: 4rem;
     padding-top: 2rem;
     text-align: center;
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.875rem;
 }

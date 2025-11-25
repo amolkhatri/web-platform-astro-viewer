@@ -1,23 +1,33 @@
 .newsletter {
-    background: #333;
-    color: white;
+    background: var(--newsletter-bg);
+    color: var(--newsletter-text);
     padding: 2rem;
     text-align: center;
-    border-radius: 8px;
+    border-radius: var(--radius-lg, 18px);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft, 0 10px 30px rgba(2, 6, 23, 0.35));
 }
 
 input {
     padding: 0.5rem;
     margin-right: 0.5rem;
-    border-radius: 4px;
-    border: none;
+    border-radius: var(--radius-sm, 6px);
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
 }
 
 button {
     padding: 0.5rem 1rem;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    background: var(--primary-color);
+    color: var(--heading-color);
+    border: 1px solid var(--primary-color-strong);
+    border-radius: var(--radius-sm, 6px);
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: var(--primary-color-strong);
+    transform: translateY(-1px);
 }

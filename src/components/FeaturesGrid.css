@@ -7,8 +7,14 @@
 
 .feature-card {
     padding: 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md, 12px);
     text-align: center;
-    background: white;
+    background: var(--card-bg);
+    color: var(--text-color);
+    box-shadow: var(--shadow-soft, 0 10px 30px rgba(2, 6, 23, 0.35));
+}
+
+.feature-card h3 {
+    color: var(--heading-color);
 }
