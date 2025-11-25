@@ -9,6 +9,7 @@ import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
 import Pagination from "../components/Pagination.astro";
 import vehiclesData from "../data/vehicles.json";
 import { isBot } from "../utils/isBot";
+import DeviceBanner from "../components/DeviceBanner.astro";
 import {
     parseFilters,
     filterVehicles,
@@ -48,12 +49,13 @@ const isBotRequest = isBot(userAgent);
 
     <main class="search-page-main">
         <div class="container mx-auto px-4 py-8">
+            <DeviceBanner />
             <div class="page-header mb-6">
                 <h1 class="text-3xl font-bold text-gray-900">
                     Used Mazda Inventory
                 </h1>
             </div>
-
+       
             <div class="search-layout">
                 <!-- Sidebar -->
                 <div class="search-sidebar">
