@@ -2,6 +2,8 @@
 import { ClientRouter } from "astro:transitions";
 import DeviceBanner from "../components/DeviceBanner.astro";
 import { isBot } from "../utils/isBot";
+import Analytics from '@vercel/analytics/astro'
+
 
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const shouldLoadHtmx = !isBot(userAgent);
@@ -14,7 +16,9 @@ const shouldLoadHtmx = !isBot(userAgent);
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		
 		<title>Viewer</title>
+		<Analytics />
 		<ClientRouter />
 		{shouldLoadHtmx && <script is:inline src="/htmx.min.js" />}
 	</head>
