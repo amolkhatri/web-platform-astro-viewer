@@ -25,6 +25,8 @@ console.log("index.astro queryParam:", queryParam);
 
 		<VehicleGrid {...homeData.vehicleGrid} />
 
+		<QueryComponent queryParam={queryParam}  />
+
 		{
 			homeData.contentSections.map((section, index) => (
 				<ContentSection {...section} reverse={index % 2 !== 0} />
