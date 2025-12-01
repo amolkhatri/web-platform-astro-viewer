@@ -23,9 +23,12 @@ console.log("index.astro queryParam:", queryParam);
 		<QueryComponent queryParam={queryParam} />
 		<QueryComponent server:defer queryParam={queryParam} />
 
-		<VehicleGrid {...homeData.vehicleGrid} />
+		<VehicleGrid {...homeData.vehicleGrid} server:defer />
 
 		<QueryComponent queryParam={queryParam}  />
+
+
+		<VehicleGrid {...homeData.vehicleGrid} server:defer />
 
 		{
 			homeData.contentSections.map((section, index) => (
