@@ -6,6 +6,13 @@ import VehicleGrid from "../components/VehicleGrid.astro";
 import ContentSection from "../components/ContentSection.astro";
 import Footer from "../components/Footer.astro";
 import homeData from "../data/home.json";
+import QueryComponent from "../components/QueryComponent.astro";
+
+// Read query parameter from the page URL and pass it down as a prop.
+// Note: this runs on the server; logs will appear in the server console, not the browser devtools.
+const queryParams = Astro.url.searchParams;
+const queryParam = queryParams.get("query");
+console.log("index.astro queryParam:", queryParam);
 ---
 
 <Layout>
@@ -13,6 +20,8 @@ import homeData from "../data/home.json";
 
 	<main>
 		<Hero {...homeData.hero} />
+		<QueryComponent queryParam={queryParam} />
+		<QueryComponent server:defer queryParam={queryParam} />
 
 		<VehicleGrid {...homeData.vehicleGrid} />
 

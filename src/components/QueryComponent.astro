@@ -1,0 +1,8 @@
+---
+// Receive the query value from the page as a prop.
+const { queryParam } = Astro.props;
+console.log("Query Component queryParam:", queryParam);
+---
+
+<h1>Query Component</h1>
+<p>Query Parameter: {queryParam}</p>
