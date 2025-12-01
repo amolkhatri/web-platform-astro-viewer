@@ -10,6 +10,7 @@
     "seed:redis": "node ./scripts/seed-redis.js"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.4",
     "@astrojs/vercel": "^8.2.11",
     "@vercel/analytics": "^1.5.0",
     "astro": "^5.16.0",

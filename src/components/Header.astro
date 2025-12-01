@@ -17,6 +17,7 @@ interface Props {
 const { logo, nav, phone } = Astro.props;
 const logoAlt = logo?.alt ?? "Passport Mazda";
 const logoSrc = MazdaLogo || logo?.src || "/Mazda.webp";
+console.log("I am rendering the header");
 ---
 
 <header class="header">
