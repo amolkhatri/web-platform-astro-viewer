@@ -10,8 +10,10 @@ interface Props {
   description: string;
   vehicles: Vehicle[];
 }
-
+await new Promise(resolve => setTimeout(resolve, 10000));
+console.log("I am rendering the vehicle grid");
 const { title, description, vehicles } = Astro.props;
+import VehicleGridSections from "./VehicleGridSections.astro";
 ---
 
 <section class="vehicle-grid-section">
@@ -20,33 +22,8 @@ const { title, description, vehicles } = Astro.props;
       <h2 class="section-title">{title}</h2>
       <p class="section-description">{description}</p>
     </div>
-
-    <div class="grid-container">
-      {vehicles.map((vehicle) => (
-        <div class="vehicle-card group">
-          <div class="card-image-wrapper">
-            <!-- Placeholder image logic if real image fails or is placeholder -->
-            <div class="placeholder-image">
-               <span class="placeholder-icon">🚗</span>
-            </div>
-             <!-- <img src={vehicle.image} alt={vehicle.model} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" /> -->
-             <div class="stock-badge">
-                In Stock
-             </div>
-          </div>
-          <div class="card-content">
-            <h3 class="vehicle-title">{vehicle.model}</h3>
-            <p class="vehicle-availability">
-                <span class="availability-dot"></span>
-                {vehicle.available} Available
-            </p>
-            <a href="#" class="view-inventory-btn">
-              View Inventory
-            </a>
-          </div>
-        </div>
-      ))}
-    </div>
+    <VehicleGridSections {...{ vehicles: vehicles }} />
+   
   </div>
 </section>
 
