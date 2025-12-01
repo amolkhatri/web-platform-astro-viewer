@@ -10,8 +10,6 @@ interface Props {
   description: string;
   vehicles: Vehicle[];
 }
-await new Promise(resolve => setTimeout(resolve, 10000));
-console.log("I am rendering the vehicle grid");
 const { title, description, vehicles } = Astro.props;
 import VehicleGridSections from "./VehicleGridSections.astro";
 ---
