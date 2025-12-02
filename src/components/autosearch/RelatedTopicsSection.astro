@@ -1,0 +1,99 @@
+---
+const relatedTopics = [
+    {
+        title: "Find dealerships near you",
+        link: "Search nearby dealers",
+    },
+    {
+        title: "Calculating car loan payments",
+        link: "Car loan calculator",
+    },
+    {
+        title: "Knowing if certified pre-owned is for you",
+        link: "Shop & learn CPO",
+    },
+    {
+        title: "Researching models and reviews",
+        link: "Research & learn",
+    },
+    {
+        title: "On a light budget?",
+        link: "Cheap cars for sale",
+    },
+    {
+        title: "Need to ship your car?",
+        link: "Ship a car",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Were you looking for more on these related topics?</h2>
+        <div class="topics-grid">
+            {
+                relatedTopics.map((topic) => (
+                    <div class="topic-item">
+                        <p class="topic-title">{topic.title}</p>
+                        <a href="#" class="topic-link">{topic.link}</a>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #f9f9f9;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    .topic-item {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+    .topic-title {
+        margin: 0 0 0.75rem 0;
+        font-size: 1rem;
+        color: #333;
+        font-weight: 500;
+    }
+    .topic-link {
+        color: #4b2c8e;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+    }
+    .topic-link:hover {
+        color: #3a2270;
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .topics-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+

@@ -1,0 +1,96 @@
+---
+
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Sell Your Car Your Way</h2>
+        <div class="sell-options">
+            <div class="sell-card">
+                <h3>Get an Instant Offer</h3>
+                <p>
+                    Enter your VIN or license plate to get a real offer in
+                    minutes.
+                </p>
+                <button class="sell-btn primary">Get Offer</button>
+            </div>
+            <div class="sell-card">
+                <h3>List for Free</h3>
+                <p>
+                    Create a listing and sell it yourself to millions of
+                    shoppers.
+                </p>
+                <button class="sell-btn secondary">List My Car</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+        color: #333;
+    }
+    .sell-options {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+    }
+    @media (min-width: 768px) {
+        .sell-options {
+            flex-direction: row;
+        }
+    }
+    .sell-card {
+        flex: 1;
+        padding: 2rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .sell-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    .sell-card p {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    .sell-btn {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .sell-btn.primary {
+        background: #4b2c8e;
+        color: #fff;
+        border: none;
+    }
+    .sell-btn.primary:hover {
+        background: #3a2270;
+    }
+    .sell-btn.secondary {
+        background: #fff;
+        color: #4b2c8e;
+        border: 1px solid #4b2c8e;
+    }
+    .sell-btn.secondary:hover {
+        background: #f0f0f0;
+    }
+</style>

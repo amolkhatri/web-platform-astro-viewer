@@ -1,0 +1,187 @@
+---
+const featuredCars = [
+    {
+        title: "2023 Ford F-150",
+        price: "$45,000",
+        location: "Chicago, IL",
+        mileage: "12,450 mi",
+        image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        title: "2024 Toyota Camry",
+        price: "$28,000",
+        location: "Los Angeles, CA",
+        mileage: "5,200 mi",
+        image: "https://images.unsplash.com/photo-1621007947382-bb3c3968e3bb?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        title: "2022 Honda CR-V",
+        price: "$32,000",
+        location: "New York, NY",
+        mileage: "18,300 mi",
+        image: "https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        title: "2023 Chevrolet Silverado",
+        price: "$48,000",
+        location: "Houston, TX",
+        mileage: "8,900 mi",
+        image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        title: "2024 Tesla Model 3",
+        price: "$42,000",
+        location: "San Francisco, CA",
+        mileage: "3,100 mi",
+        image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        title: "2023 Mazda CX-5",
+        price: "$29,500",
+        location: "Seattle, WA",
+        mileage: "11,200 mi",
+        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="section-title">Find new & used cars for sale</h2>
+            <a href="#" class="view-all">View all cars →</a>
+        </div>
+        <div class="cars-grid">
+            {
+                featuredCars.map((car) => (
+                    <div class="car-card">
+                        <img
+                            src={car.image}
+                            alt={car.title}
+                            class="car-image"
+                        />
+                        <div class="car-info">
+                            <h3 class="car-title">{car.title}</h3>
+                            <p class="car-price">{car.price}</p>
+                            <div class="car-details">
+                                <span class="detail">{car.mileage}</span>
+                                <span class="detail-separator">•</span>
+                                <span class="detail">{car.location}</span>
+                            </div>
+                            <button class="view-car-btn">View Details</button>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin: 0;
+        color: #333;
+    }
+    .view-all {
+        text-decoration: none;
+        color: #4b2c8e;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .view-all:hover {
+        text-decoration: underline;
+    }
+    .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+    .car-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+        background: #fff;
+    }
+    .car-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+    .car-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .car-info {
+        padding: 1.5rem;
+    }
+    .car-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .car-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #4b2c8e;
+        margin: 0 0 0.75rem 0;
+    }
+    .car-details {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+    .detail {
+        white-space: nowrap;
+    }
+    .detail-separator {
+        color: #ccc;
+    }
+    .view-car-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: #fff;
+        border: 2px solid #4b2c8e;
+        color: #4b2c8e;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .view-car-btn:hover {
+        background: #4b2c8e;
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .cars-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

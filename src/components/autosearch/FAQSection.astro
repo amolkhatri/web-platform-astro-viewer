@@ -1,0 +1,318 @@
+---
+const faqCategories = [
+    {
+        title: "Buying",
+        items: [
+            {
+                question: "How do I buy a car?",
+                answer: "Car buying involves several steps that include researching vehicles, browsing inventory, securing financing and negotiating. In order to purchase the right car for you at a fair price, you should first know the type of car you want and how much you want to spend on it. From there, you'll need to identify models that fit your budget and preferences, then search inventory for potential options. After that, it's wise to secure financing prior to visiting the dealership. You'll then need to inspect the car, test drive it and negotiate the sale.",
+                related: {
+                    text: "Cars.com Buying Guide: How to Buy a Car",
+                    link: "#"
+                }
+            },
+            {
+                question: "What car should I buy?",
+                answer: "The right car for you depends on many factors, including your wants, needs, lifestyle and budget. After taking time to think about these areas, we can help you identify models that work for you.",
+                related: {
+                    text: "What Car Should You Buy?",
+                    link: "#"
+                }
+            },
+            {
+                question: "When is the best time to buy a car",
+                answer: "Shoppers looking for the best deal on a new car are typically advised to wait until the end of the year when automakers offer their most generous incentives. Additionally, automakers usually offer deals around Memorial Day, 4th of July, Labor Day and Black Friday. However, the ongoing inventory shortage and supply chain issues have forced automakers to scale back on incentives in recent months.",
+                related: {
+                    text: "What's the Best Time of Year to Buy a Car?",
+                    link: "#"
+                }
+            },
+            {
+                question: "How many miles is too many for a used car?",
+                answer: "Depending on who you ask, the average miles driven per year is 10,000 to 15,000, with around 12,000 the most common measurement. What's more important, though, is knowing how well the car has been maintained so that you can estimate how many miles it has left.",
+                related: {
+                    text: "How Many Miles is Too Many for a Used Car?",
+                    link: "#"
+                }
+            }
+        ],
+    },
+    {
+        title: "Financing & leasing",
+        items: [
+            {
+                question: "How do I finance a used car?",
+                answer: "Financing a used car is similar to financing a new one. You can get a loan through a bank, credit union, or the dealership. It's best to check your credit score and get pre-approved for a loan before you start shopping so you know your budget and can negotiate better terms.",
+                related: {
+                    text: "Auto Loan Calculator",
+                    link: "#"
+                }
+            },
+            {
+                question: "Should I lease or buy?",
+                answer: "Leasing offers lower monthly payments and allows you to drive a new car every few years, but you don't own the vehicle and have mileage limits. Buying means higher monthly payments but you own the car and can drive as much as you want. Consider your budget and driving habits.",
+                related: {
+                    text: "Leasing vs. Buying: Which is Right for You?",
+                    link: "#"
+                }
+            }
+        ],
+    },
+    {
+        title: "Warranty",
+        items: [
+            {
+                question: "What is a car warranty?",
+                answer: "A car warranty is a contract that covers the cost of certain repairs and maintenance for a specific period or mileage. New cars come with a manufacturer's warranty, while used cars may have remaining warranty coverage or you can purchase an extended warranty.",
+                related: {
+                    text: "Guide to Car Warranties",
+                    link: "#"
+                }
+            },
+            {
+                question: "Do used cars come with warranties?",
+                answer: "Some used cars, especially Certified Pre-Owned (CPO) vehicles, come with warranties. Others may have the remainder of the original manufacturer's warranty. Always check the buyers guide window sticker to see if a warranty is included or if the car is sold 'as is'.",
+                related: {
+                    text: "Used Car Warranty Guide",
+                    link: "#"
+                }
+            }
+        ],
+    },
+    {
+        title: "Certified used cars",
+        items: [
+            {
+                question: "What is a certified pre-owned car?",
+                answer: "A Certified Pre-Owned (CPO) car is a used vehicle that has been inspected and refurbished by the manufacturer or dealer to meet specific quality standards. They typically come with an extended warranty and other benefits like roadside assistance.",
+                related: {
+                    text: "What is a Certified Pre-Owned Car?",
+                    link: "#"
+                }
+            },
+            {
+                question: "Are CPO cars worth it?",
+                answer: "CPO cars can be a good option if you want the peace of mind of a warranty and a thoroughly inspected vehicle. However, they usually cost more than non-certified used cars. Compare the price difference and benefits to decide if it's worth it for you.",
+                related: {
+                    text: "Pros and Cons of CPO Cars",
+                    link: "#"
+                }
+            }
+        ],
+    },
+];
+---
+
+<section class="section faq-section">
+    <div class="container">
+        <h2 class="section-title">
+            Used car buying, financing, and warranty FAQ
+        </h2>
+
+        <div class="faq-container">
+            {
+                faqCategories.map((category, index) => (
+                    <div class={`faq-category-group ${index === 0 ? "active" : ""}`}>
+                        <button class="category-header" type="button">
+                            <span class="category-title">{category.title}</span>
+                            <span class="category-arrow">▼</span>
+                        </button>
+                        <div class="faq-items">
+                            {category.items.map((item) => (
+                                <div class="faq-item">
+                                    <div class="faq-main">
+                                        <h4 class="faq-question">{item.question}</h4>
+                                        <p class="faq-answer">{item.answer}</p>
+                                    </div>
+                                    <div class="faq-related">
+                                        <span class="related-label">Related articles:</span>
+                                        <ul class="related-list">
+                                            <li>
+                                                <a href={item.related.link} class="related-link">{item.related.text}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: #111;
+        font-weight: 700;
+    }
+
+    .faq-category-group {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .faq-category-group:first-child {
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .category-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .category-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0;
+    }
+
+    .category-arrow {
+        color: #666;
+        font-size: 0.8rem;
+        transition: transform 0.3s;
+    }
+
+    .faq-category-group.active .category-arrow {
+        transform: rotate(180deg);
+    }
+
+    .faq-items {
+        display: none;
+        padding-bottom: 2rem;
+    }
+
+    .faq-category-group.active .faq-items {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .faq-item {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 4rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .faq-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .faq-question {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #111;
+    }
+
+    .faq-answer {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #444;
+        margin: 0;
+    }
+
+    .faq-related {
+        padding-top: 0.25rem;
+    }
+
+    .related-label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #111;
+    }
+
+    .related-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .related-list li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .related-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #111;
+        font-weight: bold;
+    }
+
+    .related-link {
+        color: #111;
+        text-decoration: underline;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .related-link:hover {
+        color: #4b2c8e;
+        text-decoration: none;
+    }
+
+    @media (max-width: 1024px) {
+        .faq-item {
+            grid-template-columns: 1fr 250px;
+            gap: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .faq-item {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .faq-related {
+            padding-top: 0;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const groups = document.querySelectorAll(".faq-category-group");
+
+            groups.forEach((group) => {
+                const header = group.querySelector(".category-header");
+                if (!header) return;
+
+                header.addEventListener("click", function () {
+                    // Toggle current group
+                    group.classList.toggle("active");
+                });
+            });
+        });
+    })();
+</script>

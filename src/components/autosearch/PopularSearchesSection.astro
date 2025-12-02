@@ -1,0 +1,304 @@
+---
+const popularSearches = [
+    {
+        title: "Car brands",
+        items: [
+            "Acura",
+            "Alfa Romeo",
+            "Am General",
+            "Aston Martin",
+            "Audi",
+            "Austin-Healey",
+            "Bentley",
+            "BMW",
+            "Buick",
+            "Cadillac",
+            "Chevrolet",
+            "Chrysler",
+            "Datsun",
+            "Dodge",
+            "Ferrari",
+            "FIAT",
+            "Fisker",
+            "Ford",
+            "Genesis",
+            "GMC",
+            "Honda",
+            "Hummer",
+            "Hyundai",
+            "INEOS",
+            "INFINITI",
+            "Jaguar",
+            "Jeep",
+            "Karma",
+            "Kia",
+            "Lamborghini",
+            "Land Rover",
+            "Lexus",
+            "Lincoln",
+            "Lotus",
+            "Lucid",
+            "Maserati",
+            "Mazda",
+            "McLaren",
+            "Mercedes-Benz",
+            "Mercury",
+            "MG",
+            "MINI",
+            "Mitsubishi",
+            "Nissan",
+            "Oldsmobile",
+            "Plymouth",
+            "Polestar",
+            "Pontiac",
+            "Porsche",
+            "RAM",
+            "Rivian",
+            "Rolls-Royce",
+            "Saab",
+            "Saturn",
+            "Scion",
+            "smart",
+            "Subaru",
+            "Suzuki",
+            "Tesla",
+            "Toyota",
+            "Triumph",
+            "VinFast",
+            "Volkswagen",
+            "Volvo",
+        ],
+    },
+    {
+        title: "Car body styles",
+        items: [
+            "Sedan",
+            "Convertible",
+            "Coupe",
+            "Truck",
+            "Regular Cab pickup truck",
+            "Extended Cab pickup truck",
+            "Crew Cab pickup truck",
+            "SUV",
+            "Crossover",
+            "Minivan",
+            "Passenger van",
+            "Cargo van",
+            "Hatchback",
+            "Wagon",
+        ],
+    },
+    {
+        title: "Used cars by price",
+        items: [
+            "Used cars under $10,000",
+            "Used cars under $15,000",
+            "Used cars under $20,000",
+            "Used cars under $25,000",
+            "Used cars under $30,000",
+            "Used cars under $40,000",
+        ],
+    },
+    {
+        title: "Cars by popular city",
+        items: [
+            "Atlanta, GA",
+            "Austin, TX",
+            "Chicago, IL",
+            "Dallas, TX",
+            "Denver, CO",
+            "Houston, TX",
+            "Los Angeles, CA",
+            "Miami, FL",
+            "New York, NY",
+            "Philadelphia, PA",
+            "Phoenix, AZ",
+            "San Diego, CA",
+            "San Francisco, CA",
+            "Seattle, WA",
+            "Washington, DC",
+        ],
+    },
+    {
+        title: "Popular new cars for sale",
+        items: [
+            "2024 Chevrolet Silverado 1500 for sale",
+            "2024 Ford F-150 for sale",
+            "2024 Honda CR-V for sale",
+            "2024 Honda Civic for sale",
+            "2024 Toyota Camry for sale",
+            "2024 Toyota RAV4 for sale",
+        ],
+    },
+    {
+        title: "Popular used cars for sale",
+        items: [
+            "Used Chevrolet Silverado 1500 for sale",
+            "Used Ford F-150 for sale",
+            "Used Honda Accord for sale",
+            "Used Honda Civic for sale",
+            "Used Toyota Camry for sale",
+            "Used Toyota RAV4 for sale",
+        ],
+    },
+    {
+        title: "Electric vehicles",
+        items: ["Electric", "Hybrid", "Plug-In Hybrid"],
+    },
+];
+---
+
+<section class="section popular-searches">
+    <div class="container">
+        <h2 class="section-title">Popular searches</h2>
+        <div class="searches-list">
+            {
+                popularSearches.map((search, index) => (
+                    <div
+                        class={`search-item ${
+                            index === 0 ? "open" : ""
+                        }`}
+                    >
+                        <button class="search-header" type="button">
+                            <span class="search-title">{search.title}</span>
+                            <span class="search-arrow">▼</span>
+                        </button>
+                        <div class="search-content">
+                            <div class="search-links">
+                                {
+                                    search.items.map((item) => (
+                                        <a href="#" class="search-link">
+                                            {item}
+                                        </a>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: #111;
+        font-weight: 600;
+    }
+
+    .searches-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .search-item {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .search-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .search-title {
+        font-size: 0.9rem;
+        color: #111;
+        font-weight: 600;
+    }
+
+    .search-arrow {
+        color: #666;
+        font-size: 0.75rem;
+        transition: transform 0.2s ease;
+    }
+
+    .search-item.open .search-arrow {
+        transform: rotate(180deg);
+    }
+
+    .search-content {
+        padding-bottom: 0.75rem;
+        display: none;
+    }
+
+    .search-item.open .search-content {
+        display: block;
+    }
+
+    .search-links {
+        column-count: 4;
+        column-gap: 2.5rem;
+    }
+
+    .search-link {
+        display: block;
+        font-size: 0.8rem;
+        color: #262626;
+        text-decoration: none;
+        line-height: 1.6;
+        padding: 0.1rem 0;
+    }
+
+    .search-link:hover {
+        text-decoration: underline;
+        color: #4b2c8e;
+    }
+
+    @media (max-width: 1024px) {
+        .search-links {
+            column-count: 3;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1rem;
+        }
+
+        .search-links {
+            column-count: 2;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const items = document.querySelectorAll(
+                ".popular-searches .search-item"
+            );
+
+            items.forEach(function (item) {
+                const header = item.querySelector(".search-header");
+                if (!header) return;
+
+                header.addEventListener("click", function () {
+                    item.classList.toggle("open");
+                });
+            });
+        });
+    })();
+</script>
+

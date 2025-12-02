@@ -1,0 +1,90 @@
+---
+
+---
+
+<header class="header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <span class="logo-text">Cars.com</span>
+        </a>
+        <nav class="main-nav">
+            <a href="/autosearch/shopping" class="nav-link">Cars for Sale</a>
+            <a href="#" class="nav-link">New Cars</a>
+            <a href="#" class="nav-link">Research & Reviews</a>
+            <a href="#" class="nav-link">News & Videos</a>
+            <a href="#" class="nav-link">Sell Your Car</a>
+            <a href="#" class="nav-link">Financing</a>
+        </nav>
+        <div class="header-actions">
+            <a href="#" class="sign-in">Sign In</a>
+            <button class="menu-btn">Menu</button>
+        </div>
+    </div>
+</header>
+
+<style>
+    .header {
+        background-color: #fff;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 0 1rem;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+    }
+
+    .logo {
+        text-decoration: none;
+        color: #4b2c8e; /* Cars.com purple-ish */
+        font-size: 1.8rem;
+        font-weight: 900;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    @media (min-width: 992px) {
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+        color: #4b2c8e;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .sign-in {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .menu-btn {
+        background: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+    }
+</style>

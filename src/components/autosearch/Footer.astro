@@ -1,0 +1,103 @@
+---
+
+---
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-links-grid">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">New Cars</a></li>
+                    <li><a href="#">Used Cars</a></li>
+                    <li><a href="#">Certified Pre-Owned</a></li>
+                    <li><a href="#">Car Deals</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Research & News</h3>
+                <ul>
+                    <li><a href="#">Research & Reviews</a></li>
+                    <li><a href="#">News & Videos</a></li>
+                    <li><a href="#">Expert Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Sell</h3>
+                <ul>
+                    <li><a href="#">Sell Your Car</a></li>
+                    <li><a href="#">Instant Offer</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About Cars.com</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                &copy; {new Date().getFullYear()} Cars.com. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background-color: #1a1a1a;
+        color: #fff;
+        padding: 3rem 1rem;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .footer-column h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: #fff;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-column li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-column a {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .footer-column a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #333;
+        padding-top: 2rem;
+        text-align: center;
+        color: #888;
+        font-size: 0.8rem;
+    }
+</style>

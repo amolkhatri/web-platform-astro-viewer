@@ -1,0 +1,154 @@
+---
+const buyingGuides = [
+    {
+        type: "Buying guide",
+        title: "Electric cars",
+        image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        type: "Buying guide",
+        title: "Pickup trucks",
+        image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        type: "Research",
+        title: "New & redesigned",
+        image: "https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+        type: "Research",
+        title: "Compare models",
+        image: "https://images.unsplash.com/photo-1621007947382-bb3c3968e3bb?auto=format&fit=crop&w=400&q=80",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="section-title">Find new & used cars for sale</h2>
+            <p class="section-subtitle">Tools and buying guides for car shoppers.</p>
+        </div>
+        <div class="guides-scroll">
+            <div class="guides-grid">
+                {
+                    buyingGuides.map((guide) => (
+                        <a href="#" class="guide-card">
+                            <div class="guide-image-container">
+                                <img
+                                    src={guide.image}
+                                    alt={guide.title}
+                                    class="guide-image"
+                                />
+                            </div>
+                            <div class="guide-info">
+                                <span class="guide-type">{guide.type}</span>
+                                <h3 class="guide-title">{guide.title}</h3>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .header {
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+        color: #333;
+        font-weight: 600;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin: 0;
+    }
+    .guides-scroll {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+    .guides-scroll::-webkit-scrollbar {
+        height: 8px;
+    }
+    .guides-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+    .guides-scroll::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    .guides-scroll::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    .guides-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(280px, 1fr));
+        gap: 1.5rem;
+        min-width: fit-content;
+    }
+    .guide-card {
+        text-decoration: none;
+        color: inherit;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+    }
+    .guide-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .guide-image-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+    .guide-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .guide-info {
+        padding: 1.5rem;
+    }
+    .guide-type {
+        font-size: 0.85rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    .guide-title {
+        margin: 0.5rem 0 0 0;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .guides-grid {
+            grid-template-columns: repeat(4, minmax(250px, 1fr));
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+

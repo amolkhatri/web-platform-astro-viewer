@@ -1,0 +1,62 @@
+---
+const popularCars = [
+    "Honda Civic",
+    "Toyota Camry",
+    "Ford F-150",
+    "Chevrolet Silverado",
+    "Ram 1500",
+    "Toyota RAV4",
+    "Honda CR-V",
+    "Tesla Model Y",
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Research Popular Cars</h2>
+        <div class="research-links">
+            {
+                popularCars.map((car) => (
+                    <a href="#" class="car-link">
+                        {car}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #f9f9f9;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+    }
+    .research-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .car-link {
+        background: #fff;
+        padding: 0.8rem 1.5rem;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s;
+    }
+    .car-link:hover {
+        border-color: #4b2c8e;
+        color: #4b2c8e;
+    }
+</style>
