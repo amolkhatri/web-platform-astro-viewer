@@ -1,38 +1,45 @@
 ---
+import { Image } from "astro:assets";
+import yellowCar from "../../assets/yellow-car.jpeg";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import redCar from "../../assets/red-car-2.avif";
+
+
 const articles = [
     {
         title: "2024 Cars.com Affordability Report: Best Value New Cars",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1503376763036-066120622c74?auto=format&fit=crop&w=400&q=80",
+        image: yellowCar,
         badge: "BEST VALUE",
     },
     {
         title: "What Are the Best Used Cars for $20,000?",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1568844293986-8d0400bd4745?auto=format&fit=crop&w=400&q=80",
+        image: whiteCar,
         badge: "20,000",
     },
     {
         title: "What Are the Best Used Cars for $10,000?",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1621007947382-bb3c3968e3bb?auto=format&fit=crop&w=400&q=80",
+        image: blackCar,
         badge: "10,000",
     },
     {
         title: "Here Are the 10 Cheapest New Cars You Can Buy Right Now",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=400&q=80",
+        image: yellowCar,
     },
     {
         title: "What Are the Best Used Cars for $15,000?",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80",
+        image: redCar,
         badge: "15,000",
     },
     {
         title: "Here Are the 10 Cheapest New SUVs You Can Buy Right Now",
         description: "See the best...",
-        image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=400&q=80",
+        image: blackCar,
     },
 ];
 ---
@@ -48,7 +55,7 @@ const articles = [
                 articles.map((article) => (
                     <a href="#" class="news-card">
                         <div class="news-image-container">
-                            <img
+                            <Image
                                 src={article.image}
                                 alt={article.title}
                                 class="news-image"

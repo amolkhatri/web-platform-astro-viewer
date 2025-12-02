@@ -1,5 +1,6 @@
 ---
-
+import { Image } from "astro:assets";
+import evCharging from "../../assets/ev-charging.jpeg";
 ---
 
 <section class="section">
@@ -15,8 +16,8 @@
                 <a href="#" class="ev-btn">Shop Electric Cars</a>
             </div>
             <div class="ev-image-container">
-                <img
-                    src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80"
+                <Image
+                    src={evCharging}
                     alt="Electric Car Charging"
                     class="ev-image"
                 />
