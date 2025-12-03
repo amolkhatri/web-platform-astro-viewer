@@ -1,0 +1,278 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import ResultsFilters from "../../../components/autosearch/ResultsFilters.astro";
+import VehicleCard from "../../../components/autosearch/VehicleCard.astro";
+
+// Dummy Data
+const allVehicles = [
+  {
+    id: "1",
+    year: 2023,
+    make: "Honda",
+    model: "CR-V",
+    trim: "EX-L",
+    price: 34500,
+    mileage: 12500,
+    stockType: "used",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "Honda of Downtown",
+    rating: 4.8,
+    reviewCount: 1240,
+    badges: ["Great Deal", "Home Delivery"],
+    zip: "90001"
+  },
+  {
+    id: "2",
+    year: 2024,
+    make: "Toyota",
+    model: "RAV4",
+    trim: "XLE Premium",
+    price: 36000,
+    mileage: 500,
+    stockType: "new",
+    image: "https://images.unsplash.com/photo-1581540222194-0def2dda95b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "Toyota Central",
+    rating: 4.6,
+    reviewCount: 850,
+    badges: ["Hot Car"],
+    zip: "90001"
+  },
+  {
+    id: "3",
+    year: 2021,
+    make: "BMW",
+    model: "3 Series",
+    trim: "330i xDrive",
+    price: 41000,
+    mileage: 28000,
+    stockType: "cpo",
+    image: "https://images.unsplash.com/photo-1555215696-b97c8946e700?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "BMW of Beverly Hills",
+    rating: 4.9,
+    reviewCount: 2100,
+    badges: ["Certified"],
+    zip: "90210"
+  },
+  {
+    id: "4",
+    year: 2022,
+    make: "Ford",
+    model: "F-150",
+    trim: "Lariat",
+    price: 55000,
+    mileage: 18000,
+    stockType: "used",
+    image: "https://images.unsplash.com/photo-1550565118-3a1498d38158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "Ford Nation",
+    rating: 4.5,
+    reviewCount: 500,
+    badges: [],
+    zip: "60601"
+  },
+  {
+    id: "5",
+    year: 2023,
+    make: "Mercedes-Benz",
+    model: "C-Class",
+    trim: "C 300",
+    price: 48000,
+    mileage: 5000,
+    stockType: "used",
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "Mercedes-Benz of Chicago",
+    rating: 4.7,
+    reviewCount: 1500,
+    badges: ["Price Drop"],
+    zip: "60601"
+  },
+  {
+    id: "6",
+    year: 2024,
+    make: "Chevrolet",
+    model: "Silverado",
+    trim: "1500 LT",
+    price: 52000,
+    mileage: 10,
+    stockType: "new",
+    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    dealer: "Chevy Exchange",
+    rating: 4.3,
+    reviewCount: 300,
+    badges: ["New Arrival"],
+    zip: "60007"
+  }
+];
+
+// Get Filters from URL
+const { searchParams } = Astro.url;
+const stockType = searchParams.get('stockType');
+const make = searchParams.get('make');
+const maxPrice = searchParams.get('maxPrice');
+const zip = searchParams.get('zip');
+
+// Filter Logic
+const filteredVehicles = allVehicles.filter(v => {
+  if (stockType && v.stockType !== stockType) return false;
+  if (make && v.make !== make) return false;
+  if (maxPrice && v.price > parseInt(maxPrice)) return false;
+  if (zip && v.zip !== zip) return false; // Exact match for simplicity
+  return true;
+});
+
+const resultCount = filteredVehicles.length;
+---
+
+<MainLayout title="New & Used Cars for Sale | Search Results">
+  <div class="results-page">
+    <div class="results-header">
+      <h1>New & Used Cars for Sale</h1>
+      <p class="result-count">{resultCount} results found</p>
+    </div>
+
+    <div class="results-layout">
+      <div class="sidebar">
+        <ResultsFilters currentFilters={{ stockType: stockType || '', make: make || '', maxPrice: maxPrice || '', zip: zip || '' }} />
+      </div>
+      
+      <div class="main-content">
+        <div class="sort-bar">
+            <label>Sort by:</label>
+            <select class="sort-select">
+                <option>Best match</option>
+                <option>Lowest price</option>
+                <option>Highest price</option>
+                <option>Newest</option>
+                <option>Oldest</option>
+            </select>
+        </div>
+
+        <div class="vehicle-list">
+          {filteredVehicles.length > 0 ? (
+            filteredVehicles.map(vehicle => (
+              <VehicleCard vehicle={vehicle} />
+            ))
+          ) : (
+            <div class="no-results">
+                <h2>No cars found</h2>
+                <p>Try adjusting your filters to see more results.</p>
+                <a href="/autosearch/shopping/results" class="reset-link">Reset Filters</a>
+            </div>
+          )}
+        </div>
+        
+        {filteredVehicles.length > 0 && (
+            <div class="pagination">
+                <button disabled>Previous</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>Next</button>
+            </div>
+        )}
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .results-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .results-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .results-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .result-count {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .results-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .results-layout {
+      grid-template-columns: 280px 1fr;
+    }
+  }
+
+  .sort-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #333;
+  }
+
+  .sort-select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+  }
+
+  .vehicle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .no-results {
+      text-align: center;
+      padding: 3rem;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+  }
+
+  .reset-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #4b2c8e;
+      font-weight: 600;
+      text-decoration: none;
+  }
+
+  .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+  }
+
+  .pagination button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      min-width: 40px;
+  }
+
+  .pagination button.active {
+      background: #4b2c8e;
+      color: #fff;
+      border-color: #4b2c8e;
+  }
+
+  .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+  }
+</style>
+

@@ -525,6 +525,7 @@
             const tabContents = document.querySelectorAll(
                 ".advanced-search-widget .tab-content"
             );
+            const searchButtons = document.querySelectorAll(".search-button");
 
             tabs.forEach(function (tab) {
                 tab.addEventListener("click", function () {
@@ -545,6 +546,15 @@
                             content.style.display = "none";
                         }
                     });
+                });
+            });
+
+            // Search functionality
+            searchButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // In a real app, we would gather the selected values from the active tab
+                    // For this demo, we just navigate to the results page
+                    window.location.href = '/autosearch/shopping/results';
                 });
             });
         });

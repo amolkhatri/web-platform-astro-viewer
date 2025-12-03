@@ -1,0 +1,247 @@
+---
+interface Props {
+  vehicle: {
+    id: string;
+    year: number;
+    make: string;
+    model: string;
+    trim: string;
+    price: number;
+    mileage: number;
+    image: string;
+    dealer: string;
+    rating: number;
+    reviewCount: number;
+    badges?: string[];
+  };
+}
+
+const { vehicle } = Astro.props;
+
+const formattedPrice = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+}).format(vehicle.price);
+
+const formattedMileage = new Intl.NumberFormat('en-US').format(vehicle.mileage);
+---
+
+<div class="vehicle-card">
+  <div class="vehicle-image">
+    <img src={vehicle.image} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} />
+    {vehicle.badges && vehicle.badges.length > 0 && (
+      <div class="badges">
+        {vehicle.badges.map(badge => (
+          <span class="badge">{badge}</span>
+        ))}
+      </div>
+    )}
+    <button class="favorite-btn" aria-label="Save vehicle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </button>
+  </div>
+  <div class="vehicle-details">
+    <div class="vehicle-header">
+      <span class="stock-type">Used</span>
+      <h2 class="vehicle-title">{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}</h2>
+      <div class="vehicle-price">{formattedPrice}</div>
+    </div>
+    
+    <div class="vehicle-specs">
+      <div class="spec-item">
+        <span class="spec-value">{formattedMileage} mi.</span>
+      </div>
+    </div>
+
+    <div class="dealer-info">
+      <div class="dealer-name">{vehicle.dealer}</div>
+      <div class="dealer-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-val">{vehicle.rating}</span>
+        <span class="review-count">({vehicle.reviewCount})</span>
+      </div>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn-primary">Check Availability</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .vehicle-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .vehicle-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .vehicle-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+  }
+
+  .badge {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .favorite-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #666;
+  }
+
+  .favorite-btn:hover svg {
+    color: #e74c3c;
+    fill: #e74c3c;
+  }
+
+  .vehicle-details {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+  }
+
+  .stock-type {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .vehicle-title {
+    margin: 0.25rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .vehicle-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .vehicle-specs {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .spec-value {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .dealer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .dealer-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+  }
+
+  .dealer-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+  }
+
+  .stars {
+    color: #f39c12;
+  }
+
+  .rating-val {
+    font-weight: 700;
+  }
+
+  .review-count {
+    color: #666;
+  }
+
+  .card-actions {
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4b2c8e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: #3a2270;
+  }
+
+  @media (min-width: 768px) {
+    .vehicle-card {
+      flex-direction: row;
+    }
+    
+    .vehicle-image {
+      width: 280px;
+      height: auto;
+      flex-shrink: 0;
+    }
+  }
+</style>
+

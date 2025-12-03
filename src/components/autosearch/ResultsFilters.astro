@@ -1,0 +1,169 @@
+---
+interface Props {
+  currentFilters: {
+    stockType?: string;
+    make?: string;
+    maxPrice?: string;
+    zip?: string;
+  };
+}
+
+const { currentFilters } = Astro.props;
+---
+
+<aside class="results-filters">
+  <div class="filters-header">
+    <h3>Filters</h3>
+    <a href="/autosearch/shopping/results" class="clear-filters">Clear All</a>
+  </div>
+
+  <form id="filters-form" action="/autosearch/shopping/results" method="get">
+    
+    <div class="filter-section">
+      <label class="filter-label">New/Used</label>
+      <select name="stockType" class="filter-select">
+        <option value="">All</option>
+        <option value="new" selected={currentFilters.stockType === 'new'}>New</option>
+        <option value="used" selected={currentFilters.stockType === 'used'}>Used</option>
+        <option value="cpo" selected={currentFilters.stockType === 'cpo'}>Certified Pre-Owned</option>
+      </select>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Make</label>
+      <select name="make" class="filter-select">
+        <option value="">All Makes</option>
+        <option value="Toyota" selected={currentFilters.make === 'Toyota'}>Toyota</option>
+        <option value="Honda" selected={currentFilters.make === 'Honda'}>Honda</option>
+        <option value="Ford" selected={currentFilters.make === 'Ford'}>Ford</option>
+        <option value="Chevrolet" selected={currentFilters.make === 'Chevrolet'}>Chevrolet</option>
+        <option value="BMW" selected={currentFilters.make === 'BMW'}>BMW</option>
+        <option value="Mercedes-Benz" selected={currentFilters.make === 'Mercedes-Benz'}>Mercedes-Benz</option>
+      </select>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Max Price</label>
+      <select name="maxPrice" class="filter-select">
+        <option value="">No Max Price</option>
+        <option value="10000" selected={currentFilters.maxPrice === '10000'}>$10,000</option>
+        <option value="20000" selected={currentFilters.maxPrice === '20000'}>$20,000</option>
+        <option value="30000" selected={currentFilters.maxPrice === '30000'}>$30,000</option>
+        <option value="40000" selected={currentFilters.maxPrice === '40000'}>$40,000</option>
+        <option value="50000" selected={currentFilters.maxPrice === '50000'}>$50,000</option>
+      </select>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">ZIP Code</label>
+      <input 
+        type="text" 
+        name="zip" 
+        value={currentFilters.zip || ''} 
+        class="filter-input"
+        placeholder="Enter ZIP"
+      />
+    </div>
+
+    <button type="submit" class="apply-btn">Apply Filters</button>
+  </form>
+</aside>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  const form = document.getElementById('filters-form') as HTMLFormElement;
+  const selects = form.querySelectorAll('select');
+
+  selects.forEach(select => {
+    select.addEventListener('change', () => {
+      // form.submit() triggers a full reload without View Transitions unless we intercept it 
+      // OR we can just manually navigate to the new URL.
+      const formData = new FormData(form);
+      const params = new URLSearchParams(formData as any);
+      // Clean up empty params
+      for (const [key, value] of Array.from(params.entries())) {
+          if (!value) params.delete(key);
+      }
+      
+      navigate(`${form.action}?${params.toString()}`);
+    });
+  });
+</script>
+
+<style>
+  .results-filters {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .filters-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+  }
+
+  .clear-filters {
+    font-size: 0.875rem;
+    color: #4b2c8e;
+    text-decoration: none;
+  }
+
+  .clear-filters:hover {
+    text-decoration: underline;
+  }
+
+  .filter-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-select, .filter-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  .filter-select:focus, .filter-input:focus {
+    outline: none;
+    border-color: #4b2c8e;
+  }
+
+  .apply-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none; /* Hidden because we auto-submit on change, but good for mobile/fallback */
+  }
+
+  @media (max-width: 768px) {
+    .apply-btn {
+      display: block;
+    }
+  }
+</style>
+
