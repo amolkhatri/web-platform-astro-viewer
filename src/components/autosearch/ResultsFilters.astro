@@ -72,22 +72,103 @@ const { currentFilters } = Astro.props;
 <script>
   import { navigate } from 'astro:transitions/client';
 
-  const form = document.getElementById('filters-form') as HTMLFormElement;
-  const selects = form.querySelectorAll('select');
+  let initialized = false;
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  let isNavigating = false;
 
-  selects.forEach(select => {
-    select.addEventListener('change', () => {
-      // form.submit() triggers a full reload without View Transitions unless we intercept it 
-      // OR we can just manually navigate to the new URL.
-      const formData = new FormData(form);
-      const params = new URLSearchParams(formData as any);
-      // Clean up empty params
-      for (const [key, value] of Array.from(params.entries())) {
-          if (!value) params.delete(key);
+  function initFilters() {
+    const form = document.getElementById('filters-form') as HTMLFormElement;
+    if (!form) {
+      // Retry if form not ready yet
+      if (!initialized) {
+        setTimeout(initFilters, 100);
       }
-      
-      navigate(`${form.action}?${params.toString()}`);
+      return;
+    }
+
+    // Prevent duplicate initialization
+    if ((form as any).__filtersInitialized) {
+      return;
+    }
+    (form as any).__filtersInitialized = true;
+
+    const selects = form.querySelectorAll('select');
+    const inputs = form.querySelectorAll('input[type="text"]');
+
+    const handleFilterChange = () => {
+        // Prevent multiple rapid navigations
+        if (isNavigating) return;
+        isNavigating = true;
+
+        const formData = new FormData(form);
+        const currentParams = new URLSearchParams(window.location.search);
+        
+        // Merge form data into current params
+        for (const [key, value] of formData.entries()) {
+            const stringValue = value.toString().trim();
+            if (stringValue) {
+                currentParams.set(key, stringValue);
+            } else {
+                currentParams.delete(key);
+            }
+        }
+
+        // Always reset to page 1 when filters change
+        currentParams.delete('page');
+        
+        // Use current pathname to ensure we stay on the same page
+        const baseUrl = window.location.pathname;
+        const queryString = currentParams.toString();
+        const newUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        
+        try {
+            // Use View Transitions navigate for SPA-like feel
+            navigate(newUrl);
+        } catch (e) {
+            // Fallback if navigate fails
+            console.error('Navigation error:', e);
+            window.location.href = newUrl;
+        } finally {
+          // Reset navigation flag after a short delay
+          setTimeout(() => {
+            isNavigating = false;
+          }, 300);
+        }
+    };
+
+    // Prevent default form submission and use our handler
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleFilterChange();
     });
+
+    selects.forEach(select => {
+      select.addEventListener('change', handleFilterChange);
+    });
+    
+    // Debounce input changes (like ZIP)
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if (timeout) clearTimeout(timeout);
+            timeout = setTimeout(handleFilterChange, 500);
+        });
+    });
+
+    initialized = true;
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFilters);
+  } else {
+    initFilters();
+  }
+
+  // Re-initialize after View Transitions (reset flag)
+  document.addEventListener('astro:page-load', () => {
+    initialized = false;
+    isNavigating = false;
+    initFilters();
   });
 </script>
 
@@ -97,6 +178,8 @@ const { currentFilters } = Astro.props;
     padding: 1.5rem;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
+    position: relative;
+    will-change: auto;
   }
 
   .filters-header {
@@ -141,11 +224,17 @@ const { currentFilters } = Astro.props;
     border-radius: 4px;
     font-size: 0.95rem;
     box-sizing: border-box;
+    transition: border-color 0.15s ease;
+    background: #fff;
   }
 
   .filter-select:focus, .filter-input:focus {
     outline: none;
     border-color: #4b2c8e;
+  }
+
+  .filter-select:active {
+    transform: none;
   }
 
   .apply-btn {
