@@ -1,0 +1,190 @@
+---
+import { Image } from "astro:assets";
+import yellowCar from "../../assets/yellow-car.jpeg";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import redCar from "../../assets/red-car.avif";
+import evCharging from "../../assets/ev-charging.jpeg";
+
+const articles = [
+    {
+        category: "News",
+        title: "What's the Best Time of Year to Buy a Car?",
+        author: "By Jane Ulitskaya and Stef Schrader",
+        date: "August 27, 2024",
+        image: yellowCar,
+        url: "#",
+    },
+    {
+        category: "News",
+        title: "Should I Buy a New or Used Car?",
+        author: "By Cars.com Editors",
+        date: "September 13, 2024",
+        image: whiteCar,
+        url: "#",
+    },
+    {
+        category: "News",
+        title: "Cars.com Buying Guide: How to Buy a Car",
+        author: "By Mike Hanley",
+        date: "June 8, 2020",
+        image: blackCar,
+        url: "#",
+    },
+    {
+        category: "News",
+        title: "How to Buy a Car Online",
+        author: "By Kelsey Mays",
+        date: "October 12, 2020",
+        image: redCar,
+        url: "#",
+    },
+    {
+        category: "News",
+        title:
+            "What to Know Before Purchasing an Electric Vehicle: A Buying Guide",
+        author: "By Cars.com Editors",
+        date: "September 18, 2025",
+        image: evCharging,
+        url: "#",
+    },
+    {
+        category: "News",
+        title: "2025 Cars.com Affordability Report: Best Value New Cars",
+        author: "By Joe Bruzek and Stef Schrader",
+        date: "April 1, 2025",
+        image: yellowCar,
+        url: "#",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Car research guides & news</h2>
+        <div class="articles-grid">
+            {articles.map((article) => (
+                <a href={article.url} class="article-card">
+                    <div class="article-image-container">
+                        <Image
+                            src={article.image}
+                            alt={article.title}
+                            class="article-image"
+                        />
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="article-category">{article.category}</span>
+                        </div>
+                        <h3 class="article-title">{article.title}</h3>
+                        <div class="article-footer">
+                            <span class="article-author">{article.author}</span>
+                            <span class="article-date">{article.date}</span>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .article-card {
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+    }
+    .article-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #4b2c8e;
+    }
+    .article-image-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+    .article-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .article-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .article-meta {
+        margin-bottom: 0.75rem;
+    }
+    .article-category {
+        font-size: 0.85rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    .article-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 1rem 0;
+        line-height: 1.4;
+        flex: 1;
+    }
+    .article-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.85rem;
+        color: #666;
+    }
+    .article-author {
+        font-weight: 500;
+    }
+    .article-date {
+        color: #999;
+    }
+
+    @media (max-width: 900px) {
+        .articles-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .articles-grid {
+            grid-template-columns: 1fr;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+

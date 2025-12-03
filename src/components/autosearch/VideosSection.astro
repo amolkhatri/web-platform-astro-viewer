@@ -1,0 +1,294 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car-2.avif";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import yellowCar from "../../assets/yellow-car.jpeg";
+import mazda from "../../assets/Mazda.webp";
+import evCharging from "../../assets/ev-charging.jpeg";
+
+const videos = [
+    {
+        title: "2025 Car Buying Guide: Everything You Need to Know",
+        description: "Complete guide to buying a car in 2025, from financing to negotiations.",
+        thumbnail: redCar,
+        duration: "12:45",
+        views: "125K",
+        date: "2 days ago",
+        category: "Buying Guide",
+    },
+    {
+        title: "Top 10 Best Value Cars Under $30,000",
+        description: "Our picks for the best value cars that won't break the bank.",
+        thumbnail: whiteCar,
+        duration: "15:30",
+        views: "98K",
+        date: "5 days ago",
+        category: "Reviews",
+    },
+    {
+        title: "Electric Vehicle Charging Explained",
+        description: "Everything you need to know about charging your EV at home and on the road.",
+        thumbnail: evCharging,
+        duration: "8:20",
+        views: "156K",
+        date: "1 week ago",
+        category: "EV Guide",
+    },
+    {
+        title: "2025 Mazda CX-5: First Drive Review",
+        description: "We take the 2025 Mazda CX-5 for a test drive and share our first impressions.",
+        thumbnail: mazda,
+        duration: "10:15",
+        views: "87K",
+        date: "1 week ago",
+        category: "Review",
+    },
+    {
+        title: "How to Negotiate the Best Car Deal",
+        description: "Expert tips on negotiating the best price when buying a new or used car.",
+        thumbnail: blackCar,
+        duration: "9:45",
+        views: "203K",
+        date: "2 weeks ago",
+        category: "Buying Guide",
+    },
+    {
+        title: "Best Used Cars for First-Time Buyers",
+        description: "Our recommendations for reliable and affordable cars perfect for first-time buyers.",
+        thumbnail: yellowCar,
+        duration: "11:30",
+        views: "142K",
+        date: "2 weeks ago",
+        category: "Buying Guide",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Videos</h2>
+            <p class="section-subtitle">Watch expert reviews, buying guides, and automotive news</p>
+        </div>
+        <div class="videos-grid">
+            {videos.map((video) => (
+                <a href="#" class="video-card">
+                    <div class="video-thumbnail-container">
+                        <Image
+                            src={video.thumbnail}
+                            alt={video.title}
+                            class="video-thumbnail"
+                        />
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="30" cy="30" r="30" fill="rgba(0, 0, 0, 0.7)"/>
+                                    <path d="M24 18L42 30L24 42V18Z" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-duration">{video.duration}</div>
+                        <div class="video-category-badge">{video.category}</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">{video.title}</h3>
+                        <p class="video-description">{video.description}</p>
+                        <div class="video-meta">
+                            <span class="video-views">{video.views} views</span>
+                            <span class="video-date">{video.date}</span>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+        <div class="view-all">
+            <a href="#" class="view-all-btn">View All Videos</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0;
+    }
+    .videos-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    .video-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .video-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .video-thumbnail-container {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        background: #000;
+    }
+    .video-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+        opacity: 0.9;
+    }
+    .video-card:hover .video-thumbnail {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+        transition: background 0.3s;
+    }
+    .video-card:hover .video-overlay {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    .play-button {
+        opacity: 0.9;
+        transition: opacity 0.3s, transform 0.3s;
+    }
+    .video-card:hover .play-button {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    .video-duration {
+        position: absolute;
+        bottom: 0.75rem;
+        right: 0.75rem;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .video-category-badge {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .video-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .video-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 0.75rem 0;
+        line-height: 1.4;
+        flex: 1;
+    }
+    .video-description {
+        font-size: 0.95rem;
+        color: #666;
+        margin: 0 0 1rem 0;
+        line-height: 1.6;
+    }
+    .video-meta {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+        font-size: 0.85rem;
+        color: #999;
+    }
+    .video-views {
+        font-weight: 500;
+    }
+    .view-all {
+        text-align: center;
+    }
+    .view-all-btn {
+        display: inline-block;
+        padding: 0.875rem 2.5rem;
+        background: #4b2c8e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+    .view-all-btn:hover {
+        background: #3a2270;
+    }
+
+    @media (max-width: 1024px) {
+        .videos-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
+        }
+        .videos-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .video-thumbnail-container {
+            height: 200px;
+        }
+        .play-button svg {
+            width: 50px;
+            height: 50px;
+        }
+    }
+</style>
+

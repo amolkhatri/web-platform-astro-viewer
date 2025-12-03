@@ -1,0 +1,250 @@
+---
+---
+
+<section class="section research-cars-section">
+    <div class="container">
+        <h2 class="section-title">Research cars</h2>
+        <div class="tabs-container">
+            <div class="tabs-wrapper">
+                <button class="tab active" data-tab="model">By model</button>
+                <button class="tab" data-tab="type">By type</button>
+            </div>
+        </div>
+
+        <div class="tab-content active" data-tab-content="model">
+            <p class="tab-description">
+                Learn more about the car you're interested in before you buy.
+            </p>
+            <form class="research-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Make</label>
+                        <select class="form-select">
+                            <option>Choose a make</option>
+                            <option>Acura</option>
+                            <option>Audi</option>
+                            <option>BMW</option>
+                            <option>Chevrolet</option>
+                            <option>Ford</option>
+                            <option>Honda</option>
+                            <option>Hyundai</option>
+                            <option>Jeep</option>
+                            <option>Nissan</option>
+                            <option>Toyota</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Model</label>
+                        <select class="form-select">
+                            <option>All models</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Year</label>
+                        <select class="form-select">
+                            <option>All years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="submit" class="research-btn">Research</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-content" data-tab-content="type" style="display: none;">
+            <p class="tab-description">
+                Browse cars by body style and type.
+            </p>
+            <form class="research-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Body Style</label>
+                        <select class="form-select">
+                            <option>All body styles</option>
+                            <option>SUV</option>
+                            <option>Sedan</option>
+                            <option>Truck</option>
+                            <option>Coupe</option>
+                            <option>Convertible</option>
+                            <option>Hatchback</option>
+                            <option>Wagon</option>
+                            <option>Minivan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Make</label>
+                        <select class="form-select">
+                            <option>All makes</option>
+                            <option>Acura</option>
+                            <option>Audi</option>
+                            <option>BMW</option>
+                            <option>Chevrolet</option>
+                            <option>Ford</option>
+                            <option>Honda</option>
+                            <option>Hyundai</option>
+                            <option>Jeep</option>
+                            <option>Nissan</option>
+                            <option>Toyota</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Year</label>
+                        <select class="form-select">
+                            <option>All years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="submit" class="research-btn">Research</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 3rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .tabs-container {
+        margin-bottom: 2rem;
+    }
+    .tabs-wrapper {
+        display: flex;
+        gap: 0;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    .tab {
+        background: none;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        transition: color 0.2s;
+    }
+    .tab:hover {
+        color: #333;
+    }
+    .tab.active {
+        color: #4b2c8e;
+        border-bottom-color: #4b2c8e;
+    }
+    .tab-content {
+        display: block;
+    }
+    .tab-content[style*="display: none"] {
+        display: none !important;
+    }
+    .tab-description {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    .research-form {
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 1.5rem;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .form-label {
+        font-size: 0.875rem;
+        color: #666;
+        font-weight: 500;
+    }
+    .form-select {
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        background: #fff;
+        cursor: pointer;
+    }
+    .form-select:focus {
+        outline: none;
+        border-color: #4b2c8e;
+    }
+    .research-btn {
+        background: #4b2c8e;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 1.5rem;
+    }
+    .research-btn:hover {
+        background: #3a2270;
+    }
+
+    @media (max-width: 900px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .research-btn {
+            margin-top: 0;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const section = document.querySelector(".research-cars-section");
+            if (!section) return;
+            
+            const tabs = section.querySelectorAll(".tab");
+            const tabContents = section.querySelectorAll(".tab-content");
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener("click", function () {
+                    const tabName = tab.getAttribute("data-tab");
+
+                    tabs.forEach(function (t) {
+                        t.classList.remove("active");
+                    });
+                    tab.classList.add("active");
+
+                    tabContents.forEach(function (content) {
+                        const contentTab = content.getAttribute("data-tab-content");
+                        if (contentTab === tabName) {
+                            content.style.display = "block";
+                        } else {
+                            content.style.display = "none";
+                        }
+                    });
+                });
+            });
+        });
+    })();
+</script>
+

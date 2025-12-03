@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+import nissanRogue from "../../assets/nissan-rogue-research.png";
+---
+
+<section class="hero-section">
+    <div class="container">
+        <a href="#" class="hero-link">
+            <div class="hero-content">
+                <h1 class="hero-title">Imagine the possibilities</h1>
+                <div class="sponsored-content">
+                    <span class="sponsored-badge">Sponsored content</span>
+                    <p class="sponsored-text">
+                        Sponsored: Add a Nissan to your list. The 2026 Nissan{" "}
+                        <span class="car-name">Rogue</span>
+                    </p>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <Image
+                    src={nissanRogue}
+                    alt="2026 Nissan Rogue"
+                    class="hero-image"
+                />
+            </div>
+        </a>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: #fff;
+        padding: 2rem 1rem;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .hero-link {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        text-decoration: none;
+        color: inherit;
+        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hero-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .hero-content {
+        flex: 1;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 1rem 0;
+    }
+    .sponsored-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .sponsored-badge {
+        font-size: 0.75rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    .sponsored-text {
+        font-size: 1.1rem;
+        color: #333;
+        margin: 0;
+    }
+    .car-name {
+        font-weight: 700;
+        color: #4b2c8e;
+    }
+    .hero-image-container {
+        flex: 1;
+        max-width: 400px;
+        height: 250px;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .hero-link {
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        .hero-image-container {
+            max-width: 100%;
+            height: 200px;
+        }
+    }
+</style>
+

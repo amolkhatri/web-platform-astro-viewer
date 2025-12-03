@@ -1,0 +1,297 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car.avif";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import yellowCar from "../../assets/yellow-car.jpeg";
+import redCar2 from "../../assets/red-car-2.avif";
+import mazdaCar from "../../assets/Mazda.webp";
+
+const bodyStyles = [
+    { id: "evs", label: "EVs", cars: [] },
+    {
+        id: "suvs",
+        label: "SUVs",
+        cars: [
+            { name: "2026 Mercedes-Benz GLE 580", price: "$90,000", image: redCar },
+            { name: "2026 Volvo XC60", price: "$49,700", image: whiteCar },
+            { name: "2026 Hyundai KONA", price: "$25,350", image: blackCar },
+            { name: "2025 Toyota RAV4 Hybrid", price: "$32,850", image: yellowCar },
+            { name: "2026 Nissan Murano", price: "$41,670", image: redCar2 },
+            { name: "2026 Hyundai TUCSON Plug-In Hybrid", price: "$40,075", image: mazdaCar },
+        ],
+    },
+    {
+        id: "sedans",
+        label: "Sedans",
+        cars: [
+            { name: "2025 Honda Accord", price: "$28,000", image: whiteCar },
+            { name: "2025 Toyota Camry", price: "$27,000", image: blackCar },
+            { name: "2025 Hyundai Sonata", price: "$26,000", image: redCar },
+        ],
+    },
+    {
+        id: "pickups",
+        label: "Pickup trucks",
+        cars: [
+            { name: "2025 Ford F-150", price: "$35,000", image: yellowCar },
+            { name: "2025 RAM 1500", price: "$38,000", image: redCar2 },
+        ],
+    },
+    { id: "coupes", label: "Coupes", cars: [] },
+    { id: "hatchbacks", label: "Hatchbacks", cars: [] },
+    { id: "wagons", label: "Wagons", cars: [] },
+    { id: "convertibles", label: "Convertibles", cars: [] },
+    { id: "vans", label: "Vans", cars: [] },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <h2 class="section-title">Select a model by body style</h2>
+            </div>
+            <div class="tabs-wrapper">
+                <div class="tabs" role="tablist">
+                    {bodyStyles.map((style) => (
+                        <button
+                            class={`tab ${style.id === "suvs" ? "active" : ""}`}
+                            role="tab"
+                            data-tab={style.id}
+                        >
+                            {style.label}
+                        </button>
+                    ))}
+                </div>
+                {bodyStyles.map((style) => (
+                    <div
+                        class={`tabpanel ${style.id === "suvs" ? "active" : ""}`}
+                        role="tabpanel"
+                        data-panel={style.id}
+                    >
+                        {style.cars.length > 0 ? (
+                            <div class="cars-grid">
+                                {style.cars.map((car) => (
+                                    <div class="car-card">
+                                        <div class="car-image-wrapper">
+                                            <Image
+                                                src={car.image}
+                                                alt={car.name}
+                                                class="car-image"
+                                            />
+                                        </div>
+                                        <div class="car-info">
+                                            <p class="car-price">{car.price}</p>
+                                            <a href="#" class="car-name">{car.name}</a>
+                                            <button class="compare-btn">
+                                                <span>Compare</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="empty-state">
+                                <p>No cars available in this category.</p>
+                            </div>
+                        )}
+                        {style.cars.length > 0 && (
+                            <div class="see-all">
+                                <a href="#" class="see-all-btn">
+                                    See all {style.label}
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabs = document.querySelectorAll(".tab");
+        const tabpanels = document.querySelectorAll(".tabpanel");
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const tabId = tab.getAttribute("data-tab");
+
+                // Remove active class from all tabs and panels
+                tabs.forEach((t) => t.classList.remove("active"));
+                tabpanels.forEach((p) => p.classList.remove("active"));
+
+                // Add active class to clicked tab and corresponding panel
+                tab.classList.add("active");
+                const panel = document.querySelector(
+                    `.tabpanel[data-panel="${tabId}"]`
+                );
+                if (panel) {
+                    panel.classList.add("active");
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .tabs-container {
+        width: 100%;
+    }
+    .tabs-header {
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+    }
+    .tabs-wrapper {
+        position: relative;
+    }
+    .tabs {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #e0e0e0;
+        scrollbar-width: thin;
+    }
+    .tabs::-webkit-scrollbar {
+        height: 4px;
+    }
+    .tabs::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 2px;
+    }
+    .tab {
+        background: none;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #666;
+        cursor: pointer;
+        white-space: nowrap;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        transition: all 0.2s;
+    }
+    .tab:hover {
+        color: #333;
+    }
+    .tab.active {
+        color: #4b2c8e;
+        border-bottom-color: #4b2c8e;
+        font-weight: 600;
+    }
+    .tabpanel {
+        display: none;
+    }
+    .tabpanel.active {
+        display: block;
+    }
+    .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .car-card {
+        display: flex;
+        flex-direction: column;
+    }
+    .car-image-wrapper {
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        background: #f5f5f5;
+    }
+    .car-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .car-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .car-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+    }
+    .car-name {
+        font-size: 0.95rem;
+        color: #4b2c8e;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .car-name:hover {
+        text-decoration: underline;
+    }
+    .compare-btn {
+        background: none;
+        border: none;
+        color: #4b2c8e;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0.5rem 0;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .compare-btn:hover {
+        text-decoration: underline;
+    }
+    .empty-state {
+        padding: 3rem;
+        text-align: center;
+        color: #666;
+    }
+    .see-all {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .see-all-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #4b2c8e;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .see-all-btn:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .cars-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+    }
+</style>
+

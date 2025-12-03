@@ -1,0 +1,198 @@
+---
+const brands = [
+    { name: "Hyundai", url: "#", sponsored: true },
+    { name: "Acura", url: "#" },
+    { name: "Alfa Romeo", url: "#" },
+    { name: "Aston Martin", url: "#" },
+    { name: "Audi", url: "#" },
+    { name: "Bentley", url: "#" },
+    { name: "BMW", url: "#" },
+    { name: "Buick", url: "#" },
+    { name: "Cadillac", url: "#" },
+    { name: "Chevrolet", url: "#" },
+    { name: "Chrysler", url: "#" },
+    { name: "Dodge", url: "#" },
+    { name: "Ferrari", url: "#" },
+    { name: "FIAT", url: "#" },
+    { name: "Fisker", url: "#" },
+    { name: "Ford", url: "#" },
+    { name: "Genesis", url: "#" },
+    { name: "GMC", url: "#" },
+    { name: "Honda", url: "#" },
+    { name: "INEOS", url: "#" },
+    { name: "INFINITI", url: "#" },
+    { name: "Jaguar", url: "#" },
+    { name: "Jeep", url: "#" },
+    { name: "Karma", url: "#" },
+    { name: "Kia", url: "#" },
+    { name: "Lamborghini", url: "#" },
+    { name: "Land Rover", url: "#" },
+    { name: "Lexus", url: "#" },
+    { name: "Lincoln", url: "#" },
+    { name: "Lotus", url: "#" },
+    { name: "Lucid", url: "#" },
+    { name: "Maserati", url: "#" },
+    { name: "Mazda", url: "#" },
+    { name: "McLaren", url: "#" },
+    { name: "Mercedes-Benz", url: "#" },
+    { name: "MINI", url: "#" },
+    { name: "Mitsubishi", url: "#" },
+    { name: "Nissan", url: "#" },
+    { name: "Polestar", url: "#" },
+    { name: "Porsche", url: "#" },
+    { name: "RAM", url: "#" },
+    { name: "Rivian", url: "#" },
+    { name: "Rolls-Royce", url: "#" },
+    { name: "Subaru", url: "#" },
+    { name: "Tesla", url: "#" },
+    { name: "Toyota", url: "#" },
+    { name: "VinFast", url: "#" },
+    { name: "Volkswagen", url: "#" },
+    { name: "Volvo", url: "#" },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Browse new cars by brand</h2>
+        <div class="brands-carousel">
+            <div class="brands-grid">
+                {brands.map((brand) => (
+                    <a href={brand.url} class="brand-card">
+                        {brand.sponsored && (
+                            <span class="sponsored-badge">Sponsored</span>
+                        )}
+                        <div class="brand-logo">
+                            <span class="brand-initial">
+                                {brand.name.charAt(0)}
+                            </span>
+                        </div>
+                        <span class="brand-name">{brand.name}</span>
+                    </a>
+                ))}
+            </div>
+        </div>
+        <div class="see-all-brands">
+            <button class="see-all-btn">
+                <span>See all brands</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .brands-carousel {
+        position: relative;
+        overflow: hidden;
+    }
+    .brands-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+    .brand-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #333;
+        transition: all 0.2s;
+        position: relative;
+    }
+    .brand-card:hover {
+        border-color: #4b2c8e;
+        box-shadow: 0 2px 8px rgba(75, 44, 142, 0.1);
+        transform: translateY(-2px);
+    }
+    .sponsored-badge {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.7rem;
+        color: #666;
+        font-weight: 500;
+    }
+    .brand-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+    }
+    .brand-initial {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #4b2c8e;
+    }
+    .brand-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
+        color: #333;
+    }
+    .see-all-brands {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .see-all-btn {
+        background: none;
+        border: 1px solid #4b2c8e;
+        color: #4b2c8e;
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+    .see-all-btn:hover {
+        background: #4b2c8e;
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .brands-grid {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.75rem;
+        }
+        .brand-card {
+            padding: 1rem 0.5rem;
+        }
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+        }
+        .brand-initial {
+            font-size: 1.2rem;
+        }
+        .brand-name {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+

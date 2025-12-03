@@ -1,0 +1,168 @@
+---
+const dealers = [
+    {
+        name: "Porsche Downtown Chicago",
+        url: "#",
+        distance: "1 mi. away",
+        rating: 4.6,
+    },
+    {
+        name: "CRT DI WebPackage - Retail",
+        url: "#",
+        distance: "1 mi. away",
+        rating: null,
+    },
+    {
+        name: "CRT DI OEM GM Dev",
+        url: "#",
+        distance: "1 mi. away",
+        rating: null,
+    },
+    {
+        name: "CRT DI Retail Dev",
+        url: "#",
+        distance: "1 mi. away",
+        rating: null,
+    },
+    {
+        name: "Manish Test Dealership (SoX 2025)",
+        url: "#",
+        distance: "1 mi. away",
+        rating: null,
+    },
+    {
+        name: "Test Account1",
+        url: "#",
+        distance: "1 mi. away",
+        rating: null,
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Dealers near you</h2>
+        <ul class="dealers-list">
+            {dealers.map((dealer) => (
+                <li class="dealer-item">
+                    <a href={dealer.url} class="dealer-link">
+                        <h3 class="dealer-name">{dealer.name}</h3>
+                        <div class="dealer-info">
+                            <span class="dealer-distance">{dealer.distance}</span>
+                            {dealer.rating && (
+                                <>
+                                    <span class="separator">•</span>
+                                    <span class="dealer-rating">
+                                        <span class="rating-value">{dealer.rating}</span>
+                                    </span>
+                                </>
+                            )}
+                        </div>
+                    </a>
+                </li>
+            ))}
+        </ul>
+        <div class="see-all-dealers">
+            <a href="#" class="see-all-btn">
+                See all dealers near you
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .dealers-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .dealer-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+    }
+    .dealer-item:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .dealer-link {
+        display: block;
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+    }
+    .dealer-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #4b2c8e;
+        margin: 0 0 0.5rem 0;
+    }
+    .dealer-name:hover {
+        text-decoration: underline;
+    }
+    .dealer-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .dealer-distance {
+        white-space: nowrap;
+    }
+    .separator {
+        color: #ccc;
+    }
+    .dealer-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    .rating-value {
+        font-weight: 600;
+        color: #333;
+    }
+    .see-all-dealers {
+        text-align: center;
+    }
+    .see-all-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #4b2c8e;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .see-all-btn:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.5rem;
+        }
+        .dealers-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+

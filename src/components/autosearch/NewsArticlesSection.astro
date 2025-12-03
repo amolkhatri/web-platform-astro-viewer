@@ -1,0 +1,248 @@
+---
+import { Image } from "astro:assets";
+import yellowCar from "../../assets/yellow-car.jpeg";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import redCar from "../../assets/red-car.avif";
+import evCharging from "../../assets/ev-charging.jpeg";
+import mazda from "../../assets/Mazda.webp";
+
+const newsArticles = [
+    {
+        title: "2025 Cars.com Affordability Report: Best Value New Cars",
+        description: "See which new cars offer the best value for your money in 2025.",
+        image: yellowCar,
+        category: "News",
+        date: "January 10, 2025",
+        author: "By Cars.com Editors",
+        featured: false,
+    },
+    {
+        title: "What Are the Best Used Cars for $20,000?",
+        description: "Find reliable used cars that offer great value under $20,000.",
+        image: whiteCar,
+        category: "Buying Guide",
+        date: "January 8, 2025",
+        author: "By Mike Hanley",
+        featured: false,
+    },
+    {
+        title: "Electric Vehicle Buying Guide: Everything You Need to Know",
+        description: "Complete guide to buying your first electric vehicle, from charging to incentives.",
+        image: evCharging,
+        category: "EV Guide",
+        date: "January 5, 2025",
+        author: "By Kelsey Mays",
+        featured: false,
+    },
+    {
+        title: "2025 Mazda CX-5 Review: Still a Top Pick",
+        description: "Our comprehensive review of the 2025 Mazda CX-5 compact SUV.",
+        image: mazda,
+        category: "Review",
+        date: "January 3, 2025",
+        author: "By Joe Bruzek",
+        featured: false,
+    },
+    {
+        title: "Here Are the 10 Cheapest New Cars You Can Buy Right Now",
+        description: "Budget-friendly new cars that won't break the bank.",
+        image: blackCar,
+        category: "News",
+        date: "December 28, 2024",
+        author: "By Stef Schrader",
+        featured: false,
+    },
+    {
+        title: "What Are the Best Used Cars for $15,000?",
+        description: "Top picks for reliable used cars in the $15,000 price range.",
+        image: redCar,
+        category: "Buying Guide",
+        date: "December 25, 2024",
+        author: "By Cars.com Editors",
+        featured: false,
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Latest News & Articles</h2>
+            <p class="section-subtitle">Stay up to date with the latest automotive news and expert insights</p>
+        </div>
+        <div class="articles-grid">
+            {newsArticles.map((article) => (
+                <a href="#" class="article-card">
+                    <div class="article-image-container">
+                        <Image
+                            src={article.image}
+                            alt={article.title}
+                            class="article-image"
+                        />
+                        <div class="article-category-badge">{article.category}</div>
+                    </div>
+                    <div class="article-content">
+                        <h3 class="article-title">{article.title}</h3>
+                        <p class="article-description">{article.description}</p>
+                        <div class="article-footer">
+                            <span class="article-author">{article.author}</span>
+                            <span class="article-date">{article.date}</span>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+        <div class="load-more">
+            <a href="#" class="load-more-btn">Load More Articles</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #f9f9f9;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0;
+    }
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    .article-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .article-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .article-image-container {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+    }
+    .article-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+    .article-card:hover .article-image {
+        transform: scale(1.05);
+    }
+    .article-category-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .article-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .article-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 0.75rem 0;
+        line-height: 1.4;
+        flex: 1;
+    }
+    .article-description {
+        font-size: 0.95rem;
+        color: #666;
+        margin: 0 0 1rem 0;
+        line-height: 1.6;
+    }
+    .article-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+        font-size: 0.85rem;
+    }
+    .article-author {
+        color: #333;
+        font-weight: 500;
+    }
+    .article-date {
+        color: #999;
+    }
+    .load-more {
+        text-align: center;
+    }
+    .load-more-btn {
+        display: inline-block;
+        padding: 0.875rem 2.5rem;
+        background: #4b2c8e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+    .load-more-btn:hover {
+        background: #3a2270;
+    }
+
+    @media (max-width: 1024px) {
+        .articles-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
+        }
+        .articles-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .article-image-container {
+            height: 200px;
+        }
+    }
+</style>
+

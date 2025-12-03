@@ -1,0 +1,134 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car.avif";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+import yellowCar from "../../assets/yellow-car.jpeg";
+
+const awards = [
+    {
+        title: "Best of the Year",
+        image: redCar,
+    },
+    {
+        title: "Best Pickup Truck",
+        image: whiteCar,
+    },
+    {
+        title: "Best Electric Vehicle",
+        image: blackCar,
+    },
+    {
+        title: "Best SUV",
+        image: yellowCar,
+    },
+    {
+        title: "Best Luxury Car",
+        image: redCar,
+    },
+    {
+        title: "Best Family Car",
+        image: whiteCar,
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="header">
+            <h2 class="section-title">2025 Best of Awards</h2>
+            <p class="section-subtitle">See all of the winners and nominees.</p>
+        </div>
+        <div class="awards-grid">
+            {awards.map((award) => (
+                <button class="award-card">
+                    <h3 class="award-title">{award.title}</h3>
+                    <div class="award-image-container">
+                        <Image
+                            src={award.image}
+                            alt={award.title}
+                            class="award-image"
+                        />
+                    </div>
+                </button>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .header {
+        margin-bottom: 2rem;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin: 0 0 0.5rem 0;
+        color: #333;
+        font-weight: 600;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin: 0;
+    }
+    .awards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .award-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .award-card:hover {
+        border-color: #4b2c8e;
+        box-shadow: 0 4px 12px rgba(75, 44, 142, 0.1);
+        transform: translateY(-2px);
+    }
+    .award-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+    .award-image-container {
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+    .award-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 900px) {
+        .awards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .awards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+

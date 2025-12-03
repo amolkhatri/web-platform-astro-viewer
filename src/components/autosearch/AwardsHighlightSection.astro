@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car.avif";
+---
+
+<section class="section">
+    <div class="container">
+        <div class="awards-card">
+            <div class="awards-content">
+                <div class="awards-badge">Awards</div>
+                <h3 class="car-name">Hyundai SANTA FE</h3>
+                <p class="award-title">Cars.com Best Car of 2025 winner</p>
+                <p class="car-price">Starts at $34,300</p>
+                <a href="#" class="learn-more-btn">Learn more</a>
+            </div>
+            <div class="awards-image">
+                <Image src={redCar} alt="Hyundai SANTA FE" class="car-image" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .awards-card {
+        display: flex;
+        background: linear-gradient(135deg, #f5f5f5 0%, #fff 100%);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        gap: 2rem;
+        align-items: center;
+    }
+    .awards-content {
+        flex: 1;
+        padding: 3rem;
+    }
+    .awards-badge {
+        display: inline-block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+    }
+    .car-name {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+    .award-title {
+        font-size: 1.2rem;
+        color: #666;
+        margin: 0 0 1rem 0;
+        font-weight: 500;
+    }
+    .car-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #4b2c8e;
+        margin: 0 0 2rem 0;
+    }
+    .learn-more-btn {
+        display: inline-block;
+        padding: 0.75rem 2rem;
+        background: #4b2c8e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .learn-more-btn:hover {
+        background: #3a2270;
+    }
+    .awards-image {
+        flex: 1;
+        max-width: 500px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .car-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .awards-card {
+            flex-direction: column;
+        }
+        .awards-content {
+            padding: 2rem;
+        }
+        .car-name {
+            font-size: 1.5rem;
+        }
+        .awards-image {
+            max-width: 100%;
+            height: 250px;
+        }
+    }
+</style>
+

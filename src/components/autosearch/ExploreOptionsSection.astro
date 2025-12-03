@@ -1,0 +1,348 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car.avif";
+import whiteCar from "../../assets/white-car.avif";
+import blackCar from "../../assets/black-car.avif";
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Explore your options</h2>
+        <div class="intro-text">
+            <p>
+                Either way you go, there's <strong>no obligation</strong> and <strong>no contact</strong> for getting started with an instant estimate.
+            </p>
+        </div>
+        <div class="steps-container">
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-image-container">
+                        <Image
+                            src={redCar}
+                            alt="Enter vehicle details"
+                            class="step-image"
+                        />
+                    </div>
+                    <div class="step-content">
+                        <h3 class="step-title">
+                            <strong>Enter vehicle details</strong>
+                        </h3>
+                        <p class="step-description">
+                            Provide your license plate and a few vehicle details to get started in seconds.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-image-container">
+                        <Image
+                            src={whiteCar}
+                            alt="Get instant estimates"
+                            class="step-image"
+                        />
+                    </div>
+                    <div class="step-content">
+                        <h3 class="step-title">
+                            <strong>Get instant estimates</strong>
+                        </h3>
+                        <p class="step-description">
+                            See what you can expect to make by selling to a local dealer or a private buyer.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-image-container">
+                        <Image
+                            src={blackCar}
+                            alt="Ready? Go."
+                            class="step-image"
+                        />
+                    </div>
+                    <div class="step-content">
+                        <h3 class="step-title">
+                            <strong>Ready? Go.</strong>
+                        </h3>
+                        <p class="step-description">
+                            If you're ready to be contacted, submit your vehicle for a cash offer or to be listed on Cars.com!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="form-tabs">
+                <button class="form-tab active" data-form-tab="license">
+                    License plate
+                </button>
+                <button class="form-tab" data-form-tab="vin">
+                    VIN
+                </button>
+            </div>
+            <div class="form-content">
+                <form class="estimate-form">
+                    <div class="form-group">
+                        <label for="estimate-input" class="form-label">
+                            Estimate car value for:
+                        </label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                id="estimate-input"
+                                class="form-input"
+                                placeholder="Enter license plate or VIN"
+                            />
+                            <button type="submit" class="submit-button">
+                                Get estimate
+                            </button>
+                        </div>
+                    </div>
+                    <p class="form-disclaimer">
+                        By clicking here, you authorize Cars.com to continue with collecting your information. We only save this data to provide you a listing to sell your car. We value and protect your privacy.{" "}
+                        <a href="/about/privacy" class="privacy-link">Cars.com Privacy Notice</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #f5f5f5;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 1.5rem 0;
+        text-align: center;
+    }
+
+    .intro-text {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .intro-text p {
+        font-size: 1.125rem;
+        color: #666;
+        margin: 0;
+    }
+
+    .steps-container {
+        margin-bottom: 3rem;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .step-item {
+        text-align: center;
+    }
+
+    .step-image-container {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+
+    .step-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .step-content {
+        padding: 0 1rem;
+    }
+
+    .step-title {
+        font-size: 1.125rem;
+        margin: 0 0 0.75rem 0;
+        color: #111;
+    }
+
+    .step-title strong {
+        font-weight: 700;
+    }
+
+    .step-description {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .form-container {
+        background: #fff;
+        border-radius: 8px;
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 2rem;
+    }
+
+    .form-tab {
+        background: none;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        position: relative;
+        bottom: -2px;
+    }
+
+    .form-tab:hover {
+        color: #111;
+    }
+
+    .form-tab.active {
+        color: #4b2c8e;
+        border-bottom-color: #4b2c8e;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 0.75rem;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .form-input {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #4b2c8e;
+    }
+
+    .submit-button {
+        padding: 0.875rem 2rem;
+        background: #4b2c8e;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #3a2270;
+    }
+
+    .form-disclaimer {
+        font-size: 0.875rem;
+        color: #666;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .privacy-link {
+        color: #4b2c8e;
+        text-decoration: underline;
+    }
+
+    .privacy-link:hover {
+        text-decoration: none;
+    }
+
+    @media (max-width: 968px) {
+        .steps-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .step-image-container {
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section {
+            padding: 3rem 1rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            flex-direction: column;
+        }
+
+        .submit-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const formTabs = document.querySelectorAll(".form-tab");
+            
+            formTabs.forEach((tab) => {
+                tab.addEventListener("click", function () {
+                    formTabs.forEach((t) => t.classList.remove("active"));
+                    this.classList.add("active");
+                    
+                    // Update placeholder based on selected tab
+                    const input = document.getElementById("estimate-input");
+                    if (input) {
+                        if (this.getAttribute("data-form-tab") === "vin") {
+                            input.placeholder = "Enter VIN";
+                        } else {
+                            input.placeholder = "Enter license plate";
+                        }
+                    }
+                });
+            });
+        });
+    })();
+</script>
+

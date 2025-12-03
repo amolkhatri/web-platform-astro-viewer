@@ -1,0 +1,125 @@
+---
+const tools = [
+    {
+        title: "Side-by-side comparisons",
+        description: "Choose up to four models or see popular comparisons.",
+        link: "#",
+        linkText: "Compare models",
+    },
+    {
+        title: "Payment calculator",
+        description: "Estimate your monthly car payments.",
+        link: "#",
+        linkText: "Calculate payments",
+    },
+    {
+        title: "Certified pre-owned cars",
+        description: "Search, compare or research CPO programs.",
+        link: "#",
+        linkText: "Shop & learn CPO",
+    },
+    {
+        title: "Car reviews",
+        description: "Read car reviews written by consumers.",
+        link: "#",
+        linkText: "Search consumer reviews",
+    },
+    {
+        title: "New and redesigned cars",
+        description: "View brand-new models and redesigned cars.",
+        link: "#",
+        linkText: "View new and redesigned cars",
+    },
+    {
+        title: "Need to ship your car?",
+        description: "Secure shipping for your car purchase.",
+        link: "#",
+        linkText: "Ship a car",
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Tools & expert advice</h2>
+        <div class="tools-grid">
+            {tools.map((tool) => (
+                <div class="tool-card">
+                    <h3 class="tool-title">{tool.title}</h3>
+                    <p class="tool-description">{tool.description}</p>
+                    <a href={tool.link} class="tool-link">
+                        {tool.linkText}
+                    </a>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #333;
+        font-weight: 600;
+    }
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .tool-card {
+        padding: 1.5rem;
+        background: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+    .tool-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 0.75rem 0;
+    }
+    .tool-description {
+        font-size: 0.95rem;
+        color: #666;
+        margin: 0 0 1rem 0;
+        line-height: 1.5;
+    }
+    .tool-link {
+        display: inline-block;
+        color: #4b2c8e;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+    }
+    .tool-link:hover {
+        color: #3a2270;
+        text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+        .tools-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .tools-grid {
+            grid-template-columns: 1fr;
+        }
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+

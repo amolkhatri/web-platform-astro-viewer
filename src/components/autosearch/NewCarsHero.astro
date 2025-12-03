@@ -1,0 +1,225 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car.avif";
+---
+
+<section class="hero-section">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="/" class="breadcrumb-link">Home</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    New cars
+                </li>
+            </ol>
+        </nav>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Find your <span class="highlight">next new car</span>
+                </h1>
+            </div>
+            <div class="search-section">
+                <div class="search-widget">
+                    <div class="search-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <button class="form-button">
+                                    <span>Hyundai</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <button class="form-button">
+                                    <span>PALISADE</span>
+                                </button>
+                            </div>
+                            <a href="#" class="search-link">
+                                <span class="search-icon">🔍</span>
+                                <span>Search</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="featured-section">
+                    <div class="featured-label">Featured</div>
+                    <a href="#" class="featured-car">
+                        <span class="featured-name">Hyundai PALISADE</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <Image src={redCar} alt="Hyundai PALISADE" class="car-image" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: #fff;
+        width: 100%;
+        padding: 2rem 1rem 4rem;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .breadcrumb {
+        margin-bottom: 2rem;
+    }
+    .breadcrumb-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .breadcrumb-item:not(:last-child)::after {
+        content: "/";
+        margin-left: 0.5rem;
+        color: #ccc;
+    }
+    .breadcrumb-link {
+        color: #4b2c8e;
+        text-decoration: none;
+    }
+    .breadcrumb-link:hover {
+        text-decoration: underline;
+    }
+    .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+    .hero-text {
+        grid-column: 1;
+    }
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .highlight {
+        color: #4b2c8e;
+    }
+    .search-section {
+        grid-column: 1;
+        margin-top: 2rem;
+    }
+    .search-widget {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .search-form {
+        width: 100%;
+    }
+    .form-row {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    .form-group {
+        flex: 1;
+    }
+    .form-button {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .form-button:hover {
+        border-color: #4b2c8e;
+    }
+    .search-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: #4b2c8e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .search-link:hover {
+        background: #3a2270;
+    }
+    .search-icon {
+        font-size: 1.2rem;
+    }
+    .featured-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-left: 1.5rem;
+    }
+    .featured-label {
+        font-size: 0.9rem;
+        color: #666;
+        font-weight: 500;
+    }
+    .featured-car {
+        color: #4b2c8e;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .featured-car:hover {
+        text-decoration: underline;
+    }
+    .hero-image {
+        grid-column: 2;
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+    .car-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 968px) {
+        .hero-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .hero-image {
+            grid-column: 1;
+            height: 300px;
+        }
+        .hero-title {
+            font-size: 2rem;
+        }
+        .form-row {
+            flex-wrap: wrap;
+        }
+        .search-link {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+

@@ -1,0 +1,332 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car-2.avif";
+import whiteCar from "../../assets/white-car.avif";
+---
+
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Sell your car your way</h1>
+            <p class="hero-description">
+                Quickly and securely cash-in your offer from a local dealer, or create a free listing to sell it yourself on Cars.com.
+            </p>
+        </div>
+        <div class="tabs-container">
+            <div class="tabs" role="tablist">
+                <button class="tab active" role="tab" aria-selected="true" data-tab="instant-offer">
+                    Get instant offer
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="list">
+                    List on Cars.com
+                </button>
+            </div>
+            <div class="tab-panels">
+                <div class="tab-panel active" role="tabpanel" data-panel="instant-offer">
+                    <div class="panel-content">
+                        <div class="panel-text">
+                            <h2 class="panel-title">Get instant offer</h2>
+                            <p class="panel-description">
+                                Take the next step to get an exact, no obligation cash offer on your car from a local dealer <strong>right now</strong>, and then get paid after a quick inspection of your vehicle's condition at the dealership.
+                            </p>
+                            <ul class="benefits-list">
+                                <li>
+                                    <strong>Sell your car quickly.</strong> Get your offer online and quickly complete the transaction with a short appointment.
+                                </li>
+                                <li>
+                                    <strong>Transact with full transparency.</strong> With an exact offer upfront and a fully transparent inspection report, there's no need for haggling.
+                                </li>
+                                <li>
+                                    <strong>Secure easy payment.</strong> Get paid directly from your local neighborhood dealership if you choose to move forward.
+                                </li>
+                            </ul>
+                            <a href="/autosearch/sell/instant-offer" class="cta-button">
+                                Get your instant offer
+                            </a>
+                        </div>
+                        <div class="panel-image">
+                            <Image
+                                src={redCar}
+                                alt="Sell your car to a dealer"
+                                class="hero-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" role="tabpanel" data-panel="list">
+                    <div class="panel-content">
+                        <div class="panel-text">
+                            <h2 class="panel-title">List on Cars.com</h2>
+                            <p class="panel-description">
+                                Create a free listing and sell your car yourself to millions of shoppers on Cars.com. You control the price and negotiate directly with buyers.
+                            </p>
+                            <ul class="benefits-list">
+                                <li>
+                                    <strong>List for free.</strong> No upfront costs or hidden fees. Only pay when you sell.
+                                </li>
+                                <li>
+                                    <strong>Reach millions of buyers.</strong> Your listing appears in search results where millions of car shoppers look every day.
+                                </li>
+                                <li>
+                                    <strong>You set the price.</strong> Control your asking price and negotiate directly with interested buyers.
+                                </li>
+                            </ul>
+                            <a href="/autosearch/sell/list" class="cta-button secondary">
+                                List my car
+                            </a>
+                        </div>
+                        <div class="panel-image">
+                            <Image
+                                src={whiteCar}
+                                alt="List your car for sale"
+                                class="hero-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: #fff;
+        padding: 3rem 1rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 1rem 0;
+    }
+
+    .hero-description {
+        font-size: 1.125rem;
+        color: #666;
+        margin: 0;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .tabs-container {
+        margin-top: 2rem;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 0;
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 2rem;
+    }
+
+    .tab {
+        background: none;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        position: relative;
+        bottom: -2px;
+    }
+
+    .tab:hover {
+        color: #111;
+    }
+
+    .tab.active {
+        color: #4b2c8e;
+        border-bottom-color: #4b2c8e;
+    }
+
+    .tab-panels {
+        position: relative;
+    }
+
+    .tab-panel {
+        display: none;
+    }
+
+    .tab-panel.active {
+        display: block;
+    }
+
+    .panel-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+
+    .panel-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 1rem 0;
+    }
+
+    .panel-description {
+        font-size: 1.125rem;
+        color: #666;
+        line-height: 1.6;
+        margin: 0 0 2rem 0;
+    }
+
+    .benefits-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2rem 0;
+    }
+
+    .benefits-list li {
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    .benefits-list strong {
+        color: #111;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: #4b2c8e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+
+    .cta-button:hover {
+        background: #3a2270;
+    }
+
+    .cta-button.secondary {
+        background: #fff;
+        color: #4b2c8e;
+        border: 2px solid #4b2c8e;
+    }
+
+    .cta-button.secondary:hover {
+        background: #f5f5f5;
+    }
+
+    .panel-image {
+        width: 100%;
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 968px) {
+        .panel-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .panel-image {
+            order: -1;
+            height: 300px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 1rem;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+        }
+
+        .tabs {
+            flex-direction: column;
+            border-bottom: none;
+        }
+
+        .tab {
+            border-bottom: 1px solid #e0e0e0;
+            border-left: 3px solid transparent;
+            text-align: left;
+            bottom: 0;
+        }
+
+        .tab.active {
+            border-bottom-color: #e0e0e0;
+            border-left-color: #4b2c8e;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabs = document.querySelectorAll(".tab");
+            const panels = document.querySelectorAll(".tab-panel");
+
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", function () {
+                    const targetTab = this.getAttribute("data-tab");
+
+                    // Update tabs
+                    tabs.forEach((t) => {
+                        t.classList.remove("active");
+                        t.setAttribute("aria-selected", "false");
+                    });
+                    this.classList.add("active");
+                    this.setAttribute("aria-selected", "true");
+
+                    // Update panels
+                    panels.forEach((panel) => {
+                        panel.classList.remove("active");
+                        if (panel.getAttribute("data-panel") === targetTab) {
+                            panel.classList.add("active");
+                        }
+                    });
+                });
+            });
+        });
+    })();
+</script>
+

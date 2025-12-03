@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import redCar from "../../assets/red-car-2.avif";
+---
+
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-label">Cars.com News</div>
+            <h1 class="hero-title">Car News, Reviews & Videos</h1>
+            <p class="hero-description">
+                Stay informed with the latest automotive news, expert reviews, and video content from Cars.com.
+            </p>
+        </div>
+        <div class="featured-article">
+            <a href="#" class="featured-link">
+                <div class="featured-image-container">
+                    <Image
+                        src={redCar}
+                        alt="Featured car news"
+                        class="featured-image"
+                    />
+                    <div class="featured-overlay">
+                        <span class="featured-badge">Featured</span>
+                    </div>
+                </div>
+                <div class="featured-content">
+                    <div class="featured-meta">
+                        <span class="featured-category">News</span>
+                        <span class="featured-date">January 15, 2025</span>
+                    </div>
+                    <h2 class="featured-title">2025 Cars.com Affordability Report: Best Value New Cars</h2>
+                    <p class="featured-excerpt">
+                        Discover which new cars offer the best value for your money in 2025. Our comprehensive affordability report analyzes pricing, features, and long-term value.
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: #fff;
+        padding: 3rem 1rem 4rem;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .hero-content {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .hero-label {
+        font-size: 0.9rem;
+        color: #666;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+    }
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 1rem 0;
+        line-height: 1.2;
+    }
+    .hero-description {
+        font-size: 1.2rem;
+        color: #666;
+        margin: 0;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+    .featured-article {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .featured-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .featured-link:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .featured-image-container {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+    }
+    .featured-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .featured-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+    }
+    .featured-badge {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .featured-content {
+        padding: 2rem;
+    }
+    .featured-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .featured-category {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #4b2c8e;
+    }
+    .featured-date {
+        color: #999;
+    }
+    .featured-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 1rem 0;
+        line-height: 1.3;
+    }
+    .featured-excerpt {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        .hero-description {
+            font-size: 1rem;
+        }
+        .featured-image-container {
+            height: 250px;
+        }
+        .featured-title {
+            font-size: 1.5rem;
+        }
+        .featured-excerpt {
+            font-size: 1rem;
+        }
+        .featured-content {
+            padding: 1.5rem;
+        }
+    }
+</style>
+

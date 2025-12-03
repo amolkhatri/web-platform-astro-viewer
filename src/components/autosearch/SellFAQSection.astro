@@ -1,0 +1,283 @@
+---
+const faqItems = [
+    {
+        question: "How does getting an Instant Offer work?",
+        answer: "Getting an Instant Offer is simple. Enter your license plate or VIN, provide some basic vehicle details, and you'll receive an exact cash offer from a local dealer. The offer is valid for 3 days, and you can accept it by scheduling an appointment at the dealership for a quick inspection."
+    },
+    {
+        question: "What does the 3-Day Guarantee mean?",
+        answer: "The 3-Day Guarantee means your Instant Offer is valid for 3 days. During this time, the dealer will honor the exact offer amount you received online, as long as your vehicle matches the condition you described during the initial assessment."
+    },
+    {
+        question: "What is the physical vehicle inspection and who conducts it?",
+        answer: "The physical vehicle inspection is a quick check of your vehicle's condition conducted at the dealership. A trained professional will verify that your vehicle matches the condition you described online. This typically takes about 15-30 minutes."
+    },
+    {
+        question: "How accurate do I need to be on the inspection to receive a Instant Offer?",
+        answer: "It's important to be as accurate as possible when describing your vehicle's condition. The more accurate you are, the more likely your final offer will match the initial Instant Offer. Significant discrepancies may result in an adjusted offer."
+    },
+    {
+        question: "Can I redeem my Instant Offer without buying a replacement vehicle?",
+        answer: "Yes, absolutely! You can sell your car to the dealer using your Instant Offer without any obligation to purchase another vehicle. The offer is for selling your car only."
+    },
+    {
+        question: "What happens after I receive my Instant Offer online?",
+        answer: "After receiving your Instant Offer, you can review it and decide if you'd like to proceed. If you accept, you'll schedule an appointment at the dealership for a quick inspection. If everything matches, you'll complete the sale and get paid."
+    },
+    {
+        question: "When will I receive a check for my car?",
+        answer: "You'll typically receive payment on the same day as your appointment, after the inspection is complete and the sale is finalized. Payment methods vary by dealership but often include check or direct deposit."
+    },
+    {
+        question: "If I owe money on my car, when will it get paid off?",
+        answer: "If you have a loan on your vehicle, the dealer will work with your lender to pay off the loan as part of the transaction. Any remaining equity after the loan payoff will be paid to you."
+    },
+    {
+        question: "How does getting an Instant Offer work if I still owe money on my car?",
+        answer: "If you still owe money on your car, the dealer will pay off your loan directly to the lender. If your car is worth more than what you owe, you'll receive the difference. If you owe more than the car is worth, you'll need to pay the difference (negative equity)."
+    },
+    {
+        question: "What should I bring to my dealer appointment?",
+        answer: "You should bring your vehicle title (if you own it outright), registration, driver's license, and any loan payoff information if applicable. The dealer will let you know exactly what documents are needed."
+    },
+    {
+        question: "Are there tax credit benefits to trading in a car vs. selling it outright to a dealer?",
+        answer: "Yes, in many states, trading in your car can reduce the sales tax on your new vehicle purchase. When you sell outright, you don't get this tax benefit. However, you may get a higher price selling outright versus trading in."
+    },
+    {
+        question: "How does title and registration work when selling my car to a dealer?",
+        answer: "When you sell your car to a dealer, you'll sign over the title to them. The dealer handles the title transfer and registration paperwork. Make sure you have a clear title (no liens) or work with the dealer to pay off any existing loans."
+    },
+    {
+        question: "How do I determine my vehicle's payoff amount?",
+        answer: "You can determine your payoff amount by contacting your lender directly. They can provide you with the exact amount needed to pay off your loan, which may be different from your remaining balance due to interest and fees."
+    },
+    {
+        question: "Will the dealership buy any car regardless of miles and condition?",
+        answer: "Most dealerships will consider buying any car, but the offer amount will reflect the vehicle's condition, mileage, age, and market demand. Very old or heavily damaged vehicles may receive lower offers or may not be eligible for an Instant Offer."
+    },
+    {
+        question: "How long does a listing typically take to post online?",
+        answer: "Once you complete your listing and submit it, it typically goes live within 24-48 hours after review. You'll receive an email confirmation once your listing is live."
+    },
+    {
+        question: "Can I edit my listing after it goes live?",
+        answer: "Yes, you can edit your listing after it goes live. Simply log into your account and make the changes you need. Updates may take a few hours to appear on the site."
+    },
+    {
+        question: "Are photos required in order to post my vehicle on Cars.com?",
+        answer: "While photos aren't strictly required, listings with photos receive significantly more views and interest. We recommend including at least 10-15 high-quality photos showing your vehicle from multiple angles."
+    },
+    {
+        question: "I want to delete my listing.",
+        answer: "You can delete your listing at any time by logging into your account and selecting the option to remove your listing. Once deleted, it will no longer appear on Cars.com."
+    },
+    {
+        question: "I want to list a car for my friend or family member. Am I able to do so?",
+        answer: "Yes, you can list a car for someone else, but you'll need to ensure you have the proper authorization and documentation. The vehicle owner will need to be involved in the final sale transaction."
+    },
+    {
+        question: "Can I add a vehicle history report to my listing",
+        answer: "Yes, adding a vehicle history report can increase buyer confidence and help your listing stand out. You can purchase and add a report through your listing management dashboard."
+    },
+    {
+        question: "How do people interested in my vehicle contact me?",
+        answer: "Interested buyers can contact you through Cars.com's messaging system. You'll receive notifications via email when someone is interested in your vehicle, and you can respond directly through the platform."
+    },
+    {
+        question: "How do I respond to a lead email on my vehicle?",
+        answer: "When you receive a lead email, simply click the link in the email or log into your account to view the message and respond. You can communicate directly with potential buyers through the Cars.com messaging system."
+    },
+    {
+        question: "Is my listing able to get a price badge?",
+        answer: "Price badges are awarded to listings that meet certain criteria, such as competitive pricing and complete vehicle information. Cars.com automatically evaluates listings and awards badges to qualifying vehicles."
+    },
+    {
+        question: "How do I reset my password?",
+        answer: "You can reset your password by clicking the 'Forgot Password' link on the sign-in page. You'll receive an email with instructions to create a new password."
+    },
+    {
+        question: "What do you recommend to do to my listing to get optimal performance?",
+        answer: "For optimal performance, include high-quality photos, write a detailed description, set a competitive price, respond quickly to inquiries, and keep your listing information up to date. Complete listings with all information filled out perform best."
+    },
+    {
+        question: "Are there any restrictions on the types of vehicles I post?",
+        answer: "Cars.com accepts most standard passenger vehicles. Commercial vehicles, motorcycles, RVs, and certain specialty vehicles may have restrictions. Check the listing guidelines for specific requirements."
+    },
+    {
+        question: "What will this cost me if I sell my vehicle?",
+        answer: "Listing your vehicle on Cars.com is free. You only pay a fee if your vehicle sells through the platform. The fee structure varies, so check the current pricing when you create your listing."
+    },
+    {
+        question: "How do I find my ad on Cars.com?",
+        answer: "You can find your ad by logging into your account and viewing your active listings. You can also search for your vehicle using the make, model, and location filters on the Cars.com search page."
+    },
+    {
+        question: "Does my phone number display on Cars.com?",
+        answer: "Your phone number display preferences can be set in your account settings. You can choose to show your phone number, hide it, or only show it to verified buyers."
+    },
+    {
+        question: "Is there reporting available to see how my Ad is performing?",
+        answer: "Yes, Cars.com provides reporting tools that show you how many people have viewed your listing, how many leads you've received, and other performance metrics. Log into your account to access these reports."
+    },
+    {
+        question: "How do I renew my listing?",
+        answer: "You can renew your listing through your account dashboard. Most listings have a set duration, and you'll receive a notification when it's time to renew if you want to keep it active."
+    }
+];
+---
+
+<section class="section faq-section">
+    <div class="container">
+        <h2 class="section-title">
+            Have more questions? We have the answers.
+        </h2>
+        <div class="faq-container">
+            {faqItems.map((item, index) => (
+                <div class="faq-item">
+                    <button class="faq-question" type="button" data-index={index}>
+                        <h3 class="faq-question-text">{item.question}</h3>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" data-answer={index}>
+                        <p>{item.answer}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .section {
+        padding: 4rem 1rem;
+        background: #fff;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111;
+        margin: 0 0 3rem 0;
+        text-align: center;
+    }
+
+    .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .faq-item:first-child {
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+        color: #4b2c8e;
+    }
+
+    .faq-question-text {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: inherit;
+        margin: 0;
+        flex: 1;
+        padding-right: 2rem;
+    }
+
+    .faq-icon {
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: #666;
+        transition: transform 0.3s, color 0.2s;
+        flex-shrink: 0;
+        width: 24px;
+        text-align: center;
+    }
+
+    .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+        color: #4b2c8e;
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        padding: 0 0 0 0;
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 500px;
+        padding: 0 0 1.5rem 0;
+    }
+
+    .faq-answer p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #666;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 1.75rem;
+        }
+
+        .faq-question-text {
+            font-size: 1rem;
+            padding-right: 1rem;
+        }
+
+        .faq-question {
+            padding: 1.25rem 0;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const faqQuestions = document.querySelectorAll(".faq-question");
+
+            faqQuestions.forEach((question) => {
+                question.addEventListener("click", function () {
+                    const faqItem = this.closest(".faq-item");
+                    const isActive = faqItem.classList.contains("active");
+
+                    // Close all FAQ items
+                    document.querySelectorAll(".faq-item").forEach((item) => {
+                        item.classList.remove("active");
+                    });
+
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        faqItem.classList.add("active");
+                    }
+                });
+            });
+        });
+    })();
+</script>
+
