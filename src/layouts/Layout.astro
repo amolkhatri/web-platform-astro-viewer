@@ -10,7 +10,7 @@ const shouldLoadHtmx = !isBot(userAgent);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background: #121212; color: #e2e2e2;">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -22,7 +22,7 @@ const shouldLoadHtmx = !isBot(userAgent);
 		<ClientRouter />
 		{shouldLoadHtmx && <script is:inline src="/htmx.min.js" />}
 	</head>
-	<body>
+	<body style="background: #121212; color: #e2e2e2; margin: 0; min-height: 100vh;">
 		<!-- <DeviceBanner /> -->
 		<slot />
 		<div id="eprice-overlay-root" aria-live="polite" aria-busy="false"></div>
@@ -262,6 +262,17 @@ const shouldLoadHtmx = !isBot(userAgent);
 	}
 	body {
 		min-height: 100vh;
+	}
+
+	/* Prevent white flash during Astro transitions */
+	html[data-astro-transition-scope] {
+		background: var(--md-sys-color-background) !important;
+	}
+	
+	/* Ensure no white background during page transitions */
+	astro-island,
+	[data-astro-transition-scope] {
+		background: transparent;
 	}
 	main {
 		background: var(--surface-bg);
