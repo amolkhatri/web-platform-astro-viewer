@@ -4,6 +4,7 @@ import MainLayout from "./MainLayout.astro";
 import MinimalLayout from "./MinimalLayout.astro";
 import SidebarLayout from "./SidebarLayout.astro";
 import MultipleSlotLayout from "./multipleSlot.astro";
+import Layout1 from "./DO/Layout1.astro";
 interface Props {
 	layoutName?: string;
 }
@@ -11,6 +12,7 @@ interface Props {
 const { layoutName = "default" } = Astro.props as Props;
 
 const layouts = {
+    "layout1": Layout1,
     "multipleSlot": MultipleSlotLayout,
     "main": MainLayout,
     "minimal": MinimalLayout,

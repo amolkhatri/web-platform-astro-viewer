@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 3 - Three Column" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout3-page">
+    <div class="layout3-shell">
+      <div class="layout3-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout3-hero">
+        <slot name="block1" />
+      </div>
+
+      <div class="layout3-three-col">
+        <div class="layout3-col">
+          <slot name="block2" />
+        </div>
+        <div class="layout3-col">
+          <slot name="block3" />
+        </div>
+        <div class="layout3-col">
+          <slot name="block4" />
+        </div>
+      </div>
+
+      <div class="layout3-full">
+        <slot name="block5" />
+      </div>
+
+      <div class="layout3-three-col">
+        <div class="layout3-col">
+          <slot name="block6" />
+        </div>
+        <div class="layout3-col">
+          <slot name="block7" />
+        </div>
+        <div class="layout3-col">
+          <slot name="block8" />
+        </div>
+      </div>
+
+      <div class="layout3-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout3-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout3-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .layout3-three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 992px) {
+    .layout3-three-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .layout3-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout3-three-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

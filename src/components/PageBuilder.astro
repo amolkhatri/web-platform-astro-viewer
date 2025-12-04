@@ -28,84 +28,67 @@ const { blocks = [] } = Astro.props as Props;
 // Detect if the request is from a bot
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const isBotRequest = isBot(userAgent);
-
-const COMPONENT_MAP = {
-  HeroSection: HeroSection,
-  FeaturesGrid: FeaturesGrid,
-  NewsletterSignup: NewsletterSignup,
-  Header: Header,
-  Hero: Hero,
-  VehicleGrid: VehicleGrid,
-  ContentSection: ContentSection,
-  Footer: Footer,
-  DynamicRenderer: DynamicRenderer,
-} as const;
-
-// Define valid component types
-type ComponentType = keyof typeof COMPONENT_MAP;
 ---
 
 <div class="dynamic-page-container">
-  {
-    blocks.map((block) => {
-      switch (block.type) {
-        case "HeroSection":
-          return block.serverIsland && !isBotRequest ? (
-            <HeroSection {...block.data} server:defer />
-          ) : (
-            <HeroSection {...block.data} />
-          );
-        case "FeaturesGrid":
-          return block.serverIsland && !isBotRequest ? (
-            <FeaturesGrid {...block.data} server:defer />
-          ) : (
-            <FeaturesGrid {...block.data} />
-          );
-        case "NewsletterSignup":
-          return block.serverIsland && !isBotRequest ? (
-            <NewsletterSignup {...block.data} server:defer />
-          ) : (
-            <NewsletterSignup {...block.data} />
-          );
-        case "Header":
-          return block.serverIsland && !isBotRequest ? (
-            <Header {...(block.data as any)} server:defer />
-          ) : (
-            <Header {...(block.data as any)} />
-          );
-        case "Hero":
-          return block.serverIsland && !isBotRequest ? (
-            <Hero {...(block.data as any)} server:defer />
-          ) : (
-            <Hero {...(block.data as any)} />
-          );
-        case "VehicleGrid":
-          return block.serverIsland && !isBotRequest ? (
-            <VehicleGrid {...(block.data as any)} server:defer />
-          ) : (
-            <VehicleGrid {...(block.data as any)} />
-          );
-        case "ContentSection":
-          return block.serverIsland && !isBotRequest ? (
-            <ContentSection {...(block.data as any)} server:defer />
-          ) : (
-            <ContentSection {...(block.data as any)} />
-          );
-        case "Footer":
-          return block.serverIsland && !isBotRequest ? (
-            <Footer {...(block.data as any)} server:defer />
-          ) : (
-            <Footer {...(block.data as any)} />
-          );
-        case "DynamicRenderer":
-          return block.serverIsland && !isBotRequest ? (
-            <DynamicRenderer {...(block.data as any)} server:defer />
-          ) : (
-            <DynamicRenderer {...(block.data as any)} />
-          );
-        default:
-          return <FallbackBlock {...block.data} type={block.type} />;
-      }
-    })
-  }
+  {blocks.map((block) => {
+    switch (block.type) {
+      case "HeroSection":
+        return block.serverIsland && !isBotRequest ? (
+          <HeroSection {...block.data} server:defer />
+        ) : (
+          <HeroSection {...block.data} />
+        );
+      case "FeaturesGrid":
+        return block.serverIsland && !isBotRequest ? (
+          <FeaturesGrid {...block.data} server:defer />
+        ) : (
+          <FeaturesGrid {...block.data} />
+        );
+      case "NewsletterSignup":
+        return block.serverIsland && !isBotRequest ? (
+          <NewsletterSignup {...block.data} server:defer />
+        ) : (
+          <NewsletterSignup {...block.data} />
+        );
+      case "Header":
+        return block.serverIsland && !isBotRequest ? (
+          <Header {...(block.data as any)} server:defer />
+        ) : (
+          <Header {...(block.data as any)} />
+        );
+      case "Hero":
+        return block.serverIsland && !isBotRequest ? (
+          <Hero {...(block.data as any)} server:defer />
+        ) : (
+          <Hero {...(block.data as any)} />
+        );
+      case "VehicleGrid":
+        return block.serverIsland && !isBotRequest ? (
+          <VehicleGrid {...(block.data as any)} server:defer />
+        ) : (
+          <VehicleGrid {...(block.data as any)} />
+        );
+      case "ContentSection":
+        return block.serverIsland && !isBotRequest ? (
+          <ContentSection {...(block.data as any)} server:defer />
+        ) : (
+          <ContentSection {...(block.data as any)} />
+        );
+      case "Footer":
+        return block.serverIsland && !isBotRequest ? (
+          <Footer {...(block.data as any)} server:defer />
+        ) : (
+          <Footer {...(block.data as any)} />
+        );
+      case "DynamicRenderer":
+        return block.serverIsland && !isBotRequest ? (
+          <DynamicRenderer {...(block.data as any)} server:defer />
+        ) : (
+          <DynamicRenderer {...(block.data as any)} />
+        );
+      default:
+        return <FallbackBlock {...block.data} type={block.type} />;
+    }
+  })}
 </div>

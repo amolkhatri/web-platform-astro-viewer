@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 5 - Dashboard" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout5-page">
+    <div class="layout5-shell">
+      <div class="layout5-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout5-stats">
+        <div class="layout5-stat">
+          <slot name="block1" />
+        </div>
+        <div class="layout5-stat">
+          <slot name="block2" />
+        </div>
+        <div class="layout5-stat">
+          <slot name="block3" />
+        </div>
+        <div class="layout5-stat">
+          <slot name="block4" />
+        </div>
+      </div>
+
+      <div class="layout5-charts">
+        <div class="layout5-chart-main">
+          <slot name="block5" />
+        </div>
+        <div class="layout5-chart-side">
+          <slot name="block6" />
+        </div>
+      </div>
+
+      <div class="layout5-bottom">
+        <div class="layout5-bottom-left">
+          <slot name="block7" />
+        </div>
+        <div class="layout5-bottom-right">
+          <slot name="block8" />
+        </div>
+      </div>
+
+      <div class="layout5-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout5-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout5-shell {
+    width: 100%;
+    max-width: 1400px;
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .layout5-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .layout5-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+  }
+
+  .layout5-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 992px) {
+    .layout5-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .layout5-charts {
+      grid-template-columns: 1fr;
+    }
+
+    .layout5-bottom {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .layout5-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout5-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

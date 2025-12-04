@@ -45,7 +45,7 @@ const isBotRequest = isBot(userAgent);
 ---
 
 <Layout title="Search Used Inventory | Passport Mazda" enableClientRouter={true}>
-    <Header {...homeData.header} />
+    <Header {...homeData.blocks.header} />
 
     <main class="search-page-main">
         <div class="container mx-auto px-4 py-8">
@@ -91,7 +91,7 @@ const isBotRequest = isBot(userAgent);
         </div>
     </main>
 
-    <Footer {...homeData.footer} />
+    <Footer {...homeData.blocks.footer} />
 </Layout>
 
 <style>

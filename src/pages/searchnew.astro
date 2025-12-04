@@ -51,7 +51,7 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
 ---
 
 <Layout title="Search New Inventory | Passport Mazda" enableClientRouter={true}>
-    <Header {...homeData.header} />
+    <Header {...homeData.blocks.header} />
 
     <main class="search-page-main">
         <div class="container mx-auto px-4 py-8">
@@ -119,7 +119,7 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
         </div>
     </main>
 
-    <Footer {...homeData.footer} />
+    <Footer {...homeData.blocks.footer} />
 </Layout>
 
 <style is:global>

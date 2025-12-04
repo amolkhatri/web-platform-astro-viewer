@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 4 - Magazine" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout4-page">
+    <div class="layout4-shell">
+      <div class="layout4-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout4-featured">
+        <div class="layout4-featured-main">
+          <slot name="block1" />
+        </div>
+        <div class="layout4-featured-side">
+          <div class="layout4-featured-item">
+            <slot name="block2" />
+          </div>
+          <div class="layout4-featured-item">
+            <slot name="block3" />
+          </div>
+        </div>
+      </div>
+
+      <div class="layout4-banner">
+        <slot name="block4" />
+      </div>
+
+      <div class="layout4-grid">
+        <div class="layout4-grid-item">
+          <slot name="block5" />
+        </div>
+        <div class="layout4-grid-item">
+          <slot name="block6" />
+        </div>
+        <div class="layout4-grid-item">
+          <slot name="block7" />
+        </div>
+        <div class="layout4-grid-item">
+          <slot name="block8" />
+        </div>
+      </div>
+
+      <div class="layout4-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout4-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout4-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .layout4-featured {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+  }
+
+  .layout4-featured-main {
+    min-height: 300px;
+  }
+
+  .layout4-featured-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .layout4-featured-item {
+    flex: 1;
+  }
+
+  .layout4-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 992px) {
+    .layout4-featured {
+      grid-template-columns: 1fr;
+    }
+
+    .layout4-featured-side {
+      flex-direction: row;
+    }
+
+    .layout4-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .layout4-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout4-featured-side {
+      flex-direction: column;
+    }
+
+    .layout4-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

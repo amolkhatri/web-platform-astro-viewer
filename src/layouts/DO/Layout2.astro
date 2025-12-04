@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 2 - Sidebar" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout2-page">
+    <div class="layout2-shell">
+      <div class="layout2-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout2-body">
+        <aside class="layout2-sidebar">
+          <div class="layout2-sidebar-block">
+            <slot name="block1" />
+          </div>
+          <div class="layout2-sidebar-block">
+            <slot name="block2" />
+          </div>
+          <div class="layout2-sidebar-block">
+            <slot name="block3" />
+          </div>
+        </aside>
+
+        <div class="layout2-main">
+          <div class="layout2-main-block">
+            <slot name="block4" />
+          </div>
+          <div class="layout2-main-block">
+            <slot name="block5" />
+          </div>
+          <div class="layout2-main-block">
+            <slot name="block6" />
+          </div>
+          <div class="layout2-main-block">
+            <slot name="block7" />
+          </div>
+          <div class="layout2-main-block">
+            <slot name="block8" />
+          </div>
+        </div>
+      </div>
+
+      <div class="layout2-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout2-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout2-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: 1rem;
+    box-sizing: border-box;
+  }
+
+  .layout2-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+  }
+
+  .layout2-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .layout2-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .layout2-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout2-body {
+      grid-template-columns: 1fr;
+    }
+
+    .layout2-sidebar {
+      order: 2;
+    }
+
+    .layout2-main {
+      order: 1;
+    }
+  }
+</style>
+

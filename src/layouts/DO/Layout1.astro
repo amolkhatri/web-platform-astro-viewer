@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 1" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout1-page">
+    <div class="layout1-shell">
+      <div class="layout1-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout1-row layout1-row--split-first">
+        <div class="layout1-block">
+          <slot name="block1" />
+        </div>
+        <div class="layout1-block">
+          <slot name="block2" />
+        </div>
+      </div>
+
+      <div class="layout1-row">
+        <slot name="block3" />
+      </div>
+
+      <div class="layout1-row">
+        <slot name="block4" />
+      </div>
+
+      <div class="layout1-row">
+        <slot name="block5" />
+      </div>
+
+      <div class="layout1-row layout1-row--split-second">
+        <div class="layout1-block">
+          <slot name="block6" />
+        </div>
+        <div class="layout1-block">
+          <slot name="block7" />
+        </div>
+      </div>
+
+      <div class="layout1-row">
+        <slot name="block8" />
+      </div>
+
+      <div class="layout1-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout1-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout1-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: 1rem;
+    box-sizing: border-box;
+  }
+
+  .layout1-header,
+  .layout1-footer {
+    /* Slots will provide their own styling */
+  }
+
+  .layout1-row {
+    /* Container for full-width blocks */
+  }
+
+  .layout1-row--split-first {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 1rem;
+  }
+
+  .layout1-row--split-second {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .layout1-block {
+    /* Container for blocks in split rows */
+  }
+
+  @media (max-width: 768px) {
+    .layout1-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout1-row--split-first,
+    .layout1-row--split-second {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
+

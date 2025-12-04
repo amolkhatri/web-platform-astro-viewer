@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Layout 6 - Masonry" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="layout6-page">
+    <div class="layout6-shell">
+      <div class="layout6-header">
+        <slot name="header" />
+      </div>
+
+      <div class="layout6-masonry">
+        <div class="layout6-item layout6-item--tall">
+          <slot name="block1" />
+        </div>
+        <div class="layout6-item">
+          <slot name="block2" />
+        </div>
+        <div class="layout6-item">
+          <slot name="block3" />
+        </div>
+        <div class="layout6-item layout6-item--wide">
+          <slot name="block4" />
+        </div>
+        <div class="layout6-item">
+          <slot name="block5" />
+        </div>
+        <div class="layout6-item layout6-item--tall">
+          <slot name="block6" />
+        </div>
+        <div class="layout6-item">
+          <slot name="block7" />
+        </div>
+        <div class="layout6-item">
+          <slot name="block8" />
+        </div>
+      </div>
+
+      <div class="layout6-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .layout6-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .layout6-shell {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .layout6-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(150px, auto);
+    gap: 1rem;
+  }
+
+  .layout6-item--tall {
+    grid-row: span 2;
+  }
+
+  .layout6-item--wide {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 992px) {
+    .layout6-masonry {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .layout6-item--wide {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .layout6-page {
+      padding-inline: 0.75rem;
+    }
+
+    .layout6-masonry {
+      grid-template-columns: 1fr;
+    }
+
+    .layout6-item--tall {
+      grid-row: span 1;
+    }
+  }
+</style>
+
