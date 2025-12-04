@@ -19,7 +19,7 @@ const shouldLoadHtmx = !isBot(userAgent);
 		
 		<title>Viewer</title>
 		<Analytics />
-		<ClientRouter />
+		<!-- <ClientRouter /> -->
 		{shouldLoadHtmx && <script is:inline src="/htmx.min.js" />}
 	</head>
 	<body style="background: #121212; color: #e2e2e2; margin: 0; min-height: 100vh;">
