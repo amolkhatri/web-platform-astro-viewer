@@ -50,7 +50,7 @@ const buildLoadMoreQuery = (offset: number) => {
 const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}`;
 ---
 
-<Layout title="Search New Inventory | Passport Mazda">
+<Layout title="Search New Inventory | Passport Mazda" enableClientRouter={true}>
     <Header {...homeData.header} />
 
     <main class="search-page-main">

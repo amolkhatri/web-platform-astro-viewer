@@ -4,6 +4,12 @@ import DeviceBanner from "../components/DeviceBanner.astro";
 import { isBot } from "../utils/isBot";
 import Analytics from '@vercel/analytics/astro'
 
+interface Props {
+	title?: string;
+	enableClientRouter?: boolean;
+}
+
+const { enableClientRouter = false } = Astro.props as Props;
 
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const shouldLoadHtmx = !isBot(userAgent);
@@ -19,7 +25,7 @@ const shouldLoadHtmx = !isBot(userAgent);
 		
 		<title>Viewer</title>
 		<Analytics />
-		<!-- <ClientRouter /> -->
+		{enableClientRouter && <ClientRouter />}
 		{shouldLoadHtmx && <script is:inline src="/htmx.min.js" />}
 	</head>
 	<body style="background: #121212; color: #e2e2e2; margin: 0; min-height: 100vh;">

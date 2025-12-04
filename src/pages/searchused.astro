@@ -44,7 +44,7 @@ const userAgent = Astro.request.headers.get("user-agent") || "";
 const isBotRequest = isBot(userAgent);
 ---
 
-<Layout title="Search Used Inventory | Passport Mazda">
+<Layout title="Search Used Inventory | Passport Mazda" enableClientRouter={true}>
     <Header {...homeData.header} />
 
     <main class="search-page-main">
