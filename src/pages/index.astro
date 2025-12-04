@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import MyLayout from "../layouts/MyLayout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import VehicleGrid from "../components/VehicleGrid.astro";
@@ -15,27 +15,27 @@ const queryParam = queryParams.get("query");
 console.log("index.astro queryParam:", queryParam);
 ---
 
-<Layout>
-	<Header {...homeData.header} />
+<MyLayout layoutName="minimal">
+	<Header {...homeData.blocks.header} />
 
 	<main>
-		<Hero {...homeData.hero} />
+		<Hero {...homeData.blocks.hero} />
 		<QueryComponent queryParam={queryParam} />
 		<QueryComponent server:defer queryParam={queryParam} />
 
-		<VehicleGrid {...homeData.vehicleGrid} server:defer />
+		<VehicleGrid {...homeData.blocks.vehicleGrid} server:defer />
 
 		<QueryComponent queryParam={queryParam}  />
 
 
-		<VehicleGrid {...homeData.vehicleGrid} server:defer />
+		<VehicleGrid {...homeData.blocks.vehicleGrid} server:defer />
 
 		{
-			homeData.contentSections.map((section, index) => (
+			homeData.blocks.contentSections.map((section: any, index: number) => (
 				<ContentSection {...section} reverse={index % 2 !== 0} />
 			))
 		}
 	</main>
 
-	<Footer {...homeData.footer} />
+	<Footer {...homeData.blocks.footer} />
 </Layout>

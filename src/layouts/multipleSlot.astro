@@ -1,0 +1,160 @@
+---
+import BaseLayout from "./Layout.astro";
+
+interface Props {
+  title?: string;
+}
+
+// let baseLayout = BaseLayout;
+
+const { title = "Multi-slot Layout" } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <main class="vehicle-multislot-page">
+    <div class="vehicle-multislot-shell">
+      <header class="vehicle-multislot-header">
+        <slot name="header" />
+      </header>
+
+      <section class="vehicle-multislot-hero">
+        <div class="vehicle-multislot-hero-meta">
+          <slot name="block1" />
+        </div>
+        <div class="vehicle-multislot-hero-photo">
+          <slot name="vehiclePhoto" />
+        </div>
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--full">
+        <slot name="block2" />
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--full">
+        <slot name="block3" />
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--full">
+        <slot name="block4" />
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--split">
+        <div class="vehicle-multislot-card">
+          <slot name="block5" />
+        </div>
+        <div class="vehicle-multislot-card">
+          <slot name="block6" />
+        </div>
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--full">
+        <slot name="block7" />
+      </section>
+
+      <section class="vehicle-multislot-row vehicle-multislot-row--full">
+        <slot name="block8" />
+      </section>
+
+      <footer class="vehicle-multislot-footer">
+        <slot name="footer" />
+      </footer>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .vehicle-multislot-page {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .vehicle-multislot-shell {
+    width: 100%;
+    max-width: 1120px;
+    background: color-mix(in srgb, var(--surface-bg) 96%, #ffebee 4%);
+    border-radius: 18px;
+    border: 1px solid color-mix(in srgb, var(--primary-color) 25%, transparent);
+    padding: 1rem;
+    box-shadow: 0 14px 45px rgba(0, 0, 0, 0.35),
+      0 10px 18px rgba(0, 0, 0, 0.32);
+    display: grid;
+    gap: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .vehicle-multislot-header,
+  .vehicle-multislot-footer {
+    background: #ff1744;
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .vehicle-multislot-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr);
+    gap: 0.75rem;
+  }
+
+  .vehicle-multislot-hero-meta,
+  .vehicle-multislot-hero-photo {
+    background: #ffe5ea;
+    border-radius: 12px;
+    padding: 0.75rem 0.75rem;
+  }
+
+  .vehicle-multislot-hero-photo {
+    background: #ff4569;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+  }
+
+  .vehicle-multislot-row {
+    background: #ffe5ea;
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .vehicle-multislot-row--split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0;
+    background: transparent;
+  }
+
+  .vehicle-multislot-card {
+    background: #ffe5ea;
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .vehicle-multislot-row--full {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .vehicle-multislot-page {
+      padding-inline: 0.75rem;
+    }
+
+    .vehicle-multislot-shell {
+      padding: 0.75rem;
+      border-radius: 14px;
+    }
+
+    .vehicle-multislot-hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .vehicle-multislot-row--split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

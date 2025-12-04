@@ -1,50 +1,42 @@
 ---
 import PageBuilder from "../components/PageBuilder.astro";
 import Layout from "../layouts/Layout.astro";
-import { getPage, type Page } from "../lib/db";
+import MinimalLayout from "../layouts/MinimalLayout.astro";
+import SidebarLayout from "../layouts/SidebarLayout.astro";
+import MainLayout from "../layouts/MainLayout.astro";
+import VehicleMultiSlotLayout from "../layouts/multipleSlot.astro";
+import { getPage, getDraftPage, type Page } from "../lib/db";
 
 const { slug } = Astro.params;
 const currentSlug = slug || "home"; // Default to home if root
 
-const pageData: Page | null = await getPage(currentSlug);
+// Support draft preview via ?draft=true
+const draftFlag = Astro.url.searchParams.get("draft") === "true";
 
-// Using dummy data for now
-// const pageData = {
-//   title: "Welcome to Our Platform",
-//   blocks: [
-//     {
-//       type: "HeroSection",
-//       data: {
-//         title: "Build Amazing Websites",
-//         subtitle: "Create dynamic pages with our powerful page builder",
-//       },
-//     },
-//     {
-//       type: "FeaturesGrid",
-//       data: {
-//         items: [
-//           "Drag & Drop Editor",
-//           "Real-time Preview",
-//           "Custom Components",
-//           "Responsive Design",
-//           "SEO Optimized",
-//           "Fast Performance",
-//         ],
-//       },
-//     },
-//     {
-//       type: "NewsletterSignup",
-//       data: {
-//         ctaText: "Join Waitlist",
-//       },
-//     },
-//   ],
-// };
+let pageData: Page | null;
+
+if (draftFlag) {
+  // Prefer draft, but fall back to live if draft is missing
+  pageData = (await getDraftPage(currentSlug)) ?? (await getPage(currentSlug));
+} else {
+  pageData = await getPage(currentSlug);
+}
 
 const error = null;
+
+const layouts = {
+  default: Layout,
+  minimal: MinimalLayout,
+  sidebar: SidebarLayout,
+  main: MainLayout,
+  "vehicle-multislot": VehicleMultiSlotLayout,
+};
+
+const LayoutComponent =
+  layouts[pageData?.layout as keyof typeof layouts] || Layout;
 ---
 
-<Layout title={pageData ? pageData.title : "Page Not Found"}>
+<LayoutComponent title={pageData ? pageData.title : "Page Not Found"}>
   <main>
     {
       error ? (
@@ -57,4 +49,4 @@ const error = null;
       )
     }
   </main>
-</Layout>
+</LayoutComponent>

@@ -8,9 +8,11 @@ export interface Page {
     slug: string;
     title: string;
     blocks: any[];
+    layout?: string;
 }
 
 const PAGES_LIST_KEY = 'pages:all';
+const DRAFTS_LIST_KEY = 'drafts:all';
 const DB_FILE_PATH = join(process.cwd(), 'db.json');
 
 // Initialize Redis client only if REDIS_URL is provided
@@ -38,35 +40,51 @@ if (redisUrl) {
 
 // File-based storage helpers
 type FileDbFormat =
-    | { pages: Record<string, Page> }
-    | { pages: Page[] }
-    | { pages?: undefined };
+    | { pages: Record<string, Page>; drafts?: Record<string, Page> }
+    | { pages: Page[]; drafts?: Page[] }
+    | { pages?: undefined; drafts?: undefined };
 
-async function readDbFile(): Promise<{ pages: Record<string, Page> }> {
+interface NormalizedFileDb {
+    pages: Record<string, Page>;
+    drafts: Record<string, Page>;
+}
+
+async function readDbFile(): Promise<NormalizedFileDb> {
     try {
         if (existsSync(DB_FILE_PATH)) {
             const data = await readFile(DB_FILE_PATH, 'utf-8');
             const parsed: FileDbFormat = JSON.parse(data);
 
+            let pages: Record<string, Page> = {};
+            let drafts: Record<string, Page> = {};
+
+            // Normalize pages
             if (Array.isArray(parsed.pages)) {
-                const record: Record<string, Page> = {};
                 for (const page of parsed.pages) {
-                    record[page.slug] = page;
+                    pages[page.slug] = page;
                 }
-                return { pages: record };
+            } else if (parsed.pages && typeof parsed.pages === 'object') {
+                pages = parsed.pages as Record<string, Page>;
             }
 
-            if (parsed.pages && typeof parsed.pages === 'object') {
-                return parsed as { pages: Record<string, Page> };
+            // Normalize drafts (optional, backward compatible)
+            if (Array.isArray(parsed.drafts)) {
+                for (const draft of parsed.drafts) {
+                    drafts[draft.slug] = draft;
+                }
+            } else if (parsed.drafts && typeof parsed.drafts === 'object') {
+                drafts = parsed.drafts as Record<string, Page>;
             }
+
+            return { pages, drafts };
         }
     } catch (error) {
         console.error('Error reading db.json:', error);
     }
-    return { pages: {} };
+    return { pages: {}, drafts: {} };
 }
 
-async function writeDbFile(data: { pages: Record<string, Page> }): Promise<void> {
+async function writeDbFile(data: NormalizedFileDb): Promise<void> {
     try {
         await writeFile(DB_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8');
     } catch (error) {
@@ -102,14 +120,23 @@ async function seedRedisFromFile(): Promise<void> {
             await redisClient.sAdd(PAGES_LIST_KEY, page.slug);
         }
 
-        console.info(`Seeded ${pages.length} page(s) from db.json into Redis.`);
+        // Seed drafts if present (optional)
+        const drafts = Object.values(db.drafts);
+        if (drafts.length > 0) {
+            for (const draft of drafts) {
+                await redisClient.set(`drafts:${draft.slug}`, JSON.stringify(draft));
+                await redisClient.sAdd(DRAFTS_LIST_KEY, draft.slug);
+            }
+        }
+
+        console.info(`Seeded ${pages.length} page(s) and ${drafts.length} draft page(s) from db.json into Redis.`);
     } catch (error) {
         console.error('Failed to seed Redis from db.json:', error);
     }
 }
 
 /**
- * Get all pages from storage (Redis or file)
+ * Get all live pages from storage (Redis or file)
  */
 export async function getPages(): Promise<Page[]> {
     if (redisClient) {
@@ -137,7 +164,7 @@ export async function getPages(): Promise<Page[]> {
 }
 
 /**
- * Get a single page by slug
+ * Get a single live page by slug
  */
 export async function getPage(slug: string): Promise<Page | null> {
     if (redisClient) {
@@ -152,7 +179,20 @@ export async function getPage(slug: string): Promise<Page | null> {
 }
 
 /**
- * Save a page to storage
+ * Get a draft page by slug (if any)
+ */
+export async function getDraftPage(slug: string): Promise<Page | null> {
+    if (redisClient) {
+        const draftData = await redisClient.get(`drafts:${slug}`);
+        return draftData ? JSON.parse(draftData) : null;
+    } else {
+        const db = await readDbFile();
+        return db.drafts[slug] || null;
+    }
+}
+
+/**
+ * Save a live page to storage
  */
 export async function savePage(page: Page): Promise<void> {
     if (redisClient) {
@@ -168,7 +208,57 @@ export async function savePage(page: Page): Promise<void> {
 }
 
 /**
- * Delete a page from storage
+ * Save a draft page to storage
+ */
+export async function saveDraftPage(page: Page): Promise<void> {
+    if (redisClient) {
+        await redisClient.set(`drafts:${page.slug}`, JSON.stringify(page));
+        await redisClient.sAdd(DRAFTS_LIST_KEY, page.slug);
+    } else {
+        const db = await readDbFile();
+        db.drafts[page.slug] = page;
+        await writeDbFile(db);
+    }
+}
+
+/**
+ * Publish a draft page by copying it to live storage and removing the draft
+ */
+export async function publishDraftPage(slug: string): Promise<Page | null> {
+    if (redisClient) {
+        const draftData = await redisClient.get(`drafts:${slug}`);
+        if (!draftData) {
+            return null;
+        }
+
+        const draft: Page = JSON.parse(draftData);
+
+        // Save as live page
+        await redisClient.set(`pages:${slug}`, JSON.stringify(draft));
+        await redisClient.sAdd(PAGES_LIST_KEY, slug);
+
+        // Remove draft
+        await redisClient.del(`drafts:${slug}`);
+        await redisClient.sRem(DRAFTS_LIST_KEY, slug);
+
+        return draft;
+    } else {
+        const db = await readDbFile();
+        const draft = db.drafts[slug];
+        if (!draft) {
+            return null;
+        }
+
+        db.pages[slug] = draft;
+        delete db.drafts[slug];
+        await writeDbFile(db);
+
+        return draft;
+    }
+}
+
+/**
+ * Delete a live page from storage
  */
 export async function deletePage(slug: string): Promise<void> {
     if (redisClient) {

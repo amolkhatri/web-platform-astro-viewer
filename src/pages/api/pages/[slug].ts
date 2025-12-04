@@ -1,44 +1,54 @@
 
-import fs from 'node:fs';
-import path from 'node:path';
 import type { APIRoute } from 'astro';
+import { getPage, getDraftPage } from '../../../lib/db';
 
-const DB_FILE = path.resolve('db.json');
-
-interface Page {
-  slug: string;
-  title: string;
-  blocks: any[];
-}
-
-interface Db {
-  pages: Page[];
-}
-
-// Helper to read DB
-const readDb = (): Db => {
-  if (!fs.existsSync(DB_FILE)) {
-    return { pages: [] };
-  }
-  return JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
-};
-
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, request }) => {
   const { slug } = params;
-  const db = readDb();
-  const page = db.pages.find((p: Page) => p.slug === slug);
 
-  if (page) {
-    return new Response(JSON.stringify(page), {
-      status: 200,
+  if (!slug) {
+    return new Response(JSON.stringify({ error: 'Slug is required' }), {
+      status: 400,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
       }
     });
-  } else {
-    return new Response(JSON.stringify({ error: 'Page not found' }), {
-      status: 404,
+  }
+
+  const url = new URL(request.url);
+  const draftFlag = url.searchParams.get('draft') === 'true';
+
+  try {
+    let page = null;
+
+    if (draftFlag) {
+      // Prefer draft version, fall back to live if no draft exists
+      page = (await getDraftPage(slug as string)) ?? (await getPage(slug as string));
+    } else {
+      page = await getPage(slug as string);
+    }
+
+    if (page) {
+      return new Response(JSON.stringify(page), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    } else {
+      return new Response(JSON.stringify({ error: 'Page not found' }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching page:', error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch page' }), {
+      status: 500,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"

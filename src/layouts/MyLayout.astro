@@ -1,0 +1,27 @@
+---
+import Layout from "./Layout.astro";
+import MainLayout from "./MainLayout.astro";
+import MinimalLayout from "./MinimalLayout.astro";
+import SidebarLayout from "./SidebarLayout.astro";
+import MultipleSlotLayout from "./multipleSlot.astro";
+interface Props {
+	layoutName?: string;
+}
+
+const { layoutName = "default" } = Astro.props as Props;
+
+const layouts = {
+    "multipleSlot": MultipleSlotLayout,
+    "main": MainLayout,
+    "minimal": MinimalLayout,
+    "sidebar": SidebarLayout,
+    "default": Layout,
+}
+
+const LayoutComponent = layouts[layoutName as keyof typeof layouts] || Layout;
+
+---
+
+<LayoutComponent title={layoutName}>
+    <slot />
+</LayoutComponent>
