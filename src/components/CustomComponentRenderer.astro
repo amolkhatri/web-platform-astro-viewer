@@ -1,0 +1,57 @@
+---
+/**
+ * CustomComponentRenderer - Renders user-created custom components
+ * This component fetches the custom component code from the backend and renders it dynamically
+ */
+
+interface Props {
+    type: string;
+    data: Record<string, any>;
+}
+
+const { type, data } = Astro.props;
+
+// Read custom components from db.json
+import fs from "fs";
+import path from "path";
+
+const DB_FILE = path.join(process.cwd(), "db.json");
+
+let customComponent = null;
+try {
+    if (fs.existsSync(DB_FILE)) {
+        const db = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+        const customComponents = db.customComponents || [];
+        customComponent = customComponents.find((c: any) => c.type === type);
+    }
+} catch (error) {
+    console.error("Error reading custom component:", error);
+}
+
+// If component not found, show error
+if (!customComponent) {
+    console.error(`Custom component "${type}" not found`);
+}
+---
+
+{
+    customComponent ? (
+        <div class="custom-component" data-component-type={type}>
+            <Fragment set:html={customComponent.code} />
+        </div>
+    ) : (
+        <div class="custom-component-error">
+            <p>Custom component "{type}" not found</p>
+        </div>
+    )
+}
+
+<style>
+    .custom-component-error {
+        padding: 1rem;
+        background: #fee;
+        border: 1px solid #fcc;
+        border-radius: 4px;
+        color: #c33;
+    }
+</style>
