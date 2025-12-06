@@ -1,0 +1,50 @@
+---
+/**
+ * Editor Page
+ * 
+ * This page demonstrates Astro's power as a unified rendering engine.
+ * The editor is a React SPA that runs entirely client-side, but is
+ * served by the same Astro application that renders the content pages.
+ * 
+ * Benefits:
+ * - Single deployment for both editor and viewer
+ * - Shared API endpoints
+ * - Consistent routing
+ * - No CORS issues since everything is on the same origin
+ */
+
+import App from '../components/editor/App';
+import '../styles/editor.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Visual Page Editor - Build and edit pages with ease" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>🎨 Page Editor | Astro Platform</title>
+    
+    <!-- Import Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="editor-root" class="editor-root">
+      <!-- 
+        Using client:only="react" ensures the React app is rendered entirely on the client.
+        This is perfect for complex interactive applications like editors that don't benefit from SSR.
+      -->
+      <App client:only="react" />
+      
+      <noscript>
+        <div style="text-align: center; padding: 2rem; font-family: sans-serif;">
+          <h1>JavaScript Required</h1>
+          <p>The Page Editor requires JavaScript to run. Please enable JavaScript in your browser.</p>
+        </div>
+      </noscript>
+    </div>
+  </body>
+</html>
+

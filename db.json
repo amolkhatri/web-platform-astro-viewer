@@ -16,7 +16,7 @@
           "type": "FeaturesGrid",
           "data": {
             "items": [
-              "Fast12",
+              "Fast1222",
               "Dynamic",
               "Easy",
               "sadddd"
@@ -134,7 +134,7 @@
           "type": "FeaturesGrid",
           "data": {
             "items": [
-              "Fast12",
+              "Fast1222",
               "Dynamic",
               "Easy",
               "sadddd"
@@ -208,7 +208,7 @@
           }
         }
       ],
-      "layout": "layout2"
+      "layout": "default"
     }
   }
 }

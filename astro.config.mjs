@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel/serverless';
 import { fileURLToPath } from 'url';
 import path from 'path';
-
+import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -19,5 +19,8 @@ export default defineConfig({
       }
   },
 
-  integrations: [partytown()]
+  integrations: [
+    react(),
+    partytown()
+  ]
 });
