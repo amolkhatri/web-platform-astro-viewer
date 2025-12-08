@@ -4,6 +4,9 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
+import vue from '@astrojs/vue';
+import solidJs from '@astrojs/solid-js';
+import qwikdev from '@qwikdev/astro';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -20,7 +23,16 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
+    react({
+      include: ['**/components/react/**']
+    }),
+    vue(),
+    solidJs({
+      include: ['**/components/solid/**']
+    }),
+    qwikdev({
+      include: ['**/components/qwik/**']
+    }),
     partytown()
   ]
 });
