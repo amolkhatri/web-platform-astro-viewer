@@ -1,0 +1,65 @@
+/* Light theme override for search filters */
+.search-filter {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-header {
+    border-bottom: 1px solid #e5e7eb;
+    color: #111827;
+}
+
+.filter-section {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-title {
+    color: #111827;
+}
+
+.filter-option {
+    color: #374151;
+}
+
+.filter-option:hover {
+    background-color: #f9fafb;
+}
+
+.filter-count {
+    color: #6b7280;
+}
+
+.clear-filters {
+    color: #2563eb;
+}
+
+.clear-filters:hover {
+    color: #1d4ed8;
+}
+
+.result-count-mobile {
+    color: #374151;
+}
+
+.toggle-icon {
+    color: #6b7280;
+}
+
+.disabled-hint {
+    color: #9ca3af;
+}
+
+.no-options {
+    color: #9ca3af;
+}
+
+.filter-checkbox {
+    accent-color: #2563eb;
+}
+
+.filter-option[data-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+

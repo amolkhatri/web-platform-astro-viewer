@@ -1,0 +1,161 @@
+---
+import Layout from "../layouts/Layout.astro";
+import VehicleCardGraphQL from "../components/VehicleCardGraphQL.astro";
+import { graphqlQuery } from "../lib/graphql-client";
+
+// Fetch vehicles using GraphQL
+const SEARCH_QUERY = `
+  query SearchVehicles {
+    searchVehicles(limit: 20) {
+      summary {
+        totalCount
+        count
+      }
+      vehicles {
+        id
+        year
+        make
+        model
+        trim
+        vin
+        stockNumber
+        displayableInventoryStatus
+        pricing {
+          featuredPrice
+          msrp
+          salePrice
+        }
+        specs {
+          engine {
+            description
+          }
+          transmission {
+            transmission
+          }
+          drivetrain
+        }
+        colors {
+          exterior {
+            name
+            baseColor
+          }
+        }
+        photos {
+          mainPhoto {
+            path
+            title
+          }
+        }
+      }
+    }
+  }
+`;
+
+let vehicles: any[] = [];
+let error: string | null = null;
+
+try {
+  const data = await graphqlQuery<{ searchVehicles: any }>(SEARCH_QUERY);
+  vehicles = data.searchVehicles.vehicles;
+} catch (e) {
+  error = e instanceof Error ? e.message : "Unknown error";
+  console.error("GraphQL Error:", error);
+}
+---
+
+<Layout title="GraphQL Test">
+  <main
+    style="padding: 2rem; max-width: 1400px; margin: 0 auto; background: #ffffff; min-height: 100vh;"
+  >
+    <h1
+      style="margin-bottom: 1rem; color: #1f2937; font-size: 2rem; font-weight: bold;"
+    >
+      🧪 GraphQL Test Page
+    </h1>
+    <p style="margin-bottom: 2rem; color: #4b5563; font-size: 1.125rem;">
+      Testing GraphQL integration (Mock Data or Real API)
+    </p>
+
+    {
+      error && (
+        <div style="background: #fef2f2; border: 2px solid #dc2626; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #991b1b;">
+          <strong style="font-weight: 700;">Error:</strong> {error}
+        </div>
+      )
+    }
+
+    {
+      !error && vehicles.length === 0 && (
+        <div style="background: #fffbeb; border: 2px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; color: #92400e;">
+          No vehicles found. Check console for errors.
+        </div>
+      )
+    }
+
+    {
+      !error && vehicles.length > 0 && (
+        <div>
+          <div style="background: #f0fdf4; border: 2px solid #16a34a; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; color: #166534;">
+            <strong style="font-weight: 700; font-size: 1.125rem;">
+              ✅ Success!
+            </strong>{" "}
+            Found {vehicles.length} vehicles using GraphQL.
+          </div>
+
+          <h2 style="margin-bottom: 1.5rem; color: #1f2937; font-size: 1.5rem; font-weight: 700;">
+            Vehicle Cards
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            {vehicles.map((vehicle) => (
+              <VehicleCardGraphQL vehicle={vehicle} />
+            ))}
+          </div>
+
+          <h2 style="margin-top: 3rem; margin-bottom: 1rem; color: #1f2937; font-size: 1.5rem; font-weight: 700;">
+            GraphQL Response Data
+          </h2>
+          <details style="border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden;">
+            <summary style="cursor: pointer; padding: 1rem; background: #f3f4f6; border-radius: 4px; font-weight: 600; color: #374151;">
+              Click to view raw GraphQL response
+            </summary>
+            <pre style="background: #1f2937; color: #e5e7eb; padding: 1.5rem; overflow-x: auto; margin: 0; font-size: 0.875rem; line-height: 1.5;">
+              {JSON.stringify(vehicles, null, 2)}
+            </pre>
+          </details>
+        </div>
+      )
+    }
+
+    <div
+      style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%); border-radius: 12px; border: 1px solid #3b82f6;"
+    >
+      <h3
+        style="margin-top: 0; color: #1e40af; font-size: 1.25rem; font-weight: 700;"
+      >
+        📝 Next Steps
+      </h3>
+      <ol style="color: #1e3a8a; line-height: 1.8; margin: 0;">
+        <li>
+          Visit <code>http://localhost:4321/api/graphql</code> to try GraphQL Playground
+        </li>
+        <li>Test different queries (see testing_guide.md for examples)</li>
+        <li>
+          When ready, add your bearer token to <code>.env</code> to use real API
+        </li>
+        <li>Migrate more components to use GraphQL</li>
+      </ol>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  code {
+    background: #1f2937;
+    color: #fbbf24;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+</style>

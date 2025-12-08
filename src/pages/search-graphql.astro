@@ -1,0 +1,527 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SearchFilterGraphQL from "../components/SearchFilterGraphQL.astro";
+import VehicleCardGraphQL from "../components/VehicleCardGraphQL.astro";
+import { graphqlQuery } from "../lib/graphql-client";
+import {
+  parseGraphQLFilters,
+  processAggregations,
+  convertGraphQLFiltersToAggregations,
+} from "../utils/graphqlFilterUtils";
+import {
+  SEARCH_WITH_AGGREGATIONS_QUERY,
+  buildSearchVariables,
+} from "../graphql/queries/vehicleSearch";
+
+// Parse filters from URL
+const filters = parseGraphQLFilters(Astro.url.searchParams);
+
+// Get pagination params
+const page = parseInt(Astro.url.searchParams.get("page") || "1");
+const limit = 20;
+const offset = (page - 1) * limit;
+
+// Get sort params
+const sortField = Astro.url.searchParams.get("sortField") || "year";
+const sortDirection = (Astro.url.searchParams.get("sortDirection") ||
+  "DESC") as "ASC" | "DESC";
+
+// Build GraphQL variables
+const variables = buildSearchVariables(filters, {
+  limit,
+  offset,
+  sortField,
+  sortDirection,
+});
+
+// Fetch data from GraphQL
+let searchResults: any = null;
+let error: string | null = null;
+
+try {
+  console.log(
+    "[SearchGraphQL] Fetching with variables:",
+    JSON.stringify(variables, null, 2),
+  );
+  searchResults = await graphqlQuery(SEARCH_WITH_AGGREGATIONS_QUERY, variables);
+  console.log("[SearchGraphQL] Success! Got results:", {
+    hasSearchVehicles: !!searchResults?.searchVehicles,
+    vehicleCount: searchResults?.searchVehicles?.vehicles?.length,
+    totalCount: searchResults?.searchVehicles?.summary?.totalCount,
+    makesCount: searchResults?.availableMakes?.length,
+    modelsCount: searchResults?.availableModels?.length,
+    filtersCount: searchResults?.searchVehicles?.filters?.length,
+  });
+} catch (e) {
+  error = e instanceof Error ? e.message : "Failed to fetch vehicles";
+  console.error("[SearchGraphQL] Error:", error);
+  console.error("[SearchGraphQL] Full error:", e);
+}
+
+// Extract data
+const vehicles = searchResults?.searchVehicles?.vehicles || [];
+const totalCount = searchResults?.searchVehicles?.summary?.totalCount || 0;
+const availableMakes = searchResults?.availableMakes || [];
+
+// Extract models from the filters in search results
+const searchFilters = searchResults?.searchVehicles?.filters || [];
+const modelFilter = searchFilters.find((f: any) => f.key === "model");
+const availableModels = modelFilter?.values?.map((v: any) => v.name) || [];
+
+// Process aggregations for filter counts
+// Use server-provided filters if available, otherwise fall back to processing current page results
+let aggregations;
+if (searchFilters.length > 0) {
+  console.log("[SearchGraphQL] Using server filter aggregations");
+  aggregations = convertGraphQLFiltersToAggregations(searchFilters);
+} else {
+  console.log("[SearchGraphQL] Fallback to client-side aggregations");
+  aggregations = processAggregations(availableMakes, availableModels, vehicles);
+}
+
+// Calculate pagination
+const totalPages = Math.ceil(totalCount / limit);
+const hasNextPage = page < totalPages;
+const hasPrevPage = page > 1;
+
+// Build pagination URLs
+function buildPageUrl(pageNum: number): string {
+  const params = new URLSearchParams(Astro.url.searchParams);
+  params.set("page", pageNum.toString());
+  return `${Astro.url.pathname}?${params.toString()}`;
+}
+
+// Calculate page numbers for pagination display
+function getPageNumbers(currentPage: number, total: number): number[] {
+  const maxPages = Math.min(total, 7);
+  return Array.from({ length: maxPages }, (_, i) => {
+    if (total <= 7) {
+      return i + 1;
+    } else if (currentPage <= 4) {
+      return i + 1;
+    } else if (currentPage >= total - 3) {
+      return total - 6 + i;
+    } else {
+      return currentPage - 3 + i;
+    }
+  });
+}
+
+// Sort options
+const sortOptions = [
+  { label: "Newest First", field: "year", direction: "DESC" },
+  { label: "Oldest First", field: "year", direction: "ASC" },
+  { label: "Price: Low to High", field: "price", direction: "ASC" },
+  { label: "Price: High to Low", field: "price", direction: "DESC" },
+  { label: "Make A-Z", field: "make", direction: "ASC" },
+  { label: "Make Z-A", field: "make", direction: "DESC" },
+];
+
+const currentSortLabel =
+  sortOptions.find(
+    (opt) => opt.field === sortField && opt.direction === sortDirection,
+  )?.label || "Newest First";
+---
+
+<MainLayout title="Search Vehicles | GraphQL">
+  <div class="search-page">
+    <div class="search-header">
+      <h1>Search Vehicles</h1>
+      <p class="result-count">
+        {
+          totalCount > 0 ? (
+            <span>
+              <strong>{totalCount.toLocaleString()}</strong> vehicle
+              {totalCount !== 1 ? "s" : ""} found
+            </span>
+          ) : (
+            "No vehicles found"
+          )
+        }
+      </p>
+    </div>
+
+    {
+      error && (
+        <div class="error-message">
+          <strong>Error:</strong> {error}
+          <p>Please try again or contact support if the problem persists.</p>
+        </div>
+      )
+    }
+
+    <div class="search-layout">
+      <!-- Sidebar with filters -->
+      <div class="sidebar">
+        <SearchFilterGraphQL
+          currentFilters={filters}
+          aggregations={aggregations}
+          totalCount={totalCount}
+        />
+      </div>
+
+      <!-- Main content area -->
+      <div class="main-content">
+        <!-- Sort bar -->
+        <div class="sort-bar">
+          <label for="sort-select">Sort by:</label>
+          <select id="sort-select" class="sort-select">
+            {
+              sortOptions.map((option) => (
+                <option
+                  value={`${option.field}|${option.direction}`}
+                  selected={
+                    option.field === sortField &&
+                    option.direction === sortDirection
+                  }
+                >
+                  {option.label}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+
+        <!-- Vehicle results -->
+        <div class="vehicle-list">
+          {
+            vehicles.length > 0 ? (
+              vehicles.map((vehicle: any) => (
+                <VehicleCardGraphQL vehicle={vehicle} />
+              ))
+            ) : (
+              <div class="no-results">
+                <h2>No vehicles found</h2>
+                <p>Try adjusting your filters to see more results.</p>
+                <a href={Astro.url.pathname} class="reset-link">
+                  Reset All Filters
+                </a>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Pagination -->
+        {
+          totalPages > 1 && (
+            <div class="pagination">
+              {hasPrevPage ? (
+                <a href={buildPageUrl(page - 1)} class="pagination-btn">
+                  ← Previous
+                </a>
+              ) : (
+                <button class="pagination-btn" disabled>
+                  ← Previous
+                </button>
+              )}
+
+              <div class="pagination-pages">
+                {getPageNumbers(page, totalPages).map((pageNum) => (
+                  <a
+                    key={pageNum}
+                    href={buildPageUrl(pageNum)}
+                    class={
+                      pageNum === page
+                        ? "pagination-page active"
+                        : "pagination-page"
+                    }
+                  >
+                    {pageNum}
+                  </a>
+                ))}
+              </div>
+
+              {hasNextPage ? (
+                <a href={buildPageUrl(page + 1)} class="pagination-btn">
+                  Next →
+                </a>
+              ) : (
+                <button class="pagination-btn" disabled>
+                  Next →
+                </button>
+              )}
+            </div>
+          )
+        }
+
+        <!-- Results info -->
+        {
+          vehicles.length > 0 && (
+            <div class="results-info">
+              Showing {offset + 1}-{Math.min(offset + limit, totalCount)} of{" "}
+              {totalCount.toLocaleString()} vehicles
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  // Handle sort change
+  function initSort() {
+    const sortSelect = document.getElementById(
+      "sort-select",
+    ) as HTMLSelectElement;
+    if (!sortSelect) return;
+
+    sortSelect.addEventListener("change", () => {
+      const [field, direction] = sortSelect.value.split("|");
+      const params = new URLSearchParams(window.location.search);
+      params.set("sortField", field);
+      params.set("sortDirection", direction);
+      params.delete("page"); // Reset to page 1 when sorting changes
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      navigate(newUrl);
+    });
+  }
+
+  // Initialize on page load
+  initSort();
+
+  // Re-initialize after view transitions
+  document.addEventListener("astro:page-load", initSort);
+</script>
+
+<style>
+  .search-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .search-header {
+    margin-bottom: 2rem;
+  }
+
+  .search-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .result-count {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .error-message {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #c33;
+  }
+
+  .error-message strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .search-layout {
+      grid-template-columns: 280px 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 2rem;
+      align-self: start;
+    }
+  }
+
+  .main-content {
+    min-height: 400px;
+  }
+
+  .sort-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .sort-bar label {
+    font-size: 0.95rem;
+    color: #666;
+  }
+
+  .sort-select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .sort-select:focus {
+    outline: none;
+    border-color: #4b2c8e;
+  }
+
+  .vehicle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .no-results h2 {
+    margin: 0 0 1rem 0;
+    color: #333;
+  }
+
+  .no-results p {
+    color: #666;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .reset-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #4b2c8e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .reset-link:hover {
+    background: #3a2270;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination-btn {
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .pagination-btn:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #ccc;
+  }
+
+  .pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination-pages {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .pagination-page {
+    min-width: 40px;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .pagination-page:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+  }
+
+  .pagination-page.active {
+    background: #4b2c8e;
+    color: #fff;
+    border-color: #4b2c8e;
+  }
+
+  .results-info {
+    text-align: center;
+    margin-top: 2rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  /* Smooth transitions for View Transitions */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+  }
+
+  @media (max-width: 768px) {
+    .search-page {
+      padding: 1rem;
+    }
+
+    .search-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .sort-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sort-select {
+      width: 100%;
+    }
+
+    .pagination {
+      gap: 0.25rem;
+    }
+
+    .pagination-btn {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .pagination-page {
+      min-width: 36px;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+    }
+  }
+</style>

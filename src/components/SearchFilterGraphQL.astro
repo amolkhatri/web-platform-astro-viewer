@@ -1,0 +1,381 @@
+---
+import "./SearchFilter.css";
+import "./SearchFilterLight.css";
+import type {
+    GraphQLFilterParams,
+    FilterAggregations,
+} from "../utils/graphqlFilterUtils";
+import {
+    hasActiveFilters,
+    getPriceRangeOptions,
+} from "../utils/graphqlFilterUtils";
+
+interface Props {
+    currentFilters: GraphQLFilterParams;
+    aggregations: FilterAggregations;
+    totalCount: number;
+}
+
+const { currentFilters, aggregations, totalCount } = Astro.props;
+
+// Get current page path for Clear All link
+const currentPath = Astro.url.pathname;
+
+// Check if any filters are active
+const filtersActive = hasActiveFilters(currentFilters);
+
+// Define filter categories with their display names
+const filterCategories = [
+    {
+        title: "Make",
+        type: "make" as const,
+        options: aggregations.makes.sort((a, b) =>
+            a.label.localeCompare(b.label),
+        ),
+        multiSelect: false,
+    },
+    {
+        title: "Model",
+        type: "model" as const,
+        options: aggregations.models.sort((a, b) =>
+            a.label.localeCompare(b.label),
+        ),
+        multiSelect: true,
+        disabled: !currentFilters.make,
+    },
+    {
+        title: "Year",
+        type: "year" as const,
+        options: aggregations.years,
+        multiSelect: true,
+    },
+    {
+        title: "Status",
+        type: "status" as const,
+        options:
+            aggregations.statuses.length > 0
+                ? aggregations.statuses
+                : [
+                      { label: "New", value: "new", count: 0 },
+                      { label: "In Transit", value: "in-transit", count: 0 },
+                      { label: "In Stock", value: "in-stock", count: 0 },
+                  ],
+        multiSelect: false,
+    },
+    {
+        title: "Price Range",
+        type: "price" as const,
+        options: getPriceRangeOptions(),
+        multiSelect: false,
+    },
+    {
+        title: "Body Type",
+        type: "bodyType" as const,
+        options: aggregations.bodyTypes,
+        multiSelect: false,
+    },
+];
+
+// Helper to check if a filter option is active
+function isFilterActive(filterType: string, value: string): boolean {
+    switch (filterType) {
+        case "make":
+            return currentFilters.make === value;
+        case "model":
+            return currentFilters.model?.includes(value) || false;
+        case "year":
+            const yearNum = parseInt(value);
+            return (
+                (currentFilters.minYear === yearNum &&
+                    currentFilters.maxYear === yearNum) ||
+                (currentFilters.minYear !== undefined &&
+                    currentFilters.maxYear !== undefined &&
+                    yearNum >= currentFilters.minYear &&
+                    yearNum <= currentFilters.maxYear)
+            );
+        case "status":
+            return (
+                currentFilters.status === value ||
+                currentFilters.category === value
+            );
+        case "bodyType":
+            return currentFilters.bodyType === value;
+        case "price":
+            const [min, max] = value.split("-").map((v) => parseInt(v));
+            return (
+                currentFilters.minPrice === min &&
+                currentFilters.maxPrice === max
+            );
+        default:
+            return false;
+    }
+}
+---
+
+<aside class="search-filter">
+    <div class="filter-header">
+        <h3 class="text-lg font-bold">Filters</h3>
+        {
+            filtersActive && (
+                <a href={currentPath} class="clear-filters">
+                    Clear All
+                </a>
+            )
+        }
+    </div>
+
+    <div class="result-count-mobile">
+        <strong>{totalCount}</strong> vehicles found
+    </div>
+
+    {
+        filterCategories.map((category) => (
+            <div class="filter-section" data-disabled={category.disabled}>
+                <div class="filter-title">
+                    {category.title}
+                    {category.disabled && (
+                        <span class="disabled-hint">(Select make first)</span>
+                    )}
+                    <span class="toggle-icon">−</span>
+                </div>
+                <div class="filter-options">
+                    {category.options.length > 0 ? (
+                        category.options.map((option) => {
+                            const isChecked = isFilterActive(
+                                category.type,
+                                option.value || option.label,
+                            );
+                            const inputType = category.multiSelect
+                                ? "checkbox"
+                                : "radio";
+                            const inputName = category.multiSelect
+                                ? undefined
+                                : `filter-${category.type}`;
+
+                            return (
+                                <label
+                                    class="filter-option"
+                                    data-disabled={category.disabled}
+                                >
+                                    <input
+                                        type={inputType}
+                                        name={inputName}
+                                        class="filter-checkbox"
+                                        data-filter-type={category.type}
+                                        data-filter-value={
+                                            option.value || option.label
+                                        }
+                                        data-multi-select={category.multiSelect}
+                                        checked={isChecked}
+                                        disabled={category.disabled}
+                                    />
+                                    <span>{option.label}</span>
+                                    <span class="filter-count">
+                                        ({option.count})
+                                    </span>
+                                </label>
+                            );
+                        })
+                    ) : (
+                        <div class="no-options">No options available</div>
+                    )}
+                </div>
+            </div>
+        ))
+    }
+</aside>
+
+<script>
+    import { navigate } from "astro:transitions/client";
+    import type { GraphQLFilterParams } from "../utils/graphqlFilterUtils";
+    import {
+        parseGraphQLFilters,
+        buildFilterUrl,
+        updateFilter,
+    } from "../utils/graphqlFilterUtils";
+
+    // Handle filter checkbox/radio changes
+    function handleFilterChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        const filterType = input.dataset.filterType as any;
+        const filterValue = input.dataset.filterValue!;
+        const isMultiSelect = input.dataset.multiSelect === "true";
+        const isChecked = input.checked;
+
+        // Get current filters from URL
+        const currentParams = new URLSearchParams(window.location.search);
+        let currentFilters = parseGraphQLFilters(currentParams);
+
+        // Update filters based on type
+        if (filterType === "make") {
+            currentFilters = updateFilter(
+                currentFilters,
+                "make",
+                filterValue,
+                "set",
+            );
+        } else if (filterType === "model") {
+            currentFilters = updateFilter(
+                currentFilters,
+                "model",
+                filterValue,
+                isChecked ? "add" : "remove",
+            );
+        } else if (filterType === "year") {
+            const yearNum = parseInt(filterValue);
+            if (isMultiSelect) {
+                // For multi-select years, we need to handle range
+                const currentYears: number[] = [];
+                if (currentFilters.minYear && currentFilters.maxYear) {
+                    for (
+                        let y = currentFilters.minYear;
+                        y <= currentFilters.maxYear;
+                        y++
+                    ) {
+                        currentYears.push(y);
+                    }
+                }
+
+                if (isChecked) {
+                    currentYears.push(yearNum);
+                } else {
+                    const index = currentYears.indexOf(yearNum);
+                    if (index > -1) currentYears.splice(index, 1);
+                }
+
+                if (currentYears.length > 0) {
+                    currentFilters = updateFilter(currentFilters, "year", {
+                        min: Math.min(...currentYears),
+                        max: Math.max(...currentYears),
+                    });
+                } else {
+                    delete currentFilters.minYear;
+                    delete currentFilters.maxYear;
+                }
+            } else {
+                currentFilters = updateFilter(
+                    currentFilters,
+                    "year",
+                    yearNum,
+                    "set",
+                );
+            }
+        } else if (filterType === "status") {
+            currentFilters = updateFilter(
+                currentFilters,
+                "status",
+                filterValue,
+                "set",
+            );
+        } else if (filterType === "price") {
+            const [min, max] = filterValue.split("-").map((v) => parseInt(v));
+            currentFilters = updateFilter(
+                currentFilters,
+                "price",
+                { min, max },
+                "set",
+            );
+        } else if (filterType === "bodyType") {
+            currentFilters = updateFilter(
+                currentFilters,
+                "bodyType",
+                filterValue,
+                "set",
+            );
+        }
+
+        // Build new URL
+        const newUrl = buildFilterUrl(window.location.pathname, currentFilters);
+
+        // Navigate to new URL (View Transitions will handle smooth transition)
+        navigate(newUrl);
+    }
+
+    // Attach event listeners to all checkboxes/radios
+    function initializeFilters() {
+        const inputs = document.querySelectorAll(".filter-checkbox");
+        inputs.forEach((input) => {
+            input.addEventListener("change", handleFilterChange);
+        });
+
+        // Handle collapsible filter sections
+        const filterTitles = document.querySelectorAll(".filter-title");
+        filterTitles.forEach((title) => {
+            title.addEventListener("click", () => {
+                const section = title.parentElement;
+                section?.classList.toggle("collapsed");
+                const icon = title.querySelector(".toggle-icon");
+                if (icon) {
+                    icon.textContent = section?.classList.contains("collapsed")
+                        ? "+"
+                        : "−";
+                }
+            });
+        });
+    }
+
+    // Initialize on page load
+    initializeFilters();
+
+    // Re-initialize after view transitions
+    document.addEventListener("astro:page-load", initializeFilters);
+</script>
+
+<style>
+    .result-count-mobile {
+        display: none;
+        padding: 1rem;
+        background: #f5f5f5;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+        .result-count-mobile {
+            display: block;
+        }
+    }
+
+    .filter-section[data-disabled="true"] {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .filter-title {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .disabled-hint {
+        font-size: 0.75rem;
+        color: #999;
+        font-weight: normal;
+    }
+
+    .toggle-icon {
+        margin-left: auto;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .filter-section.collapsed .filter-options {
+        display: none;
+    }
+
+    .no-options {
+        padding: 0.5rem;
+        color: #999;
+        font-size: 0.875rem;
+        font-style: italic;
+    }
+
+    .filter-option[data-disabled="true"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
