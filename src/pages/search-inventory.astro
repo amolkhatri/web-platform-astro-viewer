@@ -3,7 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SearchFilterGraphQL from "../components/SearchFilterGraphQL.astro";
-import VehicleCardGraphQL from "../components/VehicleCardGraphQL.astro";
+import VehicleGridGraphQL from "../components/VehicleGridGraphQL.astro";
+import VehicleListSkeleton from "../components/VehicleListSkeleton.astro";
 import { graphqlQuery } from "../lib/graphql-client";
 import {
   parseGraphQLFilters,
@@ -125,7 +126,7 @@ const currentSortLabel =
         <h1 class="text-3xl font-bold text-gray-900 mb-2">
           Search Inventory
         </h1>
-        <p class="text-gray-600">
+        <p class="vehicle-count-text">
           {totalCount > 0 ? (
             <span>
               <strong>{totalCount.toLocaleString()}</strong> vehicle
@@ -194,22 +195,10 @@ const currentSortLabel =
             </div>
           </div>
 
-          <!-- Vehicle results grid -->
-          <div class="vehicle-grid">
-            {vehicles.length > 0 ? (
-              vehicles.map((vehicle: any) => (
-                <VehicleCardGraphQL vehicle={vehicle} server:defer />
-              ))
-            ) : (
-              <div class="no-results-message">
-                <h2>No vehicles found</h2>
-                <p>Try adjusting your filters to see more results.</p>
-                <a href={Astro.url.pathname} class="reset-link">
-                  Reset All Filters
-                </a>
-              </div>
-            )}
-          </div>
+          <!-- Vehicle results grid with server defer -->
+          <VehicleGridGraphQL server:defer vehicles={vehicles}>
+            <VehicleListSkeleton slot="fallback" count={20} />
+          </VehicleGridGraphQL>
 
           <!-- Pagination -->
           {totalPages > 1 && (
@@ -299,6 +288,18 @@ const currentSortLabel =
   .page-header h1 {
     color: #1a1a1a;
     margin: 0;
+  }
+
+  .vehicle-count-text {
+    color: #374151;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .vehicle-count-text strong {
+    color: #111827;
+    font-weight: 700;
+    font-size: 1.125rem;
   }
 
   .error-banner {
@@ -416,55 +417,7 @@ const currentSortLabel =
     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
   }
 
-  .vehicle-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .vehicle-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .vehicle-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .no-results-message {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 4rem 2rem;
-  }
-
-  .no-results-message h2 {
-    margin: 0 0 1rem 0;
-    color: #1a1a1a;
-    font-size: 1.5rem;
-  }
-
-  .no-results-message p {
-    color: #666;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .reset-link {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: #0066cc;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    transition: background 0.2s;
-  }
-
-  .reset-link:hover {
-    background: #0052a3;
-  }
+  /* Vehicle grid styles are in VehicleGridGraphQL component */
 
   .pagination-nav {
     margin-top: 2rem;
