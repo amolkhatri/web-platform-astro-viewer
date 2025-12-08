@@ -1,0 +1,111 @@
+---
+---
+<div class="card astro-card">
+  <div class="card-header">
+    <div class="icon">🚀</div>
+    <h3>Zero JavaScript</h3>
+  </div>
+  <div class="card-content">
+    <p>
+      By default, Astro ships <strong>zero client-side JavaScript</strong>. 
+      This component is pure HTML/CSS, rendering instantly on the server.
+    </p>
+    <div class="stat">
+      <span class="value">100%</span>
+      <span class="label">Static HTML</span>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="badge">Astro</span>
+  </div>
+</div>
+
+<style>
+  .card {
+    background: #1e1e2e; /* Dark theme bg */
+    border: 1px solid #ff5d01;
+    border-radius: 12px;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #e2e2e2;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .icon {
+    font-size: 1.5rem;
+    background: rgba(255, 93, 1, 0.1);
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  .card-content {
+    flex-grow: 1;
+  }
+
+  .card-content p {
+    color: #a1a1aa;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-content strong {
+    color: #ff5d01;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .stat .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .stat .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #a1a1aa;
+  }
+
+  .card-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .badge {
+    background: #ff5d01;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+</style>

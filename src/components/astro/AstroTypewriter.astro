@@ -1,0 +1,214 @@
+---
+const messages = [
+  "Build faster websites ⚡",
+  "Ship less JavaScript 📦",
+  "Use any framework 🎨",
+  "Server-first by default 🚀",
+  "Islands of interactivity 🏝️"
+];
+---
+
+<div class="demo-card astro-card" data-typewriter>
+  <div class="card-badge">Astro</div>
+  <div class="card-icon">⌨️</div>
+  <h3>Typewriter Effect</h3>
+  <p>CSS animations + minimal JS for delightful micro-interactions.</p>
+  
+  <div class="typewriter-container">
+    <div class="typewriter-box">
+      <span class="typewriter-prefix">&gt;</span>
+      <span class="typewriter-text" data-text></span>
+      <span class="typewriter-cursor">|</span>
+    </div>
+    
+    <div class="message-dots">
+      {messages.map((_, i) => (
+        <button 
+          class={`dot ${i === 0 ? 'active' : ''}`}
+          data-index={i}
+          aria-label={`Message ${i + 1}`}
+        />
+      ))}
+    </div>
+  </div>
+  
+  <div class="typewriter-stats">
+    <span class="stat-item">
+      <span class="stat-icon">📝</span>
+      <span data-char-count>0</span> chars
+    </span>
+    <span class="stat-item">
+      <span class="stat-icon">🔄</span>
+      <span data-loop-count>0</span> loops
+    </span>
+  </div>
+</div>
+
+<style>
+  .typewriter-container {
+    background: linear-gradient(135deg, #1a1a1f 0%, #0d0d0f 100%);
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .typewriter-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+    font-size: 1.1rem;
+    min-height: 2rem;
+  }
+
+  .typewriter-prefix {
+    color: #ff5d01;
+    font-weight: 700;
+  }
+
+  .typewriter-text {
+    color: #e4e4e7;
+    white-space: nowrap;
+  }
+
+  .typewriter-cursor {
+    color: #ff5d01;
+    animation: cursorBlink 0.8s infinite;
+    font-weight: 300;
+  }
+
+  @keyframes cursorBlink {
+    0%, 45% { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .message-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3f3f46;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot:hover {
+    background: #71717a;
+    transform: scale(1.2);
+  }
+
+  .dot.active {
+    background: #ff5d01;
+    box-shadow: 0 0 8px rgba(255, 93, 1, 0.5);
+  }
+
+  .typewriter-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: #71717a;
+  }
+
+  .stat-icon {
+    font-size: 0.9rem;
+  }
+
+  .stat-item span:last-child {
+    color: #a1a1aa;
+  }
+</style>
+
+<script define:vars={{ messages }}>
+  const container = document.querySelector('[data-typewriter]');
+  if (container) {
+    const textEl = container.querySelector('[data-text]');
+    const dots = container.querySelectorAll('.dot');
+    const charCount = container.querySelector('[data-char-count]');
+    const loopCount = container.querySelector('[data-loop-count]');
+
+    let currentIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let loops = 0;
+    let isPaused = false;
+
+    function type() {
+      if (isPaused) return;
+      
+      const currentMessage = messages[currentIndex];
+      
+      if (isDeleting) {
+        charIndex--;
+        if (textEl) textEl.textContent = currentMessage.substring(0, charIndex);
+        if (charCount) charCount.textContent = charIndex.toString();
+        
+        if (charIndex === 0) {
+          isDeleting = false;
+          currentIndex = (currentIndex + 1) % messages.length;
+          if (currentIndex === 0) {
+            loops++;
+            if (loopCount) loopCount.textContent = loops.toString();
+          }
+          updateDots();
+          setTimeout(type, 500);
+          return;
+        }
+        setTimeout(type, 30);
+      } else {
+        charIndex++;
+        if (textEl) textEl.textContent = currentMessage.substring(0, charIndex);
+        if (charCount) charCount.textContent = charIndex.toString();
+        
+        if (charIndex === currentMessage.length) {
+          isDeleting = true;
+          setTimeout(type, 2000);
+          return;
+        }
+        setTimeout(type, 80);
+      }
+    }
+
+    function updateDots() {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        isPaused = true;
+        currentIndex = i;
+        charIndex = 0;
+        isDeleting = false;
+        if (textEl) textEl.textContent = '';
+        updateDots();
+        setTimeout(() => {
+          isPaused = false;
+          type();
+        }, 100);
+      });
+    });
+
+    type();
+  }
+</script>
+

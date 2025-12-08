@@ -1,0 +1,718 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AstroTimer from '../components/astro/AstroTimer.astro';
+import AstroColorPicker from '../components/astro/AstroColorPicker.astro';
+import AstroTypewriter from '../components/astro/AstroTypewriter.astro';
+import ReactCounter from '../components/react/ReactCounter';
+import ReactTabs from '../components/react/ReactTabs';
+import ReactLikeButton from '../components/react/ReactLikeButton';
+import ReactMood from '../components/react/ReactMood';
+import VueToggle from '../components/vue/VueToggle.vue';
+import VueSearch from '../components/vue/VueSearch.vue';
+import SolidProgress from '../components/solid/SolidProgress';
+import SolidTodos from '../components/solid/SolidTodos';
+import { QwikCounter } from '../components/qwik/QwikCounter';
+import { QwikAccordion } from '../components/qwik/QwikAccordion';
+---
+
+<Layout title="Astro - The Web Framework for Content-Driven Websites">
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <div class="hero-badge">🚀 The all-in-one web framework</div>
+        <h1>Build faster websites with <span class="gradient-text">Astro</span></h1>
+        <p class="hero-description">
+          Astro is the web framework that lets you use React, Vue, Solid, and Qwik 
+          together — shipping zero JavaScript by default and hydrating only what's needed.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">0kb</span>
+            <span class="stat-label">Default JS</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">5+</span>
+            <span class="stat-label">Frameworks</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">SSR Ready</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+      <div class="container">
+        <h2 class="section-title">Why Astro?</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">🏝️</div>
+            <h3>Islands Architecture</h3>
+            <p>Hydrate only the interactive components. The rest stays as zero-JS HTML.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🎨</div>
+            <h3>Framework Agnostic</h3>
+            <p>Use React, Vue, Solid, Svelte, or Qwik. Mix them in the same project.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <h3>Edge Ready</h3>
+            <p>Deploy anywhere. Vercel, Netlify, Cloudflare, or your own server.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🔍</div>
+            <h3>SEO Optimized</h3>
+            <p>Server-rendered HTML means search engines see your full content.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Framework Demos -->
+    <section class="demos">
+      <div class="container">
+        <h2 class="section-title">See It In Action</h2>
+        <p class="section-subtitle">
+          Each card below is a real component from a different framework, 
+          all running together on the same Astro page.
+        </p>
+
+        <!-- Astro Static -->
+        <div class="framework-section">
+          <div class="framework-header astro">
+            <span class="framework-logo">🚀</span>
+            <div>
+              <h3>Astro Components</h3>
+              <p>From zero-JS static content to interactive islands with vanilla JavaScript</p>
+            </div>
+          </div>
+          <div class="demo-grid four-col">
+            <div class="demo-card astro-card">
+              <div class="card-badge">Astro</div>
+              <div class="card-icon">📄</div>
+              <h3>Static Content</h3>
+              <p>This component ships absolutely zero JavaScript to the browser. It's pure HTML and CSS, rendered at build time.</p>
+              <div class="static-demo">
+                <div class="code-block">
+                  <code>&lt;div&gt;No JS needed!&lt;/div&gt;</code>
+                </div>
+                <div class="perf-badge">
+                  <span>0kb JS</span>
+                </div>
+              </div>
+            </div>
+            <AstroTimer />
+            <AstroColorPicker />
+            <AstroTypewriter />
+          </div>
+        </div>
+
+        <!-- React Section -->
+        <div class="framework-section">
+          <div class="framework-header react">
+            <span class="framework-logo">⚛️</span>
+            <div>
+              <h3>React Components</h3>
+              <p>Interactive islands with React's powerful state management</p>
+            </div>
+          </div>
+          <div class="demo-grid four-col">
+            <ReactCounter client:only="react" />
+            <ReactTabs client:only="react" />
+            <ReactLikeButton client:only="react" />
+            <ReactMood client:only="react" />
+          </div>
+        </div>
+
+        <!-- Vue Section -->
+        <div class="framework-section">
+          <div class="framework-header vue">
+            <span class="framework-logo">💚</span>
+            <div>
+              <h3>Vue Components</h3>
+              <p>Reactive components with Vue's elegant composition API</p>
+            </div>
+          </div>
+          <div class="demo-grid">
+            <VueToggle client:visible />
+            <VueSearch client:visible />
+          </div>
+        </div>
+
+        <!-- Solid Section -->
+        <div class="framework-section">
+          <div class="framework-header solid">
+            <span class="framework-logo">💎</span>
+            <div>
+              <h3>SolidJS Components</h3>
+              <p>Fine-grained reactivity with no Virtual DOM overhead</p>
+            </div>
+          </div>
+          <div class="demo-grid">
+            <SolidProgress client:visible />
+            <SolidTodos client:visible />
+          </div>
+        </div>
+
+        <!-- Qwik Section -->
+        <div class="framework-section">
+          <div class="framework-header qwik">
+            <span class="framework-logo">⚡</span>
+            <div>
+              <h3>Qwik Components</h3>
+              <p>Resumable apps with instant interactivity — zero hydration</p>
+            </div>
+          </div>
+          <div class="demo-grid">
+            <QwikCounter client:visible />
+            <QwikAccordion client:visible />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>Built with ❤️ using Astro • Demonstrating multi-framework integration</p>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  main {
+    min-height: 100vh;
+    background: #09090b;
+    color: #fafafa;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 8rem 0 6rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.3), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(255, 95, 109, 0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 20% 60%, rgba(66, 184, 131, 0.15), transparent);
+    z-index: 0;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: #a1a1aa;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Benefits */
+  .benefits {
+    padding: 6rem 0;
+    background: #0f0f14;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: #71717a;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .benefit-card {
+    background: linear-gradient(135deg, #18181b 0%, #1f1f24 100%);
+    border: 1px solid #27272a;
+    border-radius: 16px;
+    padding: 2rem;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    border-color: #3f3f46;
+  }
+
+  .benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .benefit-card h3 {
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem;
+    color: #fff;
+  }
+
+  .benefit-card p {
+    color: #a1a1aa;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Demos */
+  .demos {
+    padding: 6rem 0;
+  }
+
+  .framework-section {
+    margin-bottom: 4rem;
+  }
+
+  .framework-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: #18181b;
+    border-radius: 12px;
+    border-left: 4px solid;
+  }
+
+  .framework-header.astro { border-color: #ff5d01; }
+  .framework-header.react { border-color: #61dafb; }
+  .framework-header.vue { border-color: #42b883; }
+  .framework-header.solid { border-color: #2c4f7c; }
+  .framework-header.qwik { border-color: #AC7EF4; }
+
+  .framework-logo {
+    font-size: 2rem;
+  }
+
+  .framework-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  .framework-header p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: #71717a;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .demo-grid.four-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    .demo-grid.four-col {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .demo-grid.single {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  /* Demo Cards Base Styles */
+  :global(.demo-card) {
+    background: #18181b;
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    border: 1px solid #27272a;
+    transition: border-color 0.3s ease;
+  }
+
+  :global(.demo-card:hover) {
+    border-color: #3f3f46;
+  }
+
+  :global(.card-badge) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  :global(.astro-card .card-badge) { background: #ff5d01; color: #fff; }
+  :global(.react-card .card-badge) { background: #61dafb; color: #000; }
+  :global(.vue-card .card-badge) { background: #42b883; color: #fff; }
+  :global(.solid-card .card-badge) { background: #2c4f7c; color: #fff; }
+  :global(.qwik-card .card-badge) { background: #AC7EF4; color: #fff; }
+
+  :global(.card-icon) {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.demo-card h3) {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  :global(.demo-card p) {
+    color: #a1a1aa;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 1.25rem;
+  }
+
+  /* Counter Controls */
+  :global(.counter-controls) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  :global(.count-display) {
+    font-size: 2rem;
+    font-weight: 800;
+    min-width: 3ch;
+    text-align: center;
+  }
+
+  :global(.btn-minus), :global(.btn-plus) {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.btn-minus:hover), :global(.btn-plus:hover) {
+    transform: scale(1.1);
+  }
+
+  :global(.react-card .btn-minus) { background: #1e293b; color: #61dafb; }
+  :global(.react-card .btn-plus) { background: #61dafb; color: #000; }
+  :global(.qwik-card .btn-minus) { background: #1e1e2e; color: #AC7EF4; border: 1px solid #AC7EF4; }
+  :global(.qwik-card .btn-plus) { background: #AC7EF4; color: #fff; }
+
+  /* Tabs */
+  :global(.tabs-container) {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  :global(.tab-buttons) {
+    display: flex;
+    border-bottom: 1px solid #27272a;
+  }
+
+  :global(.tab-btn) {
+    flex: 1;
+    padding: 0.75rem;
+    background: transparent;
+    border: none;
+    color: #71717a;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  :global(.tab-btn:hover) {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  :global(.tab-btn.active) {
+    color: #61dafb;
+    background: rgba(97, 218, 251, 0.1);
+  }
+
+  :global(.tab-content) {
+    padding: 1rem;
+    color: #e4e4e7;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Progress */
+  :global(.progress-container) {
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  :global(.progress-bar) {
+    height: 8px;
+    background: #27272a;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.progress-fill) {
+    height: 100%;
+    background: linear-gradient(90deg, #2c4f7c, #4c8bf5);
+    border-radius: 4px;
+    transition: width 0.05s linear;
+  }
+
+  :global(.progress-info) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+
+  :global(.control-btn) {
+    padding: 0.5rem 1rem;
+    background: #2c4f7c;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  /* Todo List */
+  :global(.todo-container) {
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  :global(.todo-list) {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem;
+  }
+
+  :global(.todo-item) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  :global(.todo-item:hover) {
+    background: rgba(255,255,255,0.05);
+  }
+
+  :global(.todo-item.done .todo-text) {
+    text-decoration: line-through;
+    color: #71717a;
+  }
+
+  :global(.checkbox) {
+    font-size: 1.1rem;
+    color: #2c4f7c;
+  }
+
+  :global(.todo-stats) {
+    font-size: 0.85rem;
+    color: #71717a;
+    text-align: right;
+  }
+
+  /* Accordion */
+  :global(.accordion) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  :global(.accordion-item) {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  :global(.accordion-header) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.05);
+    border: none;
+    color: #e4e4e7;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  :global(.accordion-header:hover) {
+    background: rgba(255,255,255,0.08);
+  }
+
+  :global(.accordion-header.open) {
+    background: rgba(172, 126, 244, 0.15);
+    color: #AC7EF4;
+  }
+
+  :global(.accordion-icon) {
+    font-size: 1.2rem;
+  }
+
+  :global(.accordion-content) {
+    padding: 1rem;
+    background: rgba(255,255,255,0.03);
+    color: #a1a1aa;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* Static Demo */
+  .static-demo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .code-block {
+    background: #0d0d0f;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 0.85rem;
+    color: #ff5d01;
+  }
+
+  .perf-badge {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid #27272a;
+    color: #71717a;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 5rem 0 4rem;
+    }
+
+    .hero-stats {
+      gap: 2rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+    }
+
+    .demo-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .framework-header {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
