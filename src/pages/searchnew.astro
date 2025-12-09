@@ -51,9 +51,10 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
 ---
 
 <Layout title="Search New Inventory | Passport Mazda" enableClientRouter={true}>
-    <Header {...homeData.blocks.header} />
+    <div class="page-wrapper">
+        <Header {...homeData.blocks.header} />
 
-    <main class="search-page-main">
+        <main class="search-page-main">
         <div class="container mx-auto px-4 py-8">
             <div class="page-header mb-6">
                 <h1 class="text-3xl font-bold text-gray-900">
@@ -119,13 +120,31 @@ const initialLoadMoreUrl = `/searchnew/htmx?${buildLoadMoreQuery(initialOffset)}
         </div>
     </main>
 
-    <Footer {...homeData.blocks.footer} />
+        <Footer {...homeData.blocks.footer} />
+    </div>
 </Layout>
 
 <style is:global>
+    .page-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .page-wrapper > .footer {
+        margin-top: auto;
+    }
+
     .search-page-main {
         background: var(--surface-bg);
-        min-height: 100vh;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Ensure astro-island elements in the grid display properly */
+    .vehicle-list > astro-island {
+        display: contents;
     }
 
     .page-header h1 {
