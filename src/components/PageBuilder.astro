@@ -7,6 +7,7 @@ import Header from "./Header.astro";
 import Hero from "./Hero.astro";
 import VehicleGrid from "./VehicleGrid.astro";
 import ContentSection from "./ContentSection.astro";
+import CertifiedSection from "./CertifiedSection.astro";
 import Footer from "./Footer.astro";
 import DynamicRenderer from "./DynamicRenderer.astro";
 import { isBot } from "../utils/isBot";
@@ -137,6 +138,24 @@ const isBotRequest = isBot(userAgent);
             </ContentSection>
           ) : (
             <ContentSection {...(block.data as any)} />
+          );
+        case "CertifiedSection":
+          return block.serverIsland && !isBotRequest ? (
+            <CertifiedSection {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-certified-section">
+                <div class="skeleton-certified-grid">
+                  <div class="skeleton-certified-image" />
+                  <div class="skeleton-certified-text">
+                    <div class="skeleton-title" />
+                    <div class="skeleton-text" />
+                    <div class="skeleton-text" />
+                    <div class="skeleton-text short" />
+                  </div>
+                </div>
+              </div>
+            </CertifiedSection>
+          ) : (
+            <CertifiedSection {...(block.data as any)} />
           );
         case "Footer":
           return block.serverIsland && !isBotRequest ? (
@@ -467,6 +486,55 @@ const isBotRequest = isBot(userAgent);
     max-width: 800px;
     margin: 0 auto;
     background: transparent;
+  }
+
+  /* Certified Section Skeleton */
+  .skeleton-certified-section {
+    padding: 5rem 2rem;
+    background: #000000;
+  }
+
+  .skeleton-certified-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .skeleton-certified-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .skeleton-certified-image {
+    width: 100%;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06) 25%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  @media (min-width: 768px) {
+    .skeleton-certified-image {
+      height: 400px;
+    }
+  }
+
+  .skeleton-certified-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 0;
   }
 
   @media (prefers-color-scheme: dark) {

@@ -11,11 +11,11 @@ export interface ComponentField {
   label: string;
   placeholder?: string;
   required?: boolean;
-  
+
   // For array type
   itemType?: 'text' | 'textarea' | 'number' | 'url';
   addButtonText?: string;
-  
+
   // For object and array-of-objects types
   fields?: ComponentField[];
 }
@@ -57,7 +57,7 @@ export const componentRegistry: ComponentDefinition[] = [
       subtitle: 'Add your subtitle here'
     }
   },
-  
+
   {
     type: 'FeaturesGrid',
     label: 'Features Grid',
@@ -77,7 +77,7 @@ export const componentRegistry: ComponentDefinition[] = [
       items: ['Feature 1', 'Feature 2', 'Feature 3']
     }
   },
-  
+
   {
     type: 'NewsletterSignup',
     label: 'Newsletter Signup',
@@ -96,7 +96,7 @@ export const componentRegistry: ComponentDefinition[] = [
       ctaText: 'Subscribe'
     }
   },
-  
+
   {
     type: 'Header',
     label: 'Header',
@@ -166,7 +166,7 @@ export const componentRegistry: ComponentDefinition[] = [
       phone: '301-423-2200'
     }
   },
-  
+
   {
     type: 'Hero',
     label: 'Hero',
@@ -209,7 +209,7 @@ export const componentRegistry: ComponentDefinition[] = [
       }
     }
   },
-  
+
   {
     type: 'VehicleGrid',
     label: 'Vehicle Grid',
@@ -274,7 +274,7 @@ export const componentRegistry: ComponentDefinition[] = [
       ]
     }
   },
-  
+
   {
     type: 'ContentSection',
     label: 'Content Section',
@@ -330,7 +330,70 @@ export const componentRegistry: ComponentDefinition[] = [
       image: 'https://di-uploads-pod5.dealerinspire.com/passportmazda/uploads/2023/08/Mazda-CPO-Banner.jpg'
     }
   },
-  
+
+  {
+    type: 'CertifiedSection',
+    label: 'Certified Section',
+    description: 'Premium content block with configurable image position (left/right) and black background',
+    category: 'content',
+    icon: '⭐',
+    fields: [
+      {
+        name: 'title',
+        type: 'text',
+        label: 'Title',
+        placeholder: 'Section title',
+        required: true
+      },
+      {
+        name: 'description',
+        type: 'textarea',
+        label: 'Description',
+        placeholder: 'Section description',
+        required: true
+      },
+      {
+        name: 'image',
+        type: 'url',
+        label: 'Image URL',
+        placeholder: 'https://...',
+        required: true
+      },
+      {
+        name: 'imagePosition',
+        type: 'text',
+        label: 'Image Position (left or right)',
+        placeholder: 'left'
+      },
+      {
+        name: 'link',
+        type: 'object',
+        label: 'Call to Action Link (Optional)',
+        fields: [
+          {
+            name: 'label',
+            type: 'text',
+            label: 'Link Label',
+            placeholder: 'Learn More'
+          },
+          {
+            name: 'href',
+            type: 'text',
+            label: 'Link URL',
+            placeholder: '/page'
+          }
+        ]
+      }
+    ],
+    defaultData: {
+      title: 'Mazda Certified Pre-Owned',
+      description: 'Only the best-maintained late-model vehicles make the Mazda Certified Pre-Owned (CPO) vehicle cut. To be eligible, the maximum is a genuine 160-point inspection. From major components, each vehicle is scrutinized and tested.',
+      image: '/src/assets/nissan-rogue-research.png',
+      imagePosition: 'left',
+      link: { label: 'Learn Certified', href: '/certified' }
+    }
+  },
+
   {
     type: 'Footer',
     label: 'Footer',
@@ -380,7 +443,7 @@ export const componentRegistry: ComponentDefinition[] = [
       ]
     }
   },
-  
+
   {
     type: 'DynamicRenderer',
     label: 'Dynamic Renderer',
