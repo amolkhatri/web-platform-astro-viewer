@@ -281,6 +281,12 @@ const shouldLoadHtmx = !isBot(userAgent);
 	[data-astro-transition-scope] {
 		background: transparent;
 	}
+
+	/* Ensure server:defer astro-island elements don't break grid layouts */
+	.vehicle-list > astro-island,
+	.vehicle-list-skeleton > astro-island {
+		display: contents;
+	}
 	main {
 		background: var(--surface-bg);
 		color: var(--md-sys-color-on-surface);

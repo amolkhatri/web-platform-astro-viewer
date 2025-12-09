@@ -117,9 +117,10 @@ const currentSortLabel =
 ---
 
 <Layout title="Search Inventory | Passport Mazda" enableClientRouter={true}>
-  <Header {...homeData.blocks.header} />
+  <div class="page-wrapper">
+    <Header {...homeData.blocks.header} />
 
-  <main class="inventory-search-page">
+    <main class="inventory-search-page">
     <div class="container mx-auto px-4 py-6">
       <!-- Page Header -->
       <div class="page-header mb-6">
@@ -240,7 +241,8 @@ const currentSortLabel =
     </div>
   </main>
 
-  <Footer {...homeData.blocks.footer} />
+    <Footer {...homeData.blocks.footer} />
+  </div>
 </Layout>
 
 <script>
@@ -273,9 +275,19 @@ const currentSortLabel =
 </script>
 
 <style>
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .page-wrapper > :global(.footer) {
+    margin-top: auto;
+  }
+
   .inventory-search-page {
     background: #f5f5f5;
-    min-height: 100vh;
+    flex: 1;
   }
 
   .page-header {
