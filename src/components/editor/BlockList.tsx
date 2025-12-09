@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Block, ComponentDefinition } from '../../utils/editorApi';
 
 interface BlockListProps {

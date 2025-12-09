@@ -24,7 +24,7 @@ export default defineConfig({
 
   integrations: [
     react({
-      include: ['**/components/react/**']
+      include: ['**/components/react/**', '**/components/editor/**']
     }),
     vue(),
     solidJs({

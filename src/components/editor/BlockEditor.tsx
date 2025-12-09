@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Block, ComponentDefinition, ComponentField } from '../../utils/editorApi';
 
 interface BlockEditorProps {
