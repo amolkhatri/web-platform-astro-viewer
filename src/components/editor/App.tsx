@@ -3,11 +3,11 @@ import BlockList from './BlockList';
 import BlockEditor from './BlockEditor';
 import Preview from './Preview';
 import ComponentPlayground from './ComponentPlayground';
-import { 
-    fetchPages, 
-    saveDraftPage, 
-    publishPage, 
-    fetchComponentRegistry, 
+import {
+    fetchPages,
+    saveDraftPage,
+    publishPage,
+    fetchComponentRegistry,
     fetchLayouts,
     type Page,
     type Block,
@@ -255,9 +255,9 @@ export default function App() {
                         + New Page
                     </button>
 
-                    <button onClick={() => setShowPlayground(true)}>
+                    {/* <button onClick={() => setShowPlayground(true)}>
                         🎨 Component Playground
-                    </button>
+                    </button> */}
                 </div>
 
                 {currentPage && layouts.length > 0 && (
@@ -327,6 +327,7 @@ export default function App() {
                         blocks={currentPage.blocks}
                         pageSlug={currentPage.slug}
                         layout={currentPage.layout}
+                        autosaving={autosaving}
                     />
 
                     <BlockEditor
@@ -337,12 +338,12 @@ export default function App() {
                 </main>
             )}
 
-            {showPlayground && (
+            {/* {showPlayground && (
                 <ComponentPlayground
                     onClose={() => setShowPlayground(false)}
                     onComponentCreated={handleComponentCreated}
                 />
-            )}
+            )} */}
         </div>
     );
 }

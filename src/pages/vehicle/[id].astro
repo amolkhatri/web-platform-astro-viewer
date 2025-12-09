@@ -17,7 +17,7 @@ if (!vehicle) {
 <Layout
     title={`${vehicle.year} ${vehicle.make} ${vehicle.model} | Passport Mazda`}
 >
-    <Header {...homeData.header} />
+    <Header {...homeData.blocks.header} />
 
     <main class="bg-gray-50 min-h-screen pb-12">
         <div class="bg-white border-b border-gray-200 mb-8">
@@ -34,5 +34,5 @@ if (!vehicle) {
         <VehicleDetails vehicle={vehicle} />
     </main>
 
-    <Footer {...homeData.footer} />
+    <Footer {...homeData.blocks.footer} />
 </Layout>

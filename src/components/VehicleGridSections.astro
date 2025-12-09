@@ -8,7 +8,7 @@ interface Vehicle {
   interface Props {
     vehicles: Vehicle[];
   }
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  await new Promise(resolve => setTimeout(resolve, 5000));
   console.log("I am rendering the vehicle grid");
   const { vehicles } = Astro.props;
 

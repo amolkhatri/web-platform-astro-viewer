@@ -5,10 +5,12 @@ interface PreviewProps {
     blocks: Block[];
     pageSlug: string;
     layout?: string;
+    autosaving?: boolean;
 }
 
-export default function Preview({ blocks, pageSlug, layout }: PreviewProps) {
+export default function Preview({ blocks, pageSlug, layout, autosaving }: PreviewProps) {
     const [reloadKey, setReloadKey] = useState(0);
+    const [pendingReload, setPendingReload] = useState(false);
 
     const normalizedSlug = useMemo(() => {
         if (!pageSlug) return 'home';
@@ -19,12 +21,24 @@ export default function Preview({ blocks, pageSlug, layout }: PreviewProps) {
     const draftPreviewUrl = `/${normalizedSlug}?draft=true`;
     const livePreviewUrl = `/${normalizedSlug}`;
 
-    // Whenever blocks or layout change, bump the reload key so the iframe reloads the draft URL
+    // When blocks or layout change, mark that we need to reload
     useEffect(() => {
         if (blocks && blocks.length >= 0) {
-            setReloadKey((key) => key + 1);
+            setPendingReload(true);
         }
     }, [blocks, layout]);
+
+    // When autosaving completes and we have a pending reload, trigger the reload
+    useEffect(() => {
+        if (pendingReload && !autosaving) {
+            const timer = setTimeout(() => {
+                setReloadKey((key) => key + 1);
+                setPendingReload(false);
+            }, 100); // Small delay to ensure the save is fully committed
+
+            return () => clearTimeout(timer);
+        }
+    }, [pendingReload, autosaving]);
 
     return (
         <div className="preview-panel panel">

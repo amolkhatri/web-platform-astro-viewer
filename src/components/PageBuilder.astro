@@ -31,64 +31,471 @@ const isBotRequest = isBot(userAgent);
 ---
 
 <div class="dynamic-page-container">
-  {blocks.map((block) => {
-    switch (block.type) {
-      case "HeroSection":
-        return block.serverIsland && !isBotRequest ? (
-          <HeroSection {...block.data} server:defer />
-        ) : (
-          <HeroSection {...block.data} />
-        );
-      case "FeaturesGrid":
-        return block.serverIsland && !isBotRequest ? (
-          <FeaturesGrid {...block.data} server:defer />
-        ) : (
-          <FeaturesGrid {...block.data} />
-        );
-      case "NewsletterSignup":
-        return block.serverIsland && !isBotRequest ? (
-          <NewsletterSignup {...block.data} server:defer />
-        ) : (
-          <NewsletterSignup {...block.data} />
-        );
-      case "Header":
-        return block.serverIsland && !isBotRequest ? (
-          <Header {...(block.data as any)} server:defer />
-        ) : (
-          <Header {...(block.data as any)} />
-        );
-      case "Hero":
-        return block.serverIsland && !isBotRequest ? (
-          <Hero {...(block.data as any)} server:defer />
-        ) : (
-          <Hero {...(block.data as any)} />
-        );
-      case "VehicleGrid":
-        return block.serverIsland && !isBotRequest ? (
-          <VehicleGrid {...(block.data as any)} server:defer />
-        ) : (
-          <VehicleGrid {...(block.data as any)} />
-        );
-      case "ContentSection":
-        return block.serverIsland && !isBotRequest ? (
-          <ContentSection {...(block.data as any)} server:defer />
-        ) : (
-          <ContentSection {...(block.data as any)} />
-        );
-      case "Footer":
-        return block.serverIsland && !isBotRequest ? (
-          <Footer {...(block.data as any)} server:defer />
-        ) : (
-          <Footer {...(block.data as any)} />
-        );
-      case "DynamicRenderer":
-        return block.serverIsland && !isBotRequest ? (
-          <DynamicRenderer {...(block.data as any)} server:defer />
-        ) : (
-          <DynamicRenderer {...(block.data as any)} />
-        );
-      default:
-        return <FallbackBlock {...block.data} type={block.type} />;
-    }
-  })}
+  {
+    blocks.map((block) => {
+      switch (block.type) {
+        case "HeroSection":
+          return block.serverIsland && !isBotRequest ? (
+            <HeroSection {...block.data} server:defer>
+              <div slot="fallback" class="skeleton skeleton-hero">
+                <div class="skeleton-content">
+                  <div class="skeleton-title" />
+                  <div class="skeleton-subtitle" />
+                  <div class="skeleton-button" />
+                </div>
+              </div>
+            </HeroSection>
+          ) : (
+            <HeroSection {...block.data} />
+          );
+        case "FeaturesGrid":
+          return block.serverIsland && !isBotRequest ? (
+            <FeaturesGrid {...block.data} server:defer>
+              <div slot="fallback" class="skeleton skeleton-features">
+                <div class="skeleton-grid">
+                  {[...Array(6)].map(() => (
+                    <div class="skeleton-card">
+                      <div class="skeleton-icon" />
+                      <div class="skeleton-text" />
+                      <div class="skeleton-text short" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FeaturesGrid>
+          ) : (
+            <FeaturesGrid {...block.data} />
+          );
+        case "NewsletterSignup":
+          return block.serverIsland && !isBotRequest ? (
+            <NewsletterSignup {...block.data} server:defer>
+              <div slot="fallback" class="skeleton skeleton-newsletter">
+                <div class="skeleton-title" />
+                <div class="skeleton-input" />
+              </div>
+            </NewsletterSignup>
+          ) : (
+            <NewsletterSignup {...block.data} />
+          );
+        case "Header":
+          return block.serverIsland && !isBotRequest ? (
+            <Header {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-header">
+                <div class="skeleton-logo" />
+                <div class="skeleton-nav">
+                  {[...Array(5)].map(() => (
+                    <div class="skeleton-nav-item" />
+                  ))}
+                </div>
+              </div>
+            </Header>
+          ) : (
+            <Header {...(block.data as any)} />
+          );
+        case "Hero":
+          return block.serverIsland && !isBotRequest ? (
+            <Hero {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-hero">
+                <div class="skeleton-content">
+                  <div class="skeleton-title" />
+                  <div class="skeleton-subtitle" />
+                  <div class="skeleton-button" />
+                </div>
+              </div>
+            </Hero>
+          ) : (
+            <Hero {...(block.data as any)} />
+          );
+        case "VehicleGrid":
+          return block.serverIsland && !isBotRequest ? (
+            <VehicleGrid {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-vehicle-grid">
+                <div class="skeleton-grid">
+                  {[...Array(8)].map(() => (
+                    <div class="skeleton-vehicle-card">
+                      <div class="skeleton-image" />
+                      <div class="skeleton-text" />
+                      <div class="skeleton-text short" />
+                      <div class="skeleton-price" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </VehicleGrid>
+          ) : (
+            <VehicleGrid {...(block.data as any)} />
+          );
+        case "ContentSection":
+          return block.serverIsland && !isBotRequest ? (
+            <ContentSection {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-content-section">
+                <div class="skeleton-title" />
+                <div class="skeleton-text" />
+                <div class="skeleton-text" />
+                <div class="skeleton-text short" />
+              </div>
+            </ContentSection>
+          ) : (
+            <ContentSection {...(block.data as any)} />
+          );
+        case "Footer":
+          return block.serverIsland && !isBotRequest ? (
+            <Footer {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-footer">
+                <div class="skeleton-footer-grid">
+                  {[...Array(4)].map(() => (
+                    <div class="skeleton-footer-column">
+                      <div class="skeleton-text" />
+                      <div class="skeleton-text short" />
+                      <div class="skeleton-text short" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Footer>
+          ) : (
+            <Footer {...(block.data as any)} />
+          );
+        case "DynamicRenderer":
+          return block.serverIsland && !isBotRequest ? (
+            <DynamicRenderer {...(block.data as any)} server:defer>
+              <div slot="fallback" class="skeleton skeleton-dynamic">
+                <div class="skeleton-content">
+                  <div class="skeleton-title" />
+                  <div class="skeleton-text" />
+                  <div class="skeleton-text" />
+                </div>
+              </div>
+            </DynamicRenderer>
+          ) : (
+            <DynamicRenderer {...(block.data as any)} />
+          );
+        default:
+          return <FallbackBlock {...block.data} type={block.type} />;
+      }
+    })
+  }
 </div>
+
+<style>
+  .skeleton {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton > div {
+    animation: shimmer 2s infinite;
+  }
+
+  /* Hero Skeleton */
+  .skeleton-hero {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: transparent;
+  }
+
+  .skeleton-content {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .skeleton-title {
+    height: 48px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-subtitle {
+    height: 24px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    width: 80%;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-button {
+    height: 48px;
+    width: 150px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Features Grid Skeleton */
+  .skeleton-features {
+    padding: 4rem 2rem;
+    background: transparent;
+  }
+
+  .skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .skeleton-card {
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+  }
+
+  .skeleton-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-text {
+    height: 16px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-text.short {
+    width: 60%;
+  }
+
+  /* Newsletter Skeleton */
+  .skeleton-newsletter {
+    padding: 3rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background: transparent;
+  }
+
+  .skeleton-input {
+    height: 48px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    margin-top: 1rem;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Header Skeleton */
+  .skeleton-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .skeleton-logo {
+    width: 120px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-nav {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .skeleton-nav-item {
+    width: 80px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Vehicle Grid Skeleton */
+  .skeleton-vehicle-grid {
+    padding: 2rem;
+    background: transparent;
+  }
+
+  .skeleton-vehicle-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .skeleton-image {
+    width: 100%;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.08);
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  .skeleton-vehicle-card .skeleton-text {
+    margin: 1rem;
+  }
+
+  .skeleton-price {
+    height: 24px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin: 1rem;
+    width: 40%;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.06) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Content Section Skeleton */
+  .skeleton-content-section {
+    padding: 3rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background: transparent;
+  }
+
+  /* Footer Skeleton */
+  .skeleton-footer {
+    padding: 3rem 2rem;
+    background: transparent;
+  }
+
+  .skeleton-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .skeleton-footer-column .skeleton-text {
+    margin-bottom: 1rem;
+  }
+
+  /* Dynamic Renderer Skeleton */
+  .skeleton-dynamic {
+    padding: 3rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background: transparent;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .skeleton-title,
+    .skeleton-subtitle,
+    .skeleton-button,
+    .skeleton-icon,
+    .skeleton-text,
+    .skeleton-input,
+    .skeleton-logo,
+    .skeleton-nav-item,
+    .skeleton-image,
+    .skeleton-price {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+      );
+      background-size: 200% 100%;
+    }
+
+    .skeleton-card,
+    .skeleton-vehicle-card {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .skeleton-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>
