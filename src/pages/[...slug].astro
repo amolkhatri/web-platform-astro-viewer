@@ -45,78 +45,104 @@ const layouts = {
 };
 
 // Layouts that use named slots (block1, block2, etc.)
-const slotLayouts = ["layout1", "layout2", "layout3", "layout4", "layout5", "layout6"];
+const slotLayouts = [
+  "layout1",
+  "layout2",
+  "layout3",
+  "layout4",
+  "layout5",
+  "layout6",
+];
 
 // Use layout from page data, default to "default"
 const currentLayout = pageData?.layout || "default";
-const LayoutComponent = layouts[currentLayout as keyof typeof layouts] || Layout;
+const LayoutComponent =
+  layouts[currentLayout as keyof typeof layouts] || Layout;
 const blocks = pageData?.blocks || [];
-const usesSlots = slotLayouts.includes(currentLayout);
-
-
+const usesSlots = slotLayouts.includes(currentLayout as string);
 ---
 
 <LayoutComponent title={pageData ? pageData.title : "Page Not Found"}>
-  {error && (
-    <main>
-      <div style="text-align: center; padding: 2rem;">
-        <h1>404</h1>
-        <p>{error}</p>
+  {
+    error && (
+      <main>
+        <div style="text-align: center; padding: 2rem;">
+          <h1>404</h1>
+          <p>{error}</p>
+        </div>
+      </main>
+    )
+  }
+
+  {
+    !error && usesSlots && blocks?.[0] && (
+      <div slot="block1">
+        <PageBuilder blocks={[blocks[0]]} />
       </div>
-    </main>
-  )}
+    )
+  }
 
-  {!error && usesSlots && blocks?.[0] && (
-    <div slot="block1">
-      <PageBuilder blocks={[blocks[0]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[1] && (
+      <div slot="block2">
+        <PageBuilder blocks={[blocks[1]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[1] && (
-    <div slot="block2">
-      <PageBuilder blocks={[blocks[1]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[2] && (
+      <div slot="block3">
+        <PageBuilder blocks={[blocks[2]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[2] && (
-    <div slot="block3">
-      <PageBuilder blocks={[blocks[2]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[3] && (
+      <div slot="block4">
+        <PageBuilder blocks={[blocks[3]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[3] && (
-    <div slot="block4">
-      <PageBuilder blocks={[blocks[3]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[4] && (
+      <div slot="block5">
+        <PageBuilder blocks={[blocks[4]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[4] && (
-    <div slot="block5">
-      <PageBuilder blocks={[blocks[4]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[5] && (
+      <div slot="block6">
+        <PageBuilder blocks={[blocks[5]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[5] && (
-    <div slot="block6">
-      <PageBuilder blocks={[blocks[5]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[6] && (
+      <div slot="block7">
+        <PageBuilder blocks={[blocks[6]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[6] && (
-    <div slot="block7">
-      <PageBuilder blocks={[blocks[6]]} />
-    </div>
-  )}
+  {
+    !error && usesSlots && blocks?.[7] && (
+      <div slot="block8">
+        <PageBuilder blocks={[blocks[7]]} />
+      </div>
+    )
+  }
 
-  {!error && usesSlots && blocks?.[7] && (
-    <div slot="block8">
-      <PageBuilder blocks={[blocks[7]]} />
-    </div>
-  )}
-
-  {!error && !usesSlots && (
-    <main>
-      <PageBuilder blocks={blocks || []} />
-    </main>
-  )}
+  {
+    !error && !usesSlots && (
+      <main>
+        <PageBuilder blocks={blocks || []} />
+      </main>
+    )
+  }
 </LayoutComponent>

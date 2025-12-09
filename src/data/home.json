@@ -16,6 +16,10 @@
                     "href": "/searchused"
                 },
                 {
+                    "label": "Search Live",
+                    "href": "/search-inventory"
+                },
+                {
                     "label": "Specials",
                     "href": "/specials"
                 },
