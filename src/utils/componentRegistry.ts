@@ -279,7 +279,7 @@ export const componentRegistry: ComponentDefinition[] = [
         {
           model: 'Mazda CX-90',
           available: 22,
-          image: '/src/assets/v4.webp'
+          image: '/v4.webp'
         }
       ]
     }
