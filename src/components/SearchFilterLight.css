@@ -1,64 +1,64 @@
-/* Light theme override for search filters */
-.search-filter {
+/* Light theme override for search filters - scoped to light-theme wrapper */
+.search-filter--light {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.filter-header {
+.search-filter--light .filter-header {
     border-bottom: 1px solid #e5e7eb;
     color: #111827;
 }
 
-.filter-section {
+.search-filter--light .filter-section {
     border-bottom: 1px solid #e5e7eb;
 }
 
-.filter-title {
+.search-filter--light .filter-title {
     color: #111827;
 }
 
-.filter-option {
+.search-filter--light .filter-option {
     color: #374151;
 }
 
-.filter-option:hover {
+.search-filter--light .filter-option:hover {
     background-color: #f9fafb;
 }
 
-.filter-count {
+.search-filter--light .filter-count {
     color: #6b7280;
 }
 
-.clear-filters {
+.search-filter--light .clear-filters {
     color: #2563eb;
 }
 
-.clear-filters:hover {
+.search-filter--light .clear-filters:hover {
     color: #1d4ed8;
 }
 
-.result-count-mobile {
+.search-filter--light .result-count-mobile {
     color: #374151;
 }
 
-.toggle-icon {
+.search-filter--light .toggle-icon {
     color: #6b7280;
 }
 
-.disabled-hint {
+.search-filter--light .disabled-hint {
     color: #9ca3af;
 }
 
-.no-options {
+.search-filter--light .no-options {
     color: #9ca3af;
 }
 
-.filter-checkbox {
+.search-filter--light .filter-checkbox {
     accent-color: #2563eb;
 }
 
-.filter-option[data-disabled="true"] {
+.search-filter--light .filter-option[data-disabled="true"] {
     opacity: 0.4;
     cursor: not-allowed;
 }
