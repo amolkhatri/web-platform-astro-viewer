@@ -4,6 +4,8 @@
     padding-top: 4rem;
     border-top: 4px solid var(--primary-color-strong, #1d3456);
     color-scheme: dark;
+    position: relative;
+    z-index: 1;
 }
 
 .footer-brand {
@@ -25,7 +27,7 @@
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
 }
 
-.container {
+.footer .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -34,19 +36,19 @@
 }
 
 @media (min-width: 768px) {
-    .container {
+    .footer .container {
         max-width: 768px;
     }
 }
 
 @media (min-width: 1024px) {
-    .container {
+    .footer .container {
         max-width: 1024px;
     }
 }
 
 @media (min-width: 1280px) {
-    .container {
+    .footer .container {
         max-width: 1280px;
     }
 }
@@ -188,6 +190,7 @@
     border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
     margin-top: 4rem;
     padding-top: 2rem;
+    padding-bottom: 2rem;
     text-align: center;
     color: var(--text-muted, #9aa0ac);
     font-size: 0.875rem;
