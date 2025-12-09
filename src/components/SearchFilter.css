@@ -1,10 +1,13 @@
 .search-filter {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
+    /* Provide fallbacks so production still renders dark even if CSS vars fail */
+    background-color: var(--card-bg, #151515);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
     border-radius: var(--radius-md, 12px);
     padding: 1.5rem;
     width: 100%;
     box-shadow: var(--shadow-soft, 0 10px 30px rgba(2, 6, 23, 0.35));
+    color: var(--text-color, #e2e2e2);
+    color-scheme: dark;
 }
 
 .filter-section {
@@ -22,7 +25,7 @@
 .filter-title {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--heading-color);
+    color: var(--heading-color, #f5f5f5);
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
@@ -41,7 +44,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--text-color);
+    color: var(--text-color, #e2e2e2);
     cursor: pointer;
 }
 
@@ -49,13 +52,14 @@
     width: 1rem;
     height: 1rem;
     border-radius: 0.25rem;
-    border: 1px solid var(--border-color);
-    background: transparent;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.2));
+    background: var(--card-bg, #151515);
+    accent-color: var(--primary-color, #94b2ff);
 }
 
 .filter-count {
     margin-left: auto;
-    color: var(--text-muted);
+    color: var(--text-muted, #9aa0ac);
     font-size: 0.75rem;
 }
 
@@ -66,11 +70,11 @@
 .search-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
     border-radius: var(--radius-sm, 6px);
     font-size: 0.875rem;
-    background: var(--surface-elevated);
-    color: var(--text-color);
+    background: var(--surface-elevated, #1f1f1f);
+    color: var(--text-color, #e2e2e2);
 }
 
 .filter-header {
@@ -82,7 +86,7 @@
 
 .clear-filters {
     font-size: 0.75rem;
-    color: var(--danger-color);
+    color: var(--danger-color, #f2b8b5);
     text-decoration: underline;
     cursor: pointer;
 }
