@@ -1,0 +1,133 @@
+---
+interface DayHours {
+    day: string;
+    hours: string;
+}
+
+interface Props {
+    dealerName?: string;
+    location?: string;
+    address?: string;
+    phone?: string;
+    salesHours?: DayHours[];
+    serviceHours?: DayHours[];
+    note?: string;
+}
+
+const {
+    dealerName = "PASSPORT MAZDA",
+    location = "Suitland, MD",
+    address = "5050 Auth Way, Suitland, MD 20746",
+    phone = "240-695-5601",
+    salesHours = [
+        { day: "Monday", hours: "9:00AM - 7:00PM" },
+        { day: "Tuesday", hours: "9:00AM - 7:00PM" },
+        { day: "Wednesday", hours: "9:00AM - 7:00PM" },
+        { day: "Thursday", hours: "9:00AM - 7:00PM" },
+        { day: "Friday", hours: "9:00AM - 7:00PM" },
+        { day: "Saturday", hours: "9:00AM - 7:00PM" },
+        { day: "Sunday", hours: "Closed" },
+    ],
+    serviceHours = [
+        { day: "Monday", hours: "8:00AM - 6:00PM" },
+        { day: "Tuesday", hours: "8:00AM - 6:00PM" },
+        { day: "Wednesday", hours: "8:00AM - 6:00PM" },
+        { day: "Thursday", hours: "8:00AM - 6:00PM" },
+        { day: "Friday", hours: "8:00AM - 6:00PM" },
+        { day: "Saturday", hours: "8:00AM - 3:00PM" },
+        { day: "Sunday", hours: "Closed" },
+    ],
+    note = "*Sales open last Sunday of the month 12:00PM-05:00PM",
+} = Astro.props;
+---
+
+<section class="hours-section">
+    <div class="hours-container">
+        <div class="hours-header">
+            <h2 class="dealer-name">{dealerName}</h2>
+            <p class="dealer-location">{location}</p>
+        </div>
+
+        <div class="contact-info">
+            <a
+                href={`https://maps.google.com/?q=${address.replace(/ /g, "+")}`}
+                class="contact-item"
+                target="_blank"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="contact-icon"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>Get Directions</span>
+            </a>
+            <a href={`tel:${phone.replace(/\D/g, "")}`} class="contact-item">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="contact-icon"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+                    ></path>
+                </svg>
+                <span>{phone}</span>
+            </a>
+        </div>
+
+        <div class="address-info">
+            <p>{address}</p>
+        </div>
+
+        <h3 class="hours-title">HOURS</h3>
+
+        <div class="hours-grid">
+            <div class="hours-column">
+                <h4 class="column-title">SALES</h4>
+                <div class="hours-list">
+                    {
+                        salesHours.map(({ day, hours }) => (
+                            <div class="hours-row">
+                                <span class="day">{day}</span>
+                                <span class="time">{hours}</span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="hours-column">
+                <h4 class="column-title">SERVICE</h4>
+                <div class="hours-list">
+                    {
+                        serviceHours.map(({ day, hours }) => (
+                            <div class="hours-row">
+                                <span class="day">{day}</span>
+                                <span class="time">{hours}</span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+
+        {
+            note && (
+                <div class="hours-note">
+                    <p>{note}</p>
+                </div>
+            )
+        }
+    </div>
+</section>
+
+<style>
+    @import "./HoursOfOperation.css";
+</style>

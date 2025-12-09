@@ -262,14 +262,24 @@ export const componentRegistry: ComponentDefinition[] = [
       description: 'Check out our latest inventory.',
       vehicles: [
         {
-          model: 'Mazda CX-30',
+          model: 'Mazda CX-301',
           available: 31,
-          image: 'https://pictures.dealer.com/p/passportmazda/0894/089489610a0e0a170155656565656565.jpg'
+          image: '/src/assets/v1.webp'
         },
         {
           model: 'Mazda CX-5',
           available: 71,
-          image: 'https://pictures.dealer.com/p/passportmazda/1234/1234567890abcdef1234567890abcdef.jpg'
+          image: '/src/assets/v2.webp'
+        },
+        {
+          model: 'Mazda CX-50',
+          available: 55,
+          image: '/src/assets/v3.webp'
+        },
+        {
+          model: 'Mazda CX-90',
+          available: 22,
+          image: '/src/assets/v4.webp'
         }
       ]
     }
@@ -391,6 +401,115 @@ export const componentRegistry: ComponentDefinition[] = [
       image: '/src/assets/nissan-rogue-research.png',
       imagePosition: 'left',
       link: { label: 'Learn Certified', href: '/certified' }
+    }
+  },
+
+  {
+    type: 'HoursOfOperation',
+    label: 'Hours of Operation',
+    description: 'Dealer hours and contact information',
+    category: 'content',
+    icon: '🕒',
+    fields: [
+      {
+        name: 'dealerName',
+        type: 'text',
+        label: 'Dealer Name',
+        placeholder: 'PASSPORT MAZDA'
+      },
+      {
+        name: 'location',
+        type: 'text',
+        label: 'Location',
+        placeholder: 'Suitland, MD'
+      },
+      {
+        name: 'address',
+        type: 'text',
+        label: 'Address',
+        placeholder: '5050 Auth Way, Suitland, MD 20746'
+      },
+      {
+        name: 'phone',
+        type: 'text',
+        label: 'Phone Number',
+        placeholder: '240-695-5601'
+      },
+      {
+        name: 'salesHours',
+        type: 'array-of-objects',
+        label: 'Sales Hours',
+        addButtonText: '+ Add Day',
+        fields: [
+          {
+            name: 'day',
+            type: 'text',
+            label: 'Day',
+            placeholder: 'Monday',
+            required: true
+          },
+          {
+            name: 'hours',
+            type: 'text',
+            label: 'Hours',
+            placeholder: '9:00AM - 7:00PM',
+            required: true
+          }
+        ]
+      },
+      {
+        name: 'serviceHours',
+        type: 'array-of-objects',
+        label: 'Service Hours',
+        addButtonText: '+ Add Day',
+        fields: [
+          {
+            name: 'day',
+            type: 'text',
+            label: 'Day',
+            placeholder: 'Monday',
+            required: true
+          },
+          {
+            name: 'hours',
+            type: 'text',
+            label: 'Hours',
+            placeholder: '8:00AM - 6:00PM',
+            required: true
+          }
+        ]
+      },
+      {
+        name: 'note',
+        type: 'text',
+        label: 'Note',
+        placeholder: '*Sales open last Sunday of the month 12:00PM-05:00PM'
+      }
+    ],
+    defaultData: {
+      dealerName: 'PASSPORT MAZDA',
+      location: 'Suitland, MD',
+      address: '5050 Auth Way, Suitland, MD 20746',
+      phone: '240-695-5601',
+      salesHours: [
+        { day: 'Monday', hours: '9:00AM - 7:00PM' },
+        { day: 'Tuesday', hours: '9:00AM - 7:00PM' },
+        { day: 'Wednesday', hours: '9:00AM - 7:00PM' },
+        { day: 'Thursday', hours: '9:00AM - 7:00PM' },
+        { day: 'Friday', hours: '9:00AM - 7:00PM' },
+        { day: 'Saturday', hours: '9:00AM - 7:00PM' },
+        { day: 'Sunday', hours: 'Closed' }
+      ],
+      serviceHours: [
+        { day: 'Monday', hours: '8:00AM - 6:00PM' },
+        { day: 'Tuesday', hours: '8:00AM - 6:00PM' },
+        { day: 'Wednesday', hours: '8:00AM - 6:00PM' },
+        { day: 'Thursday', hours: '8:00AM - 6:00PM' },
+        { day: 'Friday', hours: '8:00AM - 6:00PM' },
+        { day: 'Saturday', hours: '8:00AM - 3:00PM' },
+        { day: 'Sunday', hours: 'Closed' }
+      ],
+      note: '*Sales open last Sunday of the month 12:00PM-05:00PM'
     }
   },
 

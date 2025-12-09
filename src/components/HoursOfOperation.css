@@ -1,0 +1,231 @@
+.hours-section {
+    background: var(--surface-bg);
+    color: var(--text-color);
+    padding: 5rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.hours-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hours-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hours-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.dealer-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+    .dealer-name {
+        font-size: 1.75rem;
+    }
+}
+
+.dealer-location {
+    color: var(--text-muted);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.5rem 0;
+}
+
+.contact-item:hover {
+    color: #93c5fd;
+    transform: translateY(-2px);
+}
+
+.contact-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.address-info {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.address-info p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+}
+
+.hours-title {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.hours-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%);
+    border-radius: 2px;
+}
+
+.hours-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+    .hours-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+    }
+}
+
+.hours-column {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hours-column:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.column-title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    color: #60a5fa;
+    text-align: center;
+}
+
+.hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.hours-row:last-child {
+    border-bottom: none;
+}
+
+.hours-row:hover {
+    padding-left: 0.5rem;
+    background: rgba(96, 165, 250, 0.05);
+    border-radius: 4px;
+}
+
+.day {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.time {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.hours-note {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hours-note p {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-style: italic;
+    letter-spacing: 0.02em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 639px) {
+    .hours-section {
+        padding: 3rem 0;
+    }
+
+    .hours-container {
+        padding: 0 1rem;
+    }
+
+    .hours-grid {
+        gap: 2rem;
+    }
+
+    .hours-column {
+        padding: 1.5rem 1rem;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}

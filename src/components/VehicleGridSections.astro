@@ -1,46 +1,53 @@
 ---
+import { Image } from "astro:assets";
+
 interface Vehicle {
-    model: string;
-    available: number;
-    image: string;
-  }
-  
-  interface Props {
-    vehicles: Vehicle[];
-  }
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  console.log("I am rendering the vehicle grid");
-  const { vehicles } = Astro.props;
+  model: string;
+  available: number;
+  image: string;
+}
 
+interface Props {
+  vehicles: Vehicle[];
+}
+await new Promise((resolve) => setTimeout(resolve, 5000));
+console.log("I am rendering the vehicle grid");
+const { vehicles } = Astro.props;
+---
 
-  ---
-
-  <div class="grid-container">
-      {vehicles.map((vehicle) => (
-        <div class="vehicle-card group">
-          <div class="card-image-wrapper">
-            <!-- Placeholder image logic if real image fails or is placeholder -->
+<div class="grid-container">
+  {
+    vehicles.map((vehicle) => (
+      <div class="vehicle-card group">
+        <div class="card-image-wrapper">
+          {vehicle.image ? (
+            <img
+              src={vehicle.image}
+              alt={vehicle.model}
+              class="vehicle-image"
+              loading="lazy"
+            />
+          ) : (
             <div class="placeholder-image">
-               <span class="placeholder-icon">🚗</span>
+              <span class="placeholder-icon">🚗</span>
             </div>
-             <!-- <img src={vehicle.image} alt={vehicle.model} class="w-full h-full object-cover group-hover:scale-105 transition duration-500" /> -->
-             <div class="stock-badge">
-                In Stock
-             </div>
-          </div>
-          <div class="card-content">
-            <h3 class="vehicle-title">{vehicle.model}</h3>
-            <p class="vehicle-availability">
-                <span class="availability-dot"></span>
-                {vehicle.available} Available
-            </p>
-            <a href="#" class="view-inventory-btn">
-              View Inventory
-            </a>
-          </div>
+          )}
+          <div class="stock-badge">In Stock</div>
         </div>
-      ))}
-    </div>
-    <style>
-        @import "./VehicleGrid.css";
-    </style>
+        <div class="card-content">
+          <h3 class="vehicle-title">{vehicle.model}</h3>
+          <p class="vehicle-availability">
+            <span class="availability-dot" />
+            {vehicle.available} Available
+          </p>
+          <a href="#" class="view-inventory-btn">
+            View Inventory
+          </a>
+        </div>
+      </div>
+    ))
+  }
+</div>
+<style>
+  @import "./VehicleGrid.css";
+</style>

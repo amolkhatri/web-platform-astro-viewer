@@ -243,7 +243,7 @@ export default function BlockEditor({ block, onUpdateBlock, componentRegistry = 
             </div>
             <div className="editor-content">
                 {/* Server Island Toggle */}
-                <div className="form-group checkbox-group" style={{ marginBottom: '1rem', padding: '0.5rem', background: '#f5f5f5', borderRadius: '4px' }}>
+                <div className="form-group checkbox-group" style={{ marginBottom: '1rem', padding: '0.5rem', background: 'var(--color-surface)', borderRadius: '4px' }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
                         <input
                             type="checkbox"

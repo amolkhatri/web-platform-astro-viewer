@@ -1,19 +1,22 @@
 ---
+import defaultHeroImage from "../assets/Passport_Mazda_Web__1920x540_HomepagePhotoV1_09-25.jpg";
+
 interface Props {
     title: string;
-    image: string;
+    image?: string;
     search: {
         placeholder: string;
     };
 }
 
 const { title, image, search } = Astro.props;
+const backgroundImage = image || defaultHeroImage.src;
 ---
 
 <section class="hero-section">
     <div class="hero-bg">
         <img
-            src={image}
+            src={backgroundImage}
             alt="Hero Background"
             class="hero-image"
             loading="eager"
