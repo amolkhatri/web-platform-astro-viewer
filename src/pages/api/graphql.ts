@@ -169,15 +169,15 @@ function getPlaygroundHTML() {
       color: #666;
     }
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphiql@3.0.10/graphiql.min.css" crossorigin="anonymous" />
 </head>
 <body>
   <div id="playground">
     <div class="loading">Loading GraphQL Playground...</div>
   </div>
-  <script crossorigin src="https://unpkg.com/react/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/graphiql/graphiql.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/graphiql@3.0.10/graphiql.min.js"></script>
   <script>
     const fetcher = GraphiQL.createFetcher({ url: window.location.pathname });
     const root = ReactDOM.createRoot(document.getElementById('playground'));
