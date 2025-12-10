@@ -264,22 +264,22 @@ export const componentRegistry: ComponentDefinition[] = [
         {
           model: 'Mazda CX-301',
           available: 31,
-          image: '/src/assets/v1.webp'
+          image: '/v1.webp'
         },
         {
           model: 'Mazda CX-5',
           available: 71,
-          image: '/src/assets/v2.webp'
+          image: '/v2.webp'
         },
         {
           model: 'Mazda CX-50',
           available: 55,
-          image: '/src/assets/v3.webp'
+          image: '/v3.webp'
         },
         {
           model: 'Mazda CX-90',
           available: 22,
-          image: '/src/assets/v4.webp'
+          image: '/v4.webp'
         }
       ]
     }
@@ -398,7 +398,7 @@ export const componentRegistry: ComponentDefinition[] = [
     defaultData: {
       title: 'Mazda Certified Pre-Owned',
       description: 'Only the best-maintained late-model vehicles make the Mazda Certified Pre-Owned (CPO) vehicle cut. To be eligible, the maximum is a genuine 160-point inspection. From major components, each vehicle is scrutinized and tested.',
-      image: '/src/assets/nissan-rogue-research.png',
+      image: '/nissan-rogue-research.png',
       imagePosition: 'left',
       link: { label: 'Learn Certified', href: '/certified' }
     }
