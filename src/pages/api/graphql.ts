@@ -5,11 +5,18 @@ import { resolvers } from '../../graphql/resolvers';
 import { VehicleAPI } from '../../graphql/datasources/VehicleAPI';
 import { getGraphQLCache } from '../../graphql/cache';
 
+// Check if playground should be enabled
+// Enable in DEV mode or if ENABLE_GRAPHQL_PLAYGROUND env var is set
+const enablePlayground = 
+    import.meta.env.DEV || 
+    import.meta.env.PUBLIC_ENABLE_GRAPHQL_PLAYGROUND === 'true' ||
+    import.meta.env.ENABLE_GRAPHQL_PLAYGROUND === 'true';
+
 // Create Apollo Server instance
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    introspection: import.meta.env.DEV,
+    introspection: enablePlayground, // Enable introspection when playground is enabled
     includeStacktraceInErrorResponses: import.meta.env.DEV,
 });
 
@@ -56,7 +63,7 @@ export const GET: APIRoute = async (context) => {
     const variables = context.url.searchParams.get('variables');
 
     if (!query) {
-        if (import.meta.env.DEV) {
+        if (enablePlayground) {
             return new Response(getPlaygroundHTML(), {
                 status: 200,
                 headers: { 'Content-Type': 'text/html' },
