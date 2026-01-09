@@ -14,7 +14,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
-
+  build: {
+   inlineStylesheets: 'always'
+  },
   vite: {
       resolve: {
           alias: {
