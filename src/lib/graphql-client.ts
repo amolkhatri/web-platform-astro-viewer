@@ -7,9 +7,12 @@ export async function graphqlQuery<T>(
     query: string,
     variables?: Record<string, any>
 ): Promise<T> {
-    const endpoint = import.meta.env.DEV
-        ? 'http://localhost:4321/api/graphql'
-        : `${import.meta.env.SITE}/api/graphql`;
+    // Use relative URL for client-side, or construct full URL for SSR
+    const endpoint = typeof window !== 'undefined'
+        ? '/api/graphql'
+        : import.meta.env.SITE
+            ? `${import.meta.env.SITE}/api/graphql`
+            : 'http://localhost:4321/api/graphql';
 
     const response = await fetch(endpoint, {
         method: 'POST',
