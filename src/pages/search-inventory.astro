@@ -11,7 +11,7 @@ import {
   convertGraphQLFiltersToAggregations,
 } from "../utils/graphqlFilterUtils";
 import {
-  SEARCH_WITH_AGGREGATIONS_QUERY,
+  SEARCH_AGGREGATIONS_ONLY_QUERY,
   buildSearchVariables,
 } from "../graphql/queries/vehicleSearch";
 import "../components/VehicleList.css";
@@ -38,19 +38,18 @@ const variables = buildSearchVariables(filters, {
   sortDirection,
 });
 
-// Fetch data from GraphQL
+// Fetch aggregations and summary (vehicles will be fetched by VehicleGridGraphQL)
 let searchResults: any = null;
 let error: string | null = null;
 
 try {
-  searchResults = await graphqlQuery(SEARCH_WITH_AGGREGATIONS_QUERY, variables);
+  searchResults = await graphqlQuery(SEARCH_AGGREGATIONS_ONLY_QUERY, variables);
 } catch (e) {
-  error = e instanceof Error ? e.message : "Failed to fetch vehicles";
+  error = e instanceof Error ? e.message : "Failed to fetch aggregations";
   console.error("[SearchInventory] Error:", error);
 }
 
 // Extract data
-const vehicles = searchResults?.searchVehicles?.vehicles || [];
 const totalCount = searchResults?.searchVehicles?.summary?.totalCount || 0;
 
 // Extract filters from search results for aggregations
@@ -197,7 +196,7 @@ const currentSortLabel =
           </div>
 
           <!-- Vehicle results grid with server defer -->
-          <VehicleGridGraphQL server:defer vehicles={vehicles}>
+          <VehicleGridGraphQL server:defer variables={variables}>
             <VehicleListSkeleton slot="fallback" count={20} />
           </VehicleGridGraphQL>
 

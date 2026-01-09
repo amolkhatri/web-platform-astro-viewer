@@ -1,29 +1,53 @@
 ---
 import VehicleCardGraphQL from "./VehicleCardGraphQL.astro";
+import { graphqlQuery } from "../lib/graphql-client";
+import { SEARCH_VEHICLES_QUERY } from "../graphql/queries/vehicleSearch";
 import "../components/VehicleList.css";
 
 interface Props {
-  vehicles: any[];
+  variables: any;
 }
 
-const { vehicles } = Astro.props;
+const { variables } = Astro.props;
+
+// Fetch vehicles with the provided variables
+let vehicles: any[] = [];
+let error: string | null = null;
+
+try {
+  const result = await graphqlQuery(SEARCH_VEHICLES_QUERY, variables);
+  vehicles = result?.searchVehicles?.vehicles || [];
+} catch (e) {
+  error = e instanceof Error ? e.message : "Failed to fetch vehicles";
+  console.error("[VehicleGridGraphQL] Error:", error);
+}
 ---
 
-<div class="vehicle-grid">
-  {vehicles.length > 0 ? (
-    vehicles.map((vehicle: any) => (
-      <VehicleCardGraphQL vehicle={vehicle} />
-    ))
-  ) : (
-    <div class="no-results-message">
-      <h2>No vehicles found</h2>
-      <p>Try adjusting your filters to see more results.</p>
-      <a href={Astro.url.pathname} class="reset-link">
-        Reset All Filters
-      </a>
-    </div>
-  )}
-</div>
+{error ? (
+  <div class="error-message">
+    <h2>Error Loading Vehicles</h2>
+    <p>{error}</p>
+    <button onclick="window.location.reload()" class="retry-button">
+      Retry
+    </button>
+  </div>
+) : (
+  <div class="vehicle-grid">
+    {vehicles.length > 0 ? (
+      vehicles.map((vehicle: any) => (
+        <VehicleCardGraphQL vehicle={vehicle} />
+      ))
+    ) : (
+      <div class="no-results-message">
+        <h2>No vehicles found</h2>
+        <p>Try adjusting your filters to see more results.</p>
+        <a href={Astro.url.pathname} class="reset-link">
+          Reset All Filters
+        </a>
+      </div>
+    )}
+  </div>
+)}
 
 <style>
   .vehicle-grid {
@@ -73,6 +97,41 @@ const { vehicles } = Astro.props;
   }
 
   .reset-link:hover {
+    background: #0052a3;
+  }
+
+  .error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+  }
+
+  .error-message h2 {
+    margin: 0 0 1rem 0;
+    color: #c33;
+    font-size: 1.5rem;
+  }
+
+  .error-message p {
+    color: #666;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .retry-button {
+    padding: 0.75rem 1.5rem;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .retry-button:hover {
     background: #0052a3;
   }
 </style>

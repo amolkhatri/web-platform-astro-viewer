@@ -147,6 +147,35 @@ export const SEARCH_WITH_AGGREGATIONS_QUERY = `
   }
 `;
 
+// Query for just aggregations and summary (no vehicles) - useful for deferred loading
+export const SEARCH_AGGREGATIONS_ONLY_QUERY = `
+  ${FILTER_FRAGMENT}
+  
+  query SearchAggregationsOnly(
+    $filters: VehicleFilters
+    $sort: SortOptions
+    $limit: Int
+    $offset: Int
+  ) {
+    searchVehicles(
+      filters: $filters
+      sort: $sort
+      limit: $limit
+      offset: $offset
+    ) {
+      summary {
+        totalCount
+        count
+        offset
+        limit
+      }
+      filters {
+        ...FilterData
+      }
+    }
+  }
+`;
+
 // Featured vehicles query
 export const FEATURED_VEHICLES_QUERY = `
   ${VEHICLE_CARD_FRAGMENT}
