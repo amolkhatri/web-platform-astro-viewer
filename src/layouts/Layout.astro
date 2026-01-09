@@ -9,7 +9,7 @@ interface Props {
 	enableClientRouter?: boolean;
 }
 
-const { enableClientRouter = false } = Astro.props as Props;
+const { enableClientRouter = true } = Astro.props as Props;
 
 const userAgent = Astro.request.headers.get("user-agent") || "";
 const shouldLoadHtmx = !isBot(userAgent);

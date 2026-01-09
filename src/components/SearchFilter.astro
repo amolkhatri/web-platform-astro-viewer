@@ -133,6 +133,8 @@ const currentPath = Astro.url.pathname;
 </aside>
 
 <script>
+    import { navigate } from 'astro:transitions/client';
+
     // Handle filter checkbox changes
     function handleFilterChange(event: Event) {
         const checkbox = event.target as HTMLInputElement;
@@ -171,9 +173,16 @@ const currentPath = Astro.url.pathname;
         params.delete("page");
 
         url.search = params.toString();
+        const newUrl = url.pathname + url.search;
 
-        // Navigate to new URL (View Transitions will handle smooth transition)
-        window.location.href = url.toString();
+        // Use navigate() for ClientRouter transitions (no full page refresh)
+        try {
+            navigate(newUrl);
+        } catch (e) {
+            // Fallback if navigate fails (e.g., ClientRouter not available)
+            console.error('Navigation error:', e);
+            window.location.href = url.toString();
+        }
     }
 
     // Attach event listeners to all checkboxes
